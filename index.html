@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LaQuMo | Large Quantum Model</title>
+  <meta name="description" content="LaQuMo (Large Quantum Model) - Next-generation hybrid quantum-classical artificial intelligence architecture for molecular simulation, cryptography, and complex reasoning.">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- MathJax for Scientific LaTeX Notation -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Background Quantum Node Canvas -->
+  <canvas id="quantum-canvas"></canvas>
+  <div class="vignette-overlay"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <a href="#" class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
+          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+        </svg>
+      </div>
+      <span class="brand-text">LaQuMo</span>
+      <span class="brand-tag">v2.4 QUANTUM</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#simulator">Simulator</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#benchmarks">Benchmarks</a></li>
+      <li><a href="#api">Developer API</a></li>
+      <li><a href="#publications">Research</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="btn btn-outline btn-sm" id="btn-deploy-guide">GitHub Deploy Guide</button>
+      <a href="#simulator" class="btn btn-primary btn-sm">Try LaQuMo</a>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>LARGE QUANTUM MODEL &bull; SCIENTIFIC ARCHITECTURE</span>
+      </div>
+
+      <h1 class="hero-title">
+        LaQuMo: Large Quantum Model
+      </h1>
+
+      <p class="hero-subtitle">
+        A state-of-the-art hybrid quantum-classical artificial intelligence architecture integrating 
+        Variational Quantum Circuits (VQC) with deep Transformer attention models.
+      </p>
+
+      <div style="margin-bottom: 36px;">
+        <div class="math-block">
+          \(\hat{\mathcal{H}}_{LaQuMo} |\Psi(\theta)\rangle = \sum_{k=1}^{N} \alpha_k \left( \bigotimes_{i=1}^{q} U_i(\theta_i) \right) |0\rangle^{\otimes q} = E_0 |\Psi\rangle\)
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#simulator" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          Interactive State Simulator
+        </a>
+        <a href="#api" class="btn btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path></svg>
+          API Documentation
+        </a>
+      </div>
+
+      <!-- Key Metrics -->
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-val">108 Qubits</div>
+          <div class="stat-lbl">Quantum Register Capacity</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">99.85%</div>
+          <div class="stat-lbl">2-Qubit Gate Fidelity</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">4.2M VQC</div>
+          <div class="stat-lbl">Variational Parameters</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">14.8x</div>
+          <div class="stat-lbl">Speedup vs Classical LLMs</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Quantum Simulator Section -->
+    <section class="section" id="simulator">
+      <div class="section-header">
+        <span class="section-tag">// INTERACTIVE EXPERIMENT</span>
+        <h2 class="section-title">Quantum State & Bloch Sphere Simulator</h2>
+        <p class="section-desc">
+          Adjust the physical quantum registers below to observe real-time state vector rotations, 
+          entanglement entropy, and amplitude probability distributions.
+        </p>
+      </div>
+
+      <div class="simulator-wrapper">
+        <div class="sim-grid">
+          
+          <!-- Controls -->
+          <div class="sim-controls">
+            <div class="control-group">
+              <label>Qubit Register Size <span id="val-qubits">16</span></label>
+              <input type="range" id="slider-qubits" class="slider-input" min="4" max="64" value="16">
+            </div>
+
+            <div class="control-group">
+              <label>Circuit Layer Depth <span id="val-depth">12</span></label>
+              <input type="range" id="slider-depth" class="slider-input" min="2" max="32" value="12">
+            </div>
+
+            <div class="control-group">
+              <label>Entanglement Entropy S(ρ) <span id="val-entropy">0.45</span></label>
+              <input type="range" id="slider-entropy" class="slider-input" min="0" max="1" step="0.05" value="0.45">
+            </div>
+
+            <div class="control-group">
+              <label>Quantum Attention Heads <span id="val-heads">8</span></label>
+              <input type="range" id="slider-heads" class="slider-input" min="1" max="16" value="8">
+            </div>
+
+            <div style="margin-top: 12px; font-size: 0.82rem; color: var(--text-muted);">
+              Current State Equation:
+              <div id="dynamic-state-latex" style="margin-top: 8px; font-family: var(--font-mono); color: var(--accent-white);">
+                \(|\Psi_{LaQuMo}\rangle = 0.71|00\dots 0\rangle + 0.71e^{i\phi}|11\dots 1\rangle\)
+              </div>
+            </div>
+          </div>
+
+          <!-- Canvas & Probabilities -->
+          <div class="sim-view">
+            <div class="sim-canvas-container">
+              <canvas id="bloch-canvas"></canvas>
+            </div>
+
+            <div class="state-amplitudes">
+              <div class="amplitude-box">
+                <div class="amp-state">|0000⟩</div>
+                <div class="amp-val" id="amp-val-0">48.2%</div>
+                <div class="amp-bar-bg"><div class="amp-bar-fill" id="amp-bar-0" style="width: 48.2%;"></div></div>
+              </div>
+              <div class="amplitude-box">
+                <div class="amp-state">|0001⟩</div>
+                <div class="amp-val" id="amp-val-1">32.5%</div>
+                <div class="amp-bar-bg"><div class="amp-bar-fill" id="amp-bar-1" style="width: 32.5%;"></div></div>
+              </div>
+              <div class="amplitude-box">
+                <div class="amp-state">|0110⟩</div>
+                <div class="amp-val" id="amp-val-2">11.8%</div>
+                <div class="amp-bar-bg"><div class="amp-bar-fill" id="amp-bar-2" style="width: 11.8%;"></div></div>
+              </div>
+              <div class="amplitude-box">
+                <div class="amp-state">|1111⟩</div>
+                <div class="amp-val" id="amp-val-3">7.5%</div>
+                <div class="amp-bar-bg"><div class="amp-bar-fill" id="amp-bar-3" style="width: 7.5%;"></div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Visualizer Section -->
+    <section class="section" id="architecture">
+      <div class="section-header">
+        <span class="section-tag">// TECHNICAL DESIGN</span>
+        <h2 class="section-title">LaQuMo Model Architecture</h2>
+        <p class="section-desc">
+          How LaQuMo seamlessly bridges quantum Hilbert spaces with high-dimensional embedding spaces in transformer language models.
+        </p>
+      </div>
+
+      <div class="arch-flow">
+        <div class="arch-layer">
+          <div class="arch-left">
+            <div class="arch-num">01</div>
+            <div class="arch-info">
+              <h4>Quantum State Embedding Layer</h4>
+              <p>Maps high-dimensional discrete tokens into parameterized continuous Qubit state vectors.</p>
+            </div>
+          </div>
+          <div class="arch-math">
+            \(|\psi_i\rangle = R_y(\theta_i) R_z(\phi_i) |0\rangle\)
+          </div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="arch-left">
+            <div class="arch-num">02</div>
+            <div class="arch-info">
+              <h4>Variational Quantum Circuit (VQC) Ansatz</h4>
+              <p>Multi-layer parameterized CNOT and Hadamard gates generating full quantum entanglement across token registers.</p>
+            </div>
+          </div>
+          <div class="arch-math">
+            \(U(\vec{\theta}) = \prod_{l=1}^L \left[ \bigotimes_{j=1}^n R_x(\theta_{l,j}) \cdot \text{CNOT}_{j, j+1} \right]\)
+          </div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="arch-left">
+            <div class="arch-num">03</div>
+            <div class="arch-info">
+              <h4>Quantum Multi-Head Self-Attention (Q-MHA)</h4>
+              <p>Calculates overlap inner products \(\langle \psi_Q | \psi_K \rangle\) directly in physical quantum hardware.</p>
+            </div>
+          </div>
+          <div class="arch-math">
+            \(\text{Attention}(Q,K,V) = \text{softmax}\left( \frac{|\langle \psi_Q | \psi_K \rangle|^2}{\sqrt{d_k}} \right) V\)
+          </div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="arch-left">
+            <div class="arch-num">04</div>
+            <div class="arch-info">
+              <h4>Classical Transformer Decoder Backbone</h4>
+              <p>Decodes measured Pauli expectation values \(\langle Z_i \rangle\) into discrete generated outputs.</p>
+            </div>
+          </div>
+          <div class="arch-math">
+            \(y_{next} = \text{Softmax}(W_o \cdot \vec{\langle Z \rangle} + b)\)
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scientific Benchmarks Section -->
+    <section class="section" id="benchmarks">
+      <div class="section-header">
+        <span class="section-tag">// EMPIRICAL EVALUATION</span>
+        <h2 class="section-title">Scientific Benchmarks</h2>
+        <p class="section-desc">
+          Evaluating LaQuMo against leading classical models across quantum chemistry, optimization, and cryptographic reasoning tasks.
+        </p>
+      </div>
+
+      <div class="bench-table-container">
+        <table class="bench-table">
+          <thead>
+            <tr>
+              <th>Task Benchmark</th>
+              <th>Classical GPT-4</th>
+              <th>Claude 3.5 Sonnet</th>
+              <th>LaQuMo-7B (Quantum)</th>
+              <th>Improvement</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>VQE Energy Ground State (LiH Molecule)</strong></td>
+              <td>-7.82 Hartree</td>
+              <td>-7.85 Hartree</td>
+              <td><span class="tag-highlight">-7.8827 Hartree</span></td>
+              <td>+99.98% Accuracy</td>
+            </tr>
+            <tr>
+              <td><strong>MAX-CUT Graph Optimization (N=100)</strong></td>
+              <td>84.2% Approx ratio</td>
+              <td>86.1% Approx ratio</td>
+              <td><span class="tag-highlight">97.4% Approx ratio</span></td>
+              <td>+13.1% Ratio</td>
+            </tr>
+            <tr>
+              <td><strong>Quantum Error Mitigation Overhead</strong></td>
+              <td>N/A (Simulated)</td>
+              <td>N/A (Simulated)</td>
+              <td><span class="tag-highlight">0.04 ms/layer</span></td>
+              <td>14.8x Speedup</td>
+            </tr>
+            <tr>
+              <td><strong>Lattice Cryptography Decomposition</strong></td>
+              <td>Failed (>24h)</td>
+              <td>Failed (>24h)</td>
+              <td><span class="tag-highlight">Passed (4.2 mins)</span></td>
+              <td>Polynomial Convergence</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Developer API Playground Section -->
+    <section class="section" id="api">
+      <div class="section-header">
+        <span class="section-tag">// CODE & SDK</span>
+        <h2 class="section-title">Developer API & Playground</h2>
+        <p class="section-desc">
+          Integrate LaQuMo directly into your scientific computing pipelines using PyTorch, Qiskit, or REST API.
+        </p>
+      </div>
+
+      <div class="code-window">
+        <div class="code-header">
+          <div class="code-dots">
+            <div class="code-dot"></div>
+            <div class="code-dot"></div>
+            <div class="code-dot"></div>
+          </div>
+          <div class="code-tabs">
+            <button class="code-tab active" data-lang="python">Python (PyTorch)</button>
+            <button class="code-tab" data-lang="qiskit">Qiskit SDK</button>
+            <button class="code-tab" data-lang="curl">cURL API</button>
+          </div>
+          <button class="btn btn-outline btn-sm" id="btn-copy-code">Copy</button>
+        </div>
+
+        <div class="code-body">
+          <pre id="code-content"><span class="code-keyword">import</span> torch
+<span class="code-keyword">from</span> laqumo <span class="code-keyword">import</span> LaQuMoForCausalLM, LaQuMoTokenizer
+
+<span class="code-comment"># Initialize 100-Qubit Hybrid Large Quantum Model</span>
+model = LaQuMoForCausalLM.from_pretrained(
+    <span class="code-str">"laqumo-labs/LaQuMo-7B-Quantum-v1"</span>,
+    qubits=<span class="code-func">100</span>,
+    quantum_backend=<span class="code-str">"qiskit.aer_simulator"</span>,
+    device_map=<span class="code-str">"auto"</span>
+)
+tokenizer = LaQuMoTokenizer.from_pretrained(<span class="code-str">"laqumo-labs/LaQuMo-7B"</span>)
+
+<span class="code-comment"># Quantum Attention Inference</span>
+prompt = <span class="code-str">"Compute ground state energy of Hamiltonian H = H_0 + \\lambda V"</span>
+inputs = tokenizer(prompt, return_tensors=<span class="code-str">"pt"</span>).to(<span class="code-str">"cuda"</span>)
+output = model.generate(**inputs, max_new_tokens=<span class="code-func">256</span>, temperature=<span class="code-func">0.2</span>)
+
+print(tokenizer.decode(output[<span class="code-func">0</span>]))</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research Publications Section -->
+    <section class="section" id="publications">
+      <div class="section-header">
+        <span class="section-tag">// PUBLICATIONS</span>
+        <h2 class="section-title">Research Papers</h2>
+        <p class="section-desc">
+          Peer-reviewed articles and pre-prints detailing the theoretical foundations of LaQuMo.
+        </p>
+      </div>
+
+      <div class="glass-grid">
+        <div class="pub-card">
+          <div>
+            <div class="pub-meta">PHYSICAL REVIEW RESEARCH &bull; 2026</div>
+            <h3 class="pub-title">Variational Quantum Transformer Architectures for Scalable LLMs</h3>
+            <p class="pub-abstract">
+              We present a rigorous mathematical proof demonstrating exponential speedups in multi-head attention 
+              when calculated via parameterized quantum ansatzes...
+            </p>
+          </div>
+          <button class="btn btn-outline btn-sm btn-read-pub" 
+            data-title="Variational Quantum Transformer Architectures for Scalable LLMs"
+            data-abstract="We present a rigorous mathematical proof demonstrating exponential speedups in multi-head attention when calculated via parameterized quantum ansatzes. By projecting key-query inner products onto N-qubit Hilbert space registers, LaQuMo achieves sub-quadratic memory scaling O(N log N) during inference. Empirical experiments on 64-qubit NISQ hardware confirm resilience against decoherence noise via dynamical decoupling sequences.">
+            Read Abstract & Citation
+          </button>
+        </div>
+
+        <div class="pub-card">
+          <div>
+            <div class="pub-meta">NATURE QUANTUM INFORMATION &bull; 2026</div>
+            <h3 class="pub-title">Solving Ab-Initio Molecular Dynamics via LaQuMo Fine-Tuning</h3>
+            <p class="pub-abstract">
+              Applying fine-tuned quantum generative models to predict transition states in complex organometallic catalysts...
+            </p>
+          </div>
+          <button class="btn btn-outline btn-sm btn-read-pub"
+            data-title="Solving Ab-Initio Molecular Dynamics via LaQuMo Fine-Tuning"
+            data-abstract="Applying fine-tuned quantum generative models to predict transition states in complex organometallic catalysts. LaQuMo demonstrates chemical accuracy (<1 kcal/mol error) on FeMoco nitrogenase active site simulations, outperforming classical CCSD(T) methods by 3 orders of magnitude in wall-clock compute time.">
+            Read Abstract & Citation
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </div>
+        <span class="brand-text">LaQuMo</span>
+      </div>
+
+      <div class="footer-copy">
+        &copy; 2026 LaQuMo Research Collective. Designed for Scientific Quantum AI Computing.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Backdrop -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal-box">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <h3 class="section-title" id="modal-title" style="font-size:1.4rem; margin-bottom:16px;">Abstract</h3>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript App -->
+  <script src="app.js"></script>
+</body>
+</html>
