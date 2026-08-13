@@ -46,7 +46,8 @@
       <li><a href="#architecture">Architecture</a></li>
       <li><a href="#benchmarks">Benchmarks</a></li>
       <li><a href="#api">Developer API</a></li>
-      <li><a href="#publications">Research</a></li>
+      <li><a href="#double-slit">Double-Slit</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
 
     <div class="nav-actions">
@@ -300,8 +301,8 @@
             </tr>
             <tr>
               <td><strong>Lattice Cryptography Decomposition</strong></td>
-              <td>Failed (>24h)</td>
-              <td>Failed (>24h)</td>
+              <td>Failed (&gt;24h)</td>
+              <td>Failed (&gt;24h)</td>
               <td><span class="tag-highlight">Passed (4.2 mins)</span></td>
               <td>Polynomial Convergence</td>
             </tr>
@@ -358,47 +359,63 @@ print(tokenizer.decode(output[<span class="code-func">0</span>]))</pre>
       </div>
     </section>
 
-    <!-- Research Publications Section -->
-    <section class="section" id="publications">
+    <!-- Double-Slit Experiment Simulation Section -->
+    <section class="section" id="double-slit">
       <div class="section-header">
-        <span class="section-tag">// PUBLICATIONS</span>
-        <h2 class="section-title">Research Papers</h2>
-        <p class="section-desc">
-          Peer-reviewed articles and pre-prints detailing the theoretical foundations of LaQuMo.
+        <span class="section-tag">// QUANTUM WAVE-PARTICLE DUALITY</span>
+        <h2 class="section-title">Double-Slit Interference Simulation</h2>
+        <p class="section-desc" style="max-width: 840px; margin: 0 auto; line-height: 1.75;">
+          Here we simulate the double slit experiment. The interference fringe patterns provides an essential foundation for modeling phase coherence, amplitude reinforcement, and wave function collapse in multi-qubit architectures.
         </p>
       </div>
 
-      <div class="glass-grid">
-        <div class="pub-card">
-          <div>
-            <div class="pub-meta">PHYSICAL REVIEW RESEARCH &bull; 2026</div>
-            <h3 class="pub-title">Variational Quantum Transformer Architectures for Scalable LLMs</h3>
-            <p class="pub-abstract">
-              We present a rigorous mathematical proof demonstrating exponential speedups in multi-head attention 
-              when calculated via parameterized quantum ansatzes...
-            </p>
-          </div>
-          <button class="btn btn-outline btn-sm btn-read-pub" 
-            data-title="Variational Quantum Transformer Architectures for Scalable LLMs"
-            data-abstract="We present a rigorous mathematical proof demonstrating exponential speedups in multi-head attention when calculated via parameterized quantum ansatzes. By projecting key-query inner products onto N-qubit Hilbert space registers, LaQuMo achieves sub-quadratic memory scaling O(N log N) during inference. Empirical experiments on 64-qubit NISQ hardware confirm resilience against decoherence noise via dynamical decoupling sequences.">
-            Read Abstract & Citation
-          </button>
+      <div class="simulator-wrapper" style="text-align: center; padding: 20px; display: flex; justify-content: center; align-items: center;">
+        <iframe src="double_slit_anim.html" title="Double-Slit Interference Simulation" style="width: 100%; max-width: 860px; height: 580px; border: 1px solid var(--border-medium); border-radius: var(--radius-md); background: #111622; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);"></iframe>
+      </div>
+    </section>
+
+    <!-- Clean Contact Section -->
+    <section class="section" id="contact">
+      <div class="contact-simple-container">
+        
+        <div class="contact-simple-header">
+          <h2 class="contact-simple-title">Connect with Us</h2>
+          <p class="contact-simple-subtitle">
+            Submit your research inquiries, technical architecture questions, or quantum compute requests below.
+          </p>
+          <p style="margin-top: 12px; font-size: 0.95rem; color: var(--text-secondary);">
+            Direct Email Inquiry: <a href="mailto:info@laqumo.com" style="color: var(--accent-white); text-decoration: underline; font-weight: 500;">info@laqumo.com</a>
+          </p>
         </div>
 
-        <div class="pub-card">
-          <div>
-            <div class="pub-meta">NATURE QUANTUM INFORMATION &bull; 2026</div>
-            <h3 class="pub-title">Solving Ab-Initio Molecular Dynamics via LaQuMo Fine-Tuning</h3>
-            <p class="pub-abstract">
-              Applying fine-tuned quantum generative models to predict transition states in complex organometallic catalysts...
-            </p>
+        <form class="contact-simple-form" id="contact-form">
+          <div class="form-row-2col">
+            <div class="form-group-simple">
+              <label for="contact-name">Name *</label>
+              <input type="text" id="contact-name" class="form-input-simple" required>
+            </div>
+            <div class="form-group-simple">
+              <label for="contact-email">Email *</label>
+              <input type="email" id="contact-email" class="form-input-simple" required>
+            </div>
           </div>
-          <button class="btn btn-outline btn-sm btn-read-pub"
-            data-title="Solving Ab-Initio Molecular Dynamics via LaQuMo Fine-Tuning"
-            data-abstract="Applying fine-tuned quantum generative models to predict transition states in complex organometallic catalysts. LaQuMo demonstrates chemical accuracy (<1 kcal/mol error) on FeMoco nitrogenase active site simulations, outperforming classical CCSD(T) methods by 3 orders of magnitude in wall-clock compute time.">
-            Read Abstract & Citation
+
+          <div class="form-group-simple">
+            <label for="contact-phone">Phone number</label>
+            <input type="tel" id="contact-phone" class="form-input-simple">
+          </div>
+
+          <div class="form-group-simple">
+            <label for="contact-message">Message *</label>
+            <textarea id="contact-message" class="form-input-simple form-textarea-simple" rows="5" placeholder="Your message" required></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit-simple" id="btn-send-contact">
+            SUBMIT
           </button>
-        </div>
+
+          <div id="contact-feedback" class="form-feedback-simple"></div>
+        </form>
       </div>
     </section>
 
@@ -416,6 +433,10 @@ print(tokenizer.decode(output[<span class="code-func">0</span>]))</pre>
           </svg>
         </div>
         <span class="brand-text">LaQuMo</span>
+      </div>
+
+      <div style="font-size:0.88rem; color:var(--text-secondary);">
+        Direct Inquiry: <a href="mailto:info@laqumo.com" style="color:var(--accent-white); text-decoration:none; font-weight:600;">info@laqumo.com</a>
       </div>
 
       <div class="footer-copy">

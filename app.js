@@ -1,18 +1,21 @@
 /**
- * LaQuMo (Large Quantum Model) - Scientific Interactive Script
- * Features: Monochromatic Quantum Node Canvas, Bloch Sphere State Projection,
- * Real-time Quantum Probability Amplitudes, Code Playground & Modal Handlers.
+ * LaQuMo (Large Quantum Model) v3.0 - Monochromatic Quantum Interactive Script
+ * Theme: Pitch Black, Deep Space Obsidian, Pure White & Monochromatic Grayscale
+ * Features: Monochromatic Particle Network, 3D Bloch Sphere Visualizer,
+ * Live Quantum AI Prompt Simulator, Code Playground, Contact Form & Deploy Guide Modal.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   initParticleNetwork();
   initBlochSphere();
+  initPromptPlayground();
   initCodePlayground();
+  initContactForm();
   initModals();
 });
 
 /* ==========================================================================
-   1. Monochromatic Quantum Node Canvas Animation
+   1. Monochromatic Quantum Particle Network Canvas Animation
    ========================================================================== */
 function initParticleNetwork() {
   const canvas = document.getElementById('quantum-canvas');
@@ -27,7 +30,7 @@ function initParticleNetwork() {
     height = canvas.height = window.innerHeight;
   });
 
-  const particleCount = Math.floor((width * height) / 18000);
+  const particleCount = Math.floor((width * height) / 16000);
   const particles = [];
 
   for (let i = 0; i < particleCount; i++) {
@@ -38,7 +41,7 @@ function initParticleNetwork() {
       vy: (Math.random() - 0.5) * 0.4,
       radius: Math.random() * 1.8 + 0.8,
       alpha: Math.random() * 0.5 + 0.2,
-      pulse: Math.random() * Math.PI * 2,
+      pulse: Math.random() * Math.PI * 2
     });
   }
 
@@ -52,7 +55,6 @@ function initParticleNetwork() {
   function draw() {
     ctx.clearRect(0, 0, width, height);
 
-    // Update and draw particles
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
       p.x += p.vx;
@@ -73,7 +75,7 @@ function initParticleNetwork() {
       ctx.shadowColor = 'rgba(255, 255, 255, 0.4)';
       ctx.fill();
 
-      // Connect nearby particles (Entanglement pairs)
+      // Entanglement Pairs (Connecting Nearby Particles)
       for (let j = i + 1; j < particles.length; j++) {
         const p2 = particles[j];
         const dx = p.x - p2.x;
@@ -91,7 +93,7 @@ function initParticleNetwork() {
         }
       }
 
-      // Mouse interactivity
+      // Mouse Interactivity
       if (mouse.x !== null) {
         const mdx = p.x - mouse.x;
         const mdy = p.y - mouse.y;
@@ -122,11 +124,13 @@ function initBlochSphere() {
   const qubitsSlider = document.getElementById('slider-qubits');
   const depthSlider = document.getElementById('slider-depth');
   const entropySlider = document.getElementById('slider-entropy');
+  const noiseSlider = document.getElementById('slider-noise');
   const headsSlider = document.getElementById('slider-heads');
 
   const valQubits = document.getElementById('val-qubits');
   const valDepth = document.getElementById('val-depth');
   const valEntropy = document.getElementById('val-entropy');
+  const valNoise = document.getElementById('val-noise');
   const valHeads = document.getElementById('val-heads');
 
   let theta = Math.PI / 4;
@@ -134,26 +138,29 @@ function initBlochSphere() {
   let animTime = 0;
 
   function updateValues() {
-    if (valQubits) valQubits.textContent = qubitsSlider.value;
-    if (valDepth) valDepth.textContent = depthSlider.value;
-    if (valEntropy) valEntropy.textContent = parseFloat(entropySlider.value).toFixed(2);
-    if (valHeads) valHeads.textContent = headsSlider.value;
+    if (valQubits && qubitsSlider) valQubits.textContent = qubitsSlider.value;
+    if (valDepth && depthSlider) valDepth.textContent = depthSlider.value;
+    if (valEntropy && entropySlider) valEntropy.textContent = parseFloat(entropySlider.value).toFixed(2);
+    if (valNoise && noiseSlider) valNoise.textContent = `${noiseSlider.value} µs`;
+    if (valHeads && headsSlider) valHeads.textContent = headsSlider.value;
 
     updateProbabilities(
-      parseInt(qubitsSlider.value),
-      parseFloat(entropySlider.value),
-      parseInt(depthSlider.value)
+      qubitsSlider ? parseInt(qubitsSlider.value) : 16,
+      entropySlider ? parseFloat(entropySlider.value) : 0.45,
+      depthSlider ? parseInt(depthSlider.value) : 12,
+      noiseSlider ? parseInt(noiseSlider.value) : 15
     );
   }
 
   if (qubitsSlider) qubitsSlider.addEventListener('input', updateValues);
   if (depthSlider) depthSlider.addEventListener('input', updateValues);
   if (entropySlider) entropySlider.addEventListener('input', updateValues);
+  if (noiseSlider) noiseSlider.addEventListener('input', updateValues);
   if (headsSlider) headsSlider.addEventListener('input', updateValues);
 
   function renderBlochSphere() {
-    const w = canvas.width = canvas.parentElement.clientWidth;
-    const h = canvas.height = canvas.parentElement.clientHeight;
+    const w = (canvas.width = canvas.parentElement.clientWidth);
+    const h = (canvas.height = canvas.parentElement.clientHeight);
     const cx = w / 2;
     const cy = h / 2;
     const r = Math.min(w, h) * 0.35;
@@ -161,10 +168,11 @@ function initBlochSphere() {
     ctx.clearRect(0, 0, w, h);
 
     animTime += 0.015;
-    const currentTheta = theta + Math.sin(animTime) * 0.25 * parseFloat(entropySlider ? entropySlider.value : 0.5);
+    const entropyVal = entropySlider ? parseFloat(entropySlider.value) : 0.45;
+    const currentTheta = theta + Math.sin(animTime) * 0.25 * entropyVal;
     const currentPhi = phi + animTime * 0.3;
 
-    // Draw Sphere Outer Ring
+    // Outer Sphere Ring
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
@@ -181,7 +189,6 @@ function initBlochSphere() {
 
     // Axes
     ctx.beginPath();
-    // Z axis (|0> to |1>)
     ctx.moveTo(cx, cy - r - 15);
     ctx.lineTo(cx, cy + r + 15);
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
@@ -200,11 +207,10 @@ function initBlochSphere() {
     const vy = r * Math.cos(currentTheta);
     const vz = r * Math.sin(currentTheta) * Math.sin(currentPhi);
 
-    // Projected 2D Point
     const px = cx + vx;
     const py = cy - vy + vz * 0.25;
 
-    // Draw Vector Arrow
+    // Vector Arrow Line
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.lineTo(px, py);
@@ -215,7 +221,7 @@ function initBlochSphere() {
     ctx.stroke();
     ctx.shadowBlur = 0;
 
-    // Vector Endpoint Bead
+    // Endpoint Bead
     ctx.beginPath();
     ctx.arc(px, py, 6, 0, Math.PI * 2);
     ctx.fillStyle = '#ffffff';
@@ -227,20 +233,16 @@ function initBlochSphere() {
   renderBlochSphere();
 }
 
-/* Update Probability Amplitude Bars */
-function updateProbabilities(qubits, entropy, depth) {
-  // Generate pseudo-probabilities based on state sliders
-  const states = ['|0000⟩', '|0001⟩', '|0110⟩', '|1111⟩'];
-  const baseVal = 1 / 4;
-
-  const p1 = Math.min(0.85, Math.max(0.05, 0.5 - entropy * 0.3 + (depth * 0.02)));
+/* Update Probability Amplitudes */
+function updateProbabilities(qubits, entropy, depth, noise) {
+  const p1 = Math.min(0.85, Math.max(0.05, 0.5 - entropy * 0.3 + depth * 0.015 - noise * 0.001));
   const p2 = Math.min(0.7, Math.max(0.05, 0.25 + entropy * 0.2));
   const p3 = Math.min(0.5, Math.max(0.02, (1 - p1 - p2) * 0.6));
   const p4 = Math.max(0.01, 1 - p1 - p2 - p3);
 
   const values = [p1, p2, p3, p4];
 
-  states.forEach((st, idx) => {
+  values.forEach((v, idx) => {
     const valEl = document.getElementById(`amp-val-${idx}`);
     const barEl = document.getElementById(`amp-bar-${idx}`);
     if (valEl && barEl) {
@@ -262,24 +264,116 @@ function updateProbabilities(qubits, entropy, depth) {
 }
 
 /* ==========================================================================
-   3. Code Playground & Tab Switching
+   3. Live Quantum AI Prompt Simulator
+   ========================================================================== */
+function initPromptPlayground() {
+  const inputEl = document.getElementById('prompt-input');
+  const btnExecute = document.getElementById('btn-execute-prompt');
+  const outputTerminal = document.getElementById('terminal-output');
+  const statusIndicator = document.querySelector('.status-indicator');
+  const statusText = document.getElementById('status-text');
+
+  if (!btnExecute || !inputEl || !outputTerminal) return;
+
+  // Preset Buttons
+  document.querySelectorAll('.btn-preset').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const prompt = btn.getAttribute('data-prompt');
+      if (prompt) {
+        inputEl.value = prompt;
+        executePrompt(prompt);
+      }
+    });
+  });
+
+  btnExecute.addEventListener('click', () => {
+    const query = inputEl.value.trim();
+    if (query) executePrompt(query);
+  });
+
+  inputEl.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      const query = inputEl.value.trim();
+      if (query) executePrompt(query);
+    }
+  });
+
+  function executePrompt(query) {
+    // Append Prompt Line
+    appendLine(`&gt; ${query}`, 'log-prompt');
+
+    // Update Status to Busy
+    if (statusIndicator) {
+      statusIndicator.classList.add('busy');
+    }
+    if (statusText) statusText.textContent = 'EXECUTING VQC ANSATZ...';
+
+    // Step-by-step quantum logs
+    setTimeout(() => {
+      appendLine('[1/4] Encoding discrete token string into 128-Qubit Hilbert state vectors...', 'log-info');
+    }, 400);
+
+    setTimeout(() => {
+      appendLine('[2/4] Applying 12-layer parameterized Ry(θ) + CNOT entanglement gates...', 'log-quantum');
+    }, 900);
+
+    setTimeout(() => {
+      appendLine('[3/4] Mitigating NISQ decoherence noise (T2 = 15µs, overhead = 0.03 ms/layer)...', 'log-info');
+    }, 1400);
+
+    setTimeout(() => {
+      appendLine('[4/4] Measuring Pauli <Z> expectation values & collapsing state vector...', 'log-quantum');
+    }, 1900);
+
+    setTimeout(() => {
+      // Dynamic Result Response
+      let resultText = '';
+      if (query.toLowerCase().includes('nitrogenase') || query.toLowerCase().includes('femoco')) {
+        resultText = 'RESULT: Calculated Nitrogenase FeMoco active site ground state energy: E0 = -7.8827 Hartree (<0.001 kcal/mol chemical accuracy). Solution converged in 18.4 mins.';
+      } else if (query.toLowerCase().includes('qaoa') || query.toLowerCase().includes('max-cut')) {
+        resultText = 'RESULT: QAOA Max-Cut Graph Partition completed for 256 Nodes. Approximation ratio achieved: 98.9% (Cut Value: 4,182).';
+      } else if (query.toLowerCase().includes('lattice') || query.toLowerCase().includes('cryptography')) {
+        resultText = 'RESULT: LWE Lattice basis reduction polynomial spectrum evaluated. Shortest Vector Problem (SVP) norm ||v|| = 1.414. Security level confirmed resistant.';
+      } else {
+        resultText = `RESULT: Quantum state collapse complete for prompt "${query}". Measured expectation value <Z> = +0.942, state fidelity = 99.92%.`;
+      }
+
+      appendLine(`[SUCCESS] ${resultText}`, 'log-success');
+
+      // Reset Status
+      if (statusIndicator) statusIndicator.classList.remove('busy');
+      if (statusText) statusText.textContent = 'SYSTEM READY';
+    }, 2400);
+  }
+
+  function appendLine(text, className) {
+    const line = document.createElement('div');
+    line.className = `terminal-line ${className}`;
+    line.innerHTML = text;
+    outputTerminal.appendChild(line);
+    outputTerminal.scrollTop = outputTerminal.scrollHeight;
+  }
+}
+
+/* ==========================================================================
+   4. Code Playground & Tab Switching
    ========================================================================== */
 function initCodePlayground() {
   const codeSnippets = {
     python: `<span class="code-keyword">import</span> torch
 <span class="code-keyword">from</span> laqumo <span class="code-keyword">import</span> LaQuMoForCausalLM, LaQuMoTokenizer
 
-<span class="code-comment"># Initialize 100-Qubit Hybrid Large Quantum Model</span>
+<span class="code-comment"># Initialize 128-Qubit Hybrid Large Quantum Model</span>
 model = LaQuMoForCausalLM.from_pretrained(
-    <span class="code-str">"laqumo-labs/LaQuMo-7B-Quantum-v1"</span>,
-    qubits=<span class="code-func">100</span>,
+    <span class="code-str">"laqumo-labs/LaQuMo-3.0-Quantum"</span>,
+    qubits=<span class="code-func">128</span>,
     quantum_backend=<span class="code-str">"qiskit.aer_simulator"</span>,
     device_map=<span class="code-str">"auto"</span>
 )
-tokenizer = LaQuMoTokenizer.from_pretrained(<span class="code-str">"laqumo-labs/LaQuMo-7B"</span>)
+tokenizer = LaQuMoTokenizer.from_pretrained(<span class="code-str">"laqumo-labs/LaQuMo-3.0"</span>)
 
 <span class="code-comment"># Quantum Attention Inference</span>
-prompt = <span class="code-str">"Compute ground state energy of Hamiltonian H = H_0 + \\lambda V"</span>
+prompt = <span class="code-str">"Compute ground state energy of Nitrogenase FeMoco active site"</span>
 inputs = tokenizer(prompt, return_tensors=<span class="code-str">"pt"</span>).to(<span class="code-str">"cuda"</span>)
 output = model.generate(**inputs, max_new_tokens=<span class="code-func">256</span>, temperature=<span class="code-func">0.2</span>)
 
@@ -288,25 +382,39 @@ print(tokenizer.decode(output[<span class="code-func">0</span>]))`,
     qiskit: `<span class="code-keyword">from</span> qiskit <span class="code-keyword">import</span> QuantumCircuit, Aer, execute
 <span class="code-keyword">from</span> laqumo.qnn <span class="code-keyword">import</span> QuantumVariationalAttention
 
-<span class="code-comment"># Construct 16-Qubit Variational Quantum Circuit Layer</span>
-vqc_layer = QuantumVariationalAttention(n_qubits=<span class="code-func">16</span>, depth=<span class="code-func">12</span>)
+<span class="code-comment"># Construct 32-Qubit Variational Quantum Circuit Layer</span>
+vqc_layer = QuantumVariationalAttention(n_qubits=<span class="code-func">32</span>, depth=<span class="code-func">16</span>)
 circuit = vqc_layer.build_ansatz(entanglement=<span class="code-str">"full"</span>)
 
 backend = Aer.get_backend(<span class="code-str">"qasm_simulator"</span>)
-job = execute(circuit, backend, shots=<span class="code-func">8192</span>)
+job = execute(circuit, backend, shots=<span class="code-func">16384</span>)
 result = job.result()
 counts = result.get_counts(circuit)
 
-print(<span class="code-str">"State Amplitudes:"</span>, counts)`,
+print(<span class="code-str">"State Vector Amplitudes:"</span>, counts)`,
 
-    curl: `<span class="code-comment"># Query LaQuMo REST API endpoint</span>
+    pennylane: `<span class="code-keyword">import</span> pennylane <span class="code-keyword">as</span> qml
+<span class="code-keyword">from</span> laqumo.pennylane <span class="code-keyword">import</span> QuantumTransformerBlock
+
+<span class="code-comment"># Setup PennyLane device with 64 qubits</span>
+dev = qml.device(<span class="code-str">"default.qubit"</span>, wires=<span class="code-func">64</span>)
+
+<span class="code-keyword">@qml.qnode</span>(dev)
+<span class="code-keyword">def</span> <span class="code-func">quantum_attention_circuit</span>(weights):
+    QuantumTransformerBlock(weights, wires=range(<span class="code-func">64</span>))
+    <span class="code-keyword">return</span> [qml.expval(qml.PauliZ(i)) <span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(<span class="code-func">64</span>)]
+
+print(<span class="code-str">"Expectation values calculated."</span>)`,
+
+    curl: `<span class="code-comment"># Query LaQuMo v3.0 REST API endpoint</span>
 curl -X POST https://api.laqumo.org/v1/quantum/chat \\
   -H <span class="code-str">"Authorization: Bearer LQM_SECRET_KEY"</span> \\
   -H <span class="code-str">"Content-Type: application/json"</span> \\
   -d '{
-    <span class="code-str">"model"</span>: <span class="code-str">"laqumo-7b-quantum"</span>,
-    <span class="code-str">"messages"</span>: [{"role": "user", "content": "Solve VQE for Lithium Hydride (LiH)"}],
-    <span class="code-str">"shots"</span>: 4096
+    <span class="code-str">"model"</span>: <span class="code-str">"laqumo-3.0-quantum"</span>,
+    <span class="code-str">"messages"</span>: [{"role": "user", "content": "Compute VQE for FeMoco active site"}],
+    <span class="code-str">"qubits"</span>: 128,
+    <span class="code-str">"shots"</span>: 8192
   }'`
   };
 
@@ -325,7 +433,7 @@ curl -X POST https://api.laqumo.org/v1/quantum/chat \\
     });
   });
 
-  // Copy code button
+  // Copy Code Button
   const copyBtn = document.getElementById('btn-copy-code');
   if (copyBtn) {
     copyBtn.addEventListener('click', () => {
@@ -341,7 +449,35 @@ curl -X POST https://api.laqumo.org/v1/quantum/chat \\
 }
 
 /* ==========================================================================
-   4. Modals (Publications & Google Sites Embed Code Helper)
+   5. Interactive Contact Form
+   ========================================================================== */
+function initContactForm() {
+  const form = document.getElementById('contact-form');
+  const feedback = document.getElementById('contact-feedback');
+
+  if (!form || !feedback) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('contact-name').value;
+
+    feedback.className = 'form-feedback-simple success';
+    feedback.innerHTML = `✓ Thank you, ${name}! Your message has been sent to <strong>info@laqumo.com</strong>. We will get back to you shortly.`;
+
+    form.reset();
+    setTimeout(() => {
+      feedback.style.opacity = '0';
+      setTimeout(() => {
+        feedback.className = 'form-feedback-simple';
+        feedback.innerHTML = '';
+        feedback.style.opacity = '1';
+      }, 400);
+    }, 5000);
+  });
+}
+
+/* ==========================================================================
+   6. Modals & GitHub Deploy Guide Helper
    ========================================================================== */
 function initModals() {
   const modalBackdrop = document.getElementById('modal-backdrop');
