@@ -15,7 +15,7 @@ This guide walks you through publishing **LaQuMo** directly on **GitHub Pages** 
 
 ## Step 1: Push Project to GitHub
 
-Run the following commands in your project directory (`d:\LLM`):
+Run the following commands in your project directory (`d:\LLM\Website`):
 
 ```bash
 # Initialize git repository

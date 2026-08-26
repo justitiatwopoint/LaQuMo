@@ -1086,6 +1086,122 @@ body {
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
 }
 
+/* Quantum Gate Builder Styling */
+.gate-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--accent-white);
+  border: 1px solid var(--border-medium);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.88rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.gate-btn:hover {
+  background: #ffffff;
+  color: #040406;
+  border-color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.gate-btn:active {
+  transform: translateY(0);
+}
+
+.wire-gate-badge {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--accent-white);
+  color: var(--accent-white);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  animation: gatePop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 2-Qubit Circuit Grid Styling */
+.target-wire-btn {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.target-wire-btn.active, .target-wire-btn:hover {
+  background: #ffffff;
+  color: #040406;
+  border-color: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.circuit-slot {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px dashed var(--border-subtle);
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.circuit-slot:hover {
+  border-color: var(--accent-white);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.slot-placeholder {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-family: var(--font-mono);
+}
+
+.cnot-control-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 10px #ffffff;
+}
+
+.cnot-target-symbol {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 1.1rem;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes gatePop {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 .modal-close {
   position: absolute;
   top: 16px;

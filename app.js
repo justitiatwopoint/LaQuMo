@@ -8,7 +8,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initParticleNetwork();
   initBlochSphere();
-  initPromptPlayground();
+  initCircuitBuilder();
   initCodePlayground();
   initContactForm();
   initModals();
@@ -124,43 +124,44 @@ function initBlochSphere() {
   const qubitsSlider = document.getElementById('slider-qubits');
   const depthSlider = document.getElementById('slider-depth');
   const entropySlider = document.getElementById('slider-entropy');
-  const noiseSlider = document.getElementById('slider-noise');
   const headsSlider = document.getElementById('slider-heads');
 
   const valQubits = document.getElementById('val-qubits');
   const valDepth = document.getElementById('val-depth');
   const valEntropy = document.getElementById('val-entropy');
-  const valNoise = document.getElementById('val-noise');
   const valHeads = document.getElementById('val-heads');
 
-  let theta = Math.PI / 4;
-  let phi = Math.PI / 3;
+  window.blochTheta = Math.PI / 4;
+  window.blochPhi = Math.PI / 3;
+  window.isCircuitControlled = false;
   let animTime = 0;
 
   function updateValues() {
     if (valQubits && qubitsSlider) valQubits.textContent = qubitsSlider.value;
     if (valDepth && depthSlider) valDepth.textContent = depthSlider.value;
     if (valEntropy && entropySlider) valEntropy.textContent = parseFloat(entropySlider.value).toFixed(2);
-    if (valNoise && noiseSlider) valNoise.textContent = `${noiseSlider.value} µs`;
     if (valHeads && headsSlider) valHeads.textContent = headsSlider.value;
 
-    updateProbabilities(
-      qubitsSlider ? parseInt(qubitsSlider.value) : 16,
-      entropySlider ? parseFloat(entropySlider.value) : 0.45,
-      depthSlider ? parseInt(depthSlider.value) : 12,
-      noiseSlider ? parseInt(noiseSlider.value) : 15
-    );
+    if (!window.isCircuitControlled) {
+      updateProbabilities(
+        qubitsSlider ? parseInt(qubitsSlider.value) : 16,
+        entropySlider ? parseFloat(entropySlider.value) : 0.45,
+        depthSlider ? parseInt(depthSlider.value) : 12
+      );
+    }
   }
 
   if (qubitsSlider) qubitsSlider.addEventListener('input', updateValues);
   if (depthSlider) depthSlider.addEventListener('input', updateValues);
   if (entropySlider) entropySlider.addEventListener('input', updateValues);
-  if (noiseSlider) noiseSlider.addEventListener('input', updateValues);
   if (headsSlider) headsSlider.addEventListener('input', updateValues);
 
   function renderBlochSphere() {
-    const w = (canvas.width = canvas.parentElement.clientWidth);
-    const h = (canvas.height = canvas.parentElement.clientHeight);
+    const parent = canvas.parentElement;
+    if (!parent) return;
+
+    const w = (canvas.width = parent.clientWidth || 300);
+    const h = (canvas.height = parent.clientHeight || 280);
     const cx = w / 2;
     const cy = h / 2;
     const r = Math.min(w, h) * 0.35;
@@ -168,9 +169,14 @@ function initBlochSphere() {
     ctx.clearRect(0, 0, w, h);
 
     animTime += 0.015;
-    const entropyVal = entropySlider ? parseFloat(entropySlider.value) : 0.45;
-    const currentTheta = theta + Math.sin(animTime) * 0.25 * entropyVal;
-    const currentPhi = phi + animTime * 0.3;
+    let targetTheta = window.blochTheta;
+    let targetPhi = window.blochPhi;
+
+    if (!window.isCircuitControlled) {
+      const entropyVal = entropySlider ? parseFloat(entropySlider.value) : 0.45;
+      targetTheta = window.blochTheta + Math.sin(animTime) * 0.25 * entropyVal;
+      targetPhi = window.blochPhi + animTime * 0.3;
+    }
 
     // Outer Sphere Ring
     ctx.beginPath();
@@ -198,14 +204,14 @@ function initBlochSphere() {
     // Axis Labels
     ctx.fillStyle = '#ffffff';
     ctx.font = '12px "JetBrains Mono", monospace';
-    ctx.fillText('|0⟩', cx - 8, cy - r - 20);
-    ctx.fillText('|1⟩', cx - 8, cy + r + 30);
-    ctx.fillText('|i+⟩', cx + r + 15, cy + 4);
+    ctx.fillText('|0⟩', cx - 8, cy - r - 12);
+    ctx.fillText('|1⟩', cx - 8, cy + r + 24);
+    ctx.fillText('|i+⟩', cx + r + 12, cy + 4);
 
     // Vector Point Calculation
-    const vx = r * Math.sin(currentTheta) * Math.cos(currentPhi);
-    const vy = r * Math.cos(currentTheta);
-    const vz = r * Math.sin(currentTheta) * Math.sin(currentPhi);
+    const vx = r * Math.sin(targetTheta) * Math.cos(targetPhi);
+    const vy = r * Math.cos(targetTheta);
+    const vz = r * Math.sin(targetTheta) * Math.sin(targetPhi);
 
     const px = cx + vx;
     const py = cy - vy + vz * 0.25;
@@ -234,8 +240,8 @@ function initBlochSphere() {
 }
 
 /* Update Probability Amplitudes */
-function updateProbabilities(qubits, entropy, depth, noise) {
-  const p1 = Math.min(0.85, Math.max(0.05, 0.5 - entropy * 0.3 + depth * 0.015 - noise * 0.001));
+function updateProbabilities(qubits, entropy, depth) {
+  const p1 = Math.min(0.85, Math.max(0.05, 0.5 - entropy * 0.3 + depth * 0.015));
   const p2 = Math.min(0.7, Math.max(0.05, 0.25 + entropy * 0.2));
   const p3 = Math.min(0.5, Math.max(0.02, (1 - p1 - p2) * 0.6));
   const p4 = Math.max(0.01, 1 - p1 - p2 - p3);
@@ -264,158 +270,300 @@ function updateProbabilities(qubits, entropy, depth, noise) {
 }
 
 /* ==========================================================================
-   3. Live Quantum AI Prompt Simulator
+   3. Interactive Qubit Circuit Builder & Matrix Engine
    ========================================================================== */
-function initPromptPlayground() {
-  const inputEl = document.getElementById('prompt-input');
-  const btnExecute = document.getElementById('btn-execute-prompt');
-  const outputTerminal = document.getElementById('terminal-output');
-  const statusIndicator = document.querySelector('.status-indicator');
-  const statusText = document.getElementById('status-text');
+/* ==========================================================================
+   3. Interactive 2-Qubit Circuit Grid & Matrix Engine
+   ========================================================================== */
+function initCircuitBuilder() {
+  const btnSelectQ0 = document.getElementById('btn-select-q0');
+  const btnSelectQ1 = document.getElementById('btn-select-q1');
+  const resetBtn = document.getElementById('btn-circuit-reset');
+  const mathStatevector = document.getElementById('circuit-math-statevector');
+  const mathProbs = document.getElementById('circuit-math-probs');
 
-  if (!btnExecute || !inputEl || !outputTerminal) return;
+  let activeWire = 'q0';
 
-  // Preset Buttons
-  document.querySelectorAll('.btn-preset').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const prompt = btn.getAttribute('data-prompt');
-      if (prompt) {
-        inputEl.value = prompt;
-        executePrompt(prompt);
+  // 2-Qubit State Vector: 4 complex numbers for |00>, |01>, |10>, |11>
+  let state = [
+    { r: 1, i: 0 }, // |00>
+    { r: 0, i: 0 }, // |01>
+    { r: 0, i: 0 }, // |10>
+    { r: 0, i: 0 }  // |11>
+  ];
+
+  let gridq0 = Array(5).fill(null);
+  let gridq1 = Array(5).fill(null);
+  let cnotSteps = Array(5).fill(false);
+
+  function setActiveWire(w) {
+    activeWire = w;
+    if (w === 'q0') {
+      if (btnSelectQ0) btnSelectQ0.classList.add('active');
+      if (btnSelectQ1) btnSelectQ1.classList.remove('active');
+    } else {
+      if (btnSelectQ1) btnSelectQ1.classList.add('active');
+      if (btnSelectQ0) btnSelectQ0.classList.remove('active');
+    }
+  }
+
+  if (btnSelectQ0) btnSelectQ0.addEventListener('click', () => setActiveWire('q0'));
+  if (btnSelectQ1) btnSelectQ1.addEventListener('click', () => setActiveWire('q1'));
+
+  // Attach direct click events to grid slots
+  document.querySelectorAll('.circuit-slot').forEach(slot => {
+    slot.addEventListener('click', () => {
+      const wire = slot.getAttribute('data-wire');
+      const step = parseInt(slot.getAttribute('data-step'));
+      setActiveWire(wire);
+
+      // If slot is occupied by CNOT or gate, clear it
+      if (cnotSteps[step]) {
+        cnotSteps[step] = false;
+      } else if (wire === 'q0' && gridq0[step]) {
+        gridq0[step] = null;
+      } else if (wire === 'q1' && gridq1[step]) {
+        gridq1[step] = null;
       }
+      computeFullGridState();
     });
   });
 
-  btnExecute.addEventListener('click', () => {
-    const query = inputEl.value.trim();
-    if (query) executePrompt(query);
-  });
+  function multiplyComplex(r1, i1, r2, i2) {
+    return { r: r1 * r2 - i1 * i2, i: r1 * i2 + i1 * r2 };
+  }
 
-  inputEl.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      const query = inputEl.value.trim();
-      if (query) executePrompt(query);
+  function applySingleGate(gate, inputPair) {
+    let ca = inputPair[0], cb = inputPair[1];
+    let nA = { r: ca.r, i: ca.i }, nB = { r: cb.r, i: cb.i };
+    const invSqrt2 = 1 / Math.SQRT2;
+
+    if (gate === 'H') {
+      nA = { r: invSqrt2 * (ca.r + cb.r), i: invSqrt2 * (ca.i + cb.i) };
+      nB = { r: invSqrt2 * (ca.r - cb.r), i: invSqrt2 * (ca.i - cb.i) };
+    } else if (gate === 'X') {
+      nA = { r: cb.r, i: cb.i };
+      nB = { r: ca.r, i: ca.i };
+    } else if (gate === 'Y') {
+      nA = { r: cb.i, i: -cb.r };
+      nB = { r: -ca.i, i: ca.r };
+    } else if (gate === 'Z') {
+      nB = { r: -cb.r, i: -cb.i };
+    } else if (gate === 'S') {
+      nB = { r: -cb.i, i: cb.r };
+    } else if (gate === 'T') {
+      const res = multiplyComplex(cb.r, cb.i, invSqrt2, invSqrt2);
+      nB = res;
     }
-  });
+    return [nA, nB];
+  }
 
-  function executePrompt(query) {
-    // Append Prompt Line
-    appendLine(`&gt; ${query}`, 'log-prompt');
+  function computeFullGridState() {
+    let s = [
+      { r: 1, i: 0 },
+      { r: 0, i: 0 },
+      { r: 0, i: 0 },
+      { r: 0, i: 0 }
+    ];
 
-    // Update Status to Busy
-    if (statusIndicator) {
-      statusIndicator.classList.add('busy');
-    }
-    if (statusText) statusText.textContent = 'EXECUTING VQC ANSATZ...';
+    let hasGates = false;
 
-    // Step-by-step quantum logs
-    setTimeout(() => {
-      appendLine('[1/4] Encoding discrete token string into 128-Qubit Hilbert state vectors...', 'log-info');
-    }, 400);
+    for (let step = 0; step < 5; step++) {
+      let g0 = gridq0[step];
+      let g1 = gridq1[step];
 
-    setTimeout(() => {
-      appendLine('[2/4] Applying 12-layer parameterized Ry(θ) + CNOT entanglement gates...', 'log-quantum');
-    }, 900);
-
-    setTimeout(() => {
-      appendLine('[3/4] Mitigating NISQ decoherence noise (T2 = 15µs, overhead = 0.03 ms/layer)...', 'log-info');
-    }, 1400);
-
-    setTimeout(() => {
-      appendLine('[4/4] Measuring Pauli <Z> expectation values & collapsing state vector...', 'log-quantum');
-    }, 1900);
-
-    setTimeout(() => {
-      // Dynamic Result Response
-      let resultText = '';
-      if (query.toLowerCase().includes('nitrogenase') || query.toLowerCase().includes('femoco')) {
-        resultText = 'RESULT: Calculated Nitrogenase FeMoco active site ground state energy: E0 = -7.8827 Hartree (<0.001 kcal/mol chemical accuracy). Solution converged in 18.4 mins.';
-      } else if (query.toLowerCase().includes('qaoa') || query.toLowerCase().includes('max-cut')) {
-        resultText = 'RESULT: QAOA Max-Cut Graph Partition completed for 256 Nodes. Approximation ratio achieved: 98.9% (Cut Value: 4,182).';
-      } else if (query.toLowerCase().includes('lattice') || query.toLowerCase().includes('cryptography')) {
-        resultText = 'RESULT: LWE Lattice basis reduction polynomial spectrum evaluated. Shortest Vector Problem (SVP) norm ||v|| = 1.414. Security level confirmed resistant.';
+      if (cnotSteps[step]) {
+        hasGates = true;
+        // CNOT (control q0, target q1): if q0 is |1> (indices 2,3), flip q1 (|10> <-> |11>)
+        let temp = s[2];
+        s[2] = s[3];
+        s[3] = temp;
       } else {
-        resultText = `RESULT: Quantum state collapse complete for prompt "${query}". Measured expectation value <Z> = +0.942, state fidelity = 99.92%.`;
+        if (g0) {
+          hasGates = true;
+          let pair1 = applySingleGate(g0, [s[0], s[2]]);
+          s[0] = pair1[0]; s[2] = pair1[1];
+          let pair2 = applySingleGate(g0, [s[1], s[3]]);
+          s[1] = pair2[0]; s[3] = pair2[1];
+        }
+        if (g1) {
+          hasGates = true;
+          let pair1 = applySingleGate(g1, [s[0], s[1]]);
+          s[0] = pair1[0]; s[1] = pair1[1];
+          let pair2 = applySingleGate(g1, [s[2], s[3]]);
+          s[2] = pair2[0]; s[3] = pair2[1];
+        }
       }
+    }
 
-      appendLine(`[SUCCESS] ${resultText}`, 'log-success');
-
-      // Reset Status
-      if (statusIndicator) statusIndicator.classList.remove('busy');
-      if (statusText) statusText.textContent = 'SYSTEM READY';
-    }, 2400);
+    state = s;
+    window.isCircuitControlled = hasGates;
+    updateUI();
   }
 
-  function appendLine(text, className) {
-    const line = document.createElement('div');
-    line.className = `terminal-line ${className}`;
-    line.innerHTML = text;
-    outputTerminal.appendChild(line);
-    outputTerminal.scrollTop = outputTerminal.scrollHeight;
+  function addGateToGrid(gate) {
+    if (gate === 'CNOT') {
+      for (let step = 0; step < 5; step++) {
+        if (!gridq0[step] && !gridq1[step] && !cnotSteps[step]) {
+          cnotSteps[step] = true;
+          break;
+        }
+      }
+    } else {
+      let targetArray = activeWire === 'q0' ? gridq0 : gridq1;
+      for (let step = 0; step < 5; step++) {
+        if (!targetArray[step] && !cnotSteps[step]) {
+          targetArray[step] = gate;
+          break;
+        }
+      }
+    }
+    computeFullGridState();
   }
+
+  function resetGrid() {
+    gridq0 = Array(5).fill(null);
+    gridq1 = Array(5).fill(null);
+    cnotSteps = Array(5).fill(false);
+    window.isCircuitControlled = false;
+    window.blochTheta = Math.PI / 4;
+    window.blochPhi = Math.PI / 3;
+    computeFullGridState();
+  }
+
+  function updateUI() {
+    // Slot elements rendering
+    for (let step = 0; step < 5; step++) {
+      const slotq0 = document.querySelector(`.circuit-slot[data-wire="q0"][data-step="${step}"]`);
+      const slotq1 = document.querySelector(`.circuit-slot[data-wire="q1"][data-step="${step}"]`);
+
+      if (cnotSteps[step]) {
+        if (slotq0) slotq0.innerHTML = `<div class="cnot-control-dot" title="CNOT Control Dot (q0)"></div>`;
+        if (slotq1) slotq1.innerHTML = `<div class="cnot-target-symbol" title="CNOT Target Symbol (q1)">+</div>`;
+      } else {
+        if (slotq0) {
+          slotq0.innerHTML = gridq0[step] ? `<span class="wire-gate-badge">${gridq0[step]}</span>` : `<span class="slot-placeholder">+</span>`;
+        }
+        if (slotq1) {
+          slotq1.innerHTML = gridq1[step] ? `<span class="wire-gate-badge">${gridq1[step]}</span>` : `<span class="slot-placeholder">+</span>`;
+        }
+      }
+    }
+
+    // Probabilities
+    const p00 = state[0].r * state[0].r + state[0].i * state[0].i;
+    const p01 = state[1].r * state[1].r + state[1].i * state[1].i;
+    const p10 = state[2].r * state[2].r + state[2].i * state[2].i;
+    const p11 = state[3].r * state[3].r + state[3].i * state[3].i;
+
+    // Amplitude Bars
+    const setAmp = (idx, prob) => {
+      const valEl = document.getElementById(`amp-val-${idx}`);
+      const barEl = document.getElementById(`amp-bar-${idx}`);
+      if (valEl && barEl) {
+        valEl.textContent = `${(prob * 100).toFixed(1)}%`;
+        barEl.style.width = `${(prob * 100).toFixed(1)}%`;
+      }
+    };
+    setAmp(0, p00);
+    setAmp(1, p01);
+    setAmp(2, p10);
+    setAmp(3, p11);
+
+    // Update Amplitude basis labels
+    const states = ['|00⟩', '|01⟩', '|10⟩', '|11⟩'];
+    document.querySelectorAll('.amplitude-box .amp-state').forEach((box, idx) => {
+      if (box && states[idx]) box.textContent = states[idx];
+    });
+
+    // Bloch Sphere Vector Rotation Connection
+    const normAlpha = Math.sqrt(p00 + p01);
+    const newTheta = 2 * Math.acos(Math.min(1, Math.max(0, normAlpha)));
+    window.blochTheta = newTheta;
+
+    // Formatting Statevector Text
+    const formatComplex = (r, i) => {
+      const rStr = Math.abs(r) < 0.001 ? '0.00' : r.toFixed(3);
+      const iStr = Math.abs(i) < 0.001 ? '' : (i > 0 ? `+${i.toFixed(3)}i` : `-${Math.abs(i).toFixed(3)}i`);
+      return `${rStr}${iStr}`;
+    };
+
+    if (mathStatevector) {
+      mathStatevector.textContent = `${formatComplex(state[0].r, state[0].i)}|00⟩ + ${formatComplex(state[1].r, state[1].i)}|01⟩ + ${formatComplex(state[2].r, state[2].i)}|10⟩ + ${formatComplex(state[3].r, state[3].i)}|11⟩`;
+    }
+    if (mathProbs) {
+      mathProbs.textContent = `P(00)=${(p00*100).toFixed(1)}% | P(01)=${(p01*100).toFixed(1)}% | P(10)=${(p10*100).toFixed(1)}% | P(11)=${(p11*100).toFixed(1)}%`;
+    }
+
+    // Update Dynamic LaTeX Equation
+    const stateEq = document.getElementById('dynamic-state-latex');
+    if (stateEq) {
+      stateEq.innerHTML = `\\(|\\Psi_{LaQuMo}\\rangle = ${Math.sqrt(p00).toFixed(2)}|00\\rangle + ${Math.sqrt(p01).toFixed(2)}|01\\rangle + ${Math.sqrt(p10).toFixed(2)}|10\\rangle + ${Math.sqrt(p11).toFixed(2)}|11\\rangle\\)`;
+      if (window.MathJax) MathJax.typesetPromise([stateEq]);
+    }
+  }
+
+  document.querySelectorAll('.gate-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      addGateToGrid(btn.getAttribute('data-gate'));
+    });
+  });
+
+  if (resetBtn) resetBtn.addEventListener('click', resetGrid);
 }
 
 /* ==========================================================================
-   4. Code Playground & Tab Switching
+   4. Developer API Code Playground
    ========================================================================== */
 function initCodePlayground() {
   const codeSnippets = {
-    python: `<span class="code-keyword">import</span> torch
-<span class="code-keyword">from</span> laqumo <span class="code-keyword">import</span> LaQuMoForCausalLM, LaQuMoTokenizer
+    python: `<span class="code-keyword">from</span> qiskit <span class="code-keyword">import</span> QuantumCircuit
+<span class="code-keyword">from</span> qiskit.quantum_info <span class="code-keyword">import</span> Statevector
 
-<span class="code-comment"># Initialize 128-Qubit Hybrid Large Quantum Model</span>
-model = LaQuMoForCausalLM.from_pretrained(
-    <span class="code-str">"laqumo-labs/LaQuMo-3.0-Quantum"</span>,
-    qubits=<span class="code-func">128</span>,
-    quantum_backend=<span class="code-str">"qiskit.aer_simulator"</span>,
-    device_map=<span class="code-str">"auto"</span>
-)
-tokenizer = LaQuMoTokenizer.from_pretrained(<span class="code-str">"laqumo-labs/LaQuMo-3.0"</span>)
+<span class="code-comment"># Initialize 4-Qubit Variational Quantum Circuit (VQC)</span>
+qc = QuantumCircuit(<span class="code-func">4</span>)
+qc.h(<span class="code-func">0</span>)  <span class="code-comment"># Equal superposition on Qubit 0</span>
+qc.cx(<span class="code-func">0</span>, <span class="code-func">1</span>)  <span class="code-comment"># Entangle Qubit 0 and Qubit 1 (Bell Pair)</span>
+qc.ry(<span class="code-func">0.785</span>, <span class="code-func">2</span>)  <span class="code-comment"># Variational rotation on Qubit 2</span>
 
-<span class="code-comment"># Quantum Attention Inference</span>
-prompt = <span class="code-str">"Compute ground state energy of Nitrogenase FeMoco active site"</span>
-inputs = tokenizer(prompt, return_tensors=<span class="code-str">"pt"</span>).to(<span class="code-str">"cuda"</span>)
-output = model.generate(**inputs, max_new_tokens=<span class="code-func">256</span>, temperature=<span class="code-func">0.2</span>)
-
-print(tokenizer.decode(output[<span class="code-func">0</span>]))`,
-
-    qiskit: `<span class="code-keyword">from</span> qiskit <span class="code-keyword">import</span> QuantumCircuit, Aer, execute
-<span class="code-keyword">from</span> laqumo.qnn <span class="code-keyword">import</span> QuantumVariationalAttention
-
-<span class="code-comment"># Construct 32-Qubit Variational Quantum Circuit Layer</span>
-vqc_layer = QuantumVariationalAttention(n_qubits=<span class="code-func">32</span>, depth=<span class="code-func">16</span>)
-circuit = vqc_layer.build_ansatz(entanglement=<span class="code-str">"full"</span>)
-
-backend = Aer.get_backend(<span class="code-str">"qasm_simulator"</span>)
-job = execute(circuit, backend, shots=<span class="code-func">16384</span>)
-result = job.result()
-counts = result.get_counts(circuit)
-
-print(<span class="code-str">"State Vector Amplitudes:"</span>, counts)`,
+<span class="code-comment"># Calculate exact statevector representation</span>
+state = Statevector.from_instruction(qc)
+print(<span class="code-str">"Statevector:"</span>, state)
+print(<span class="code-str">"Probabilities:"</span>, state.probabilities_dict())`,
 
     pennylane: `<span class="code-keyword">import</span> pennylane <span class="code-keyword">as</span> qml
-<span class="code-keyword">from</span> laqumo.pennylane <span class="code-keyword">import</span> QuantumTransformerBlock
+<span class="code-keyword">from</span> pennylane <span class="code-keyword">import</span> numpy <span class="code-keyword">as</span> np
 
-<span class="code-comment"># Setup PennyLane device with 64 qubits</span>
-dev = qml.device(<span class="code-str">"default.qubit"</span>, wires=<span class="code-func">64</span>)
+<span class="code-comment"># Initialize 4-Qubit device</span>
+dev = qml.device(<span class="code-str">"default.qubit"</span>, wires=<span class="code-func">4</span>)
 
 <span class="code-keyword">@qml.qnode</span>(dev)
-<span class="code-keyword">def</span> <span class="code-func">quantum_attention_circuit</span>(weights):
-    QuantumTransformerBlock(weights, wires=range(<span class="code-func">64</span>))
-    <span class="code-keyword">return</span> [qml.expval(qml.PauliZ(i)) <span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(<span class="code-func">64</span>)]
+<span class="code-keyword">def</span> <span class="code-func">quantum_circuit</span>(params):
+    qml.Hadamard(wires=<span class="code-func">0</span>)
+    qml.RY(params[<span class="code-func">0</span>], wires=<span class="code-func">1</span>)
+    qml.CNOT(wires=[<span class="code-func">0</span>, <span class="code-func">1</span>])
+    <span class="code-keyword">return</span> qml.expval(qml.PauliZ(<span class="code-func">0</span>))
 
-print(<span class="code-str">"Expectation values calculated."</span>)`,
+params = np.array([<span class="code-func">0.543</span>], requires_grad=<span class="code-func">True</span>)
+print(<span class="code-str">"Expectation Value <Z_0>:"</span>, quantum_circuit(params))`,
 
-    curl: `<span class="code-comment"># Query LaQuMo v3.0 REST API endpoint</span>
-curl -X POST https://api.laqumo.org/v1/quantum/chat \\
-  -H <span class="code-str">"Authorization: Bearer LQM_SECRET_KEY"</span> \\
-  -H <span class="code-str">"Content-Type: application/json"</span> \\
-  -d '{
-    <span class="code-str">"model"</span>: <span class="code-str">"laqumo-3.0-quantum"</span>,
-    <span class="code-str">"messages"</span>: [{"role": "user", "content": "Compute VQE for FeMoco active site"}],
-    <span class="code-str">"qubits"</span>: 128,
-    <span class="code-str">"shots"</span>: 8192
-  }'`
+    pytorch: `<span class="code-keyword">import</span> torch
+<span class="code-keyword">import</span> pennylane <span class="code-keyword">as</span> qml
+
+<span class="code-comment"># PyTorch Hybrid Quantum-Classical Layer</span>
+dev = qml.device(<span class="code-str">"default.qubit"</span>, wires=<span class="code-func">2</span>)
+
+<span class="code-keyword">@qml.qnode</span>(dev, interface=<span class="code-str">"torch"</span>)
+<span class="code-keyword">def</span> <span class="code-func">qnode</span>(inputs, weights):
+    qml.AngleEmbedding(inputs, wires=[<span class="code-func">0</span>, <span class="code-func">1</span>])
+    qml.BasicEntanglerLayers(weights, wires=[<span class="code-func">0</span>, <span class="code-func">1</span>])
+    <span class="code-keyword">return</span> [qml.expval(qml.PauliZ(i)) <span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(<span class="code-func">2</span>)]
+
+weight_shapes = {<span class="code-str">"weights"</span>: (<span class="code-func">2</span>, <span class="code-func">2</span>)}
+qlayer = qml.qnn.TorchLayer(qnode, weight_shapes)
+
+x = torch.tensor([<span class="code-func">0.1</span>, <span class="code-func">0.2</span>])
+print(<span class="code-str">"Hybrid Layer Output:"</span>, qlayer(x))`
   };
 
   const tabs = document.querySelectorAll('.code-tab');
