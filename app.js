@@ -7,9 +7,14 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initParticleNetwork();
-  initBlochSphere();
+
+  // Only run index-page Bloch Sphere animation if on index.html
+  if (document.getElementById('hero')) {
+    initBlochSphere();
+    initCodePlayground();
+  }
+
   initCircuitBuilder();
-  initCodePlayground();
   initContactForm();
   initModals();
 });

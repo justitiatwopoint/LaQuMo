@@ -510,18 +510,20 @@
           if (targetSection) {
             targetSection.classList.add('active');
 
-            if (targetId === 'tab-rydberg') {
-              if (!rydberg) rydberg = new RydbergLatticeSimulator('rydberg-canvas');
-              else rydberg.resize();
-            } else if (targetId === 'tab-schrodinger') {
-              if (!schrodinger) schrodinger = new SchrodingerSimulator('schrodinger-canvas');
-              else schrodinger.resize();
-            } else if (targetId === 'tab-doubleslit') {
-              if (!doubleslit) doubleslit = new DoubleSlitSimulator('doubleslit-canvas');
-              else doubleslit.resize();
-            } else if (targetId === 'tab-bloch') {
-              bloch.resize();
-            }
+            requestAnimationFrame(() => {
+              if (targetId === 'tab-rydberg') {
+                if (!rydberg) rydberg = new RydbergLatticeSimulator('rydberg-canvas');
+                else rydberg.resize();
+              } else if (targetId === 'tab-schrodinger') {
+                if (!schrodinger) schrodinger = new SchrodingerSimulator('schrodinger-canvas');
+                else schrodinger.resize();
+              } else if (targetId === 'tab-doubleslit') {
+                if (!doubleslit) doubleslit = new DoubleSlitSimulator('doubleslit-canvas');
+                else doubleslit.resize();
+              } else if (targetId === 'tab-bloch') {
+                bloch.resize();
+              }
+            });
           }
         });
       });
