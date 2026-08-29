@@ -1,0 +1,246 @@
+/* ==========================================================================
+   PROF. ERWIN SCHRÖDINGER AI ASSISTANT (css/schrodinger-bot.css)
+   Stellar Dark Mode Obsidian Theme & Glassmorphism
+   ========================================================================== */
+
+/* Floating Launcher Button */
+.schrodinger-widget-launcher {
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  z-index: 2500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(10, 12, 18, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 18px 10px 10px;
+  border-radius: 9999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+  transition: all var(--transition-fast);
+}
+.schrodinger-widget-launcher:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: #ffffff;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 255, 255, 0.25);
+}
+
+.schrodinger-avatar-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.schrodinger-status-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #040508;
+  box-shadow: 0 0 8px #ffffff;
+}
+
+.schrodinger-launcher-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.schrodinger-launcher-title {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+.schrodinger-launcher-sub {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Chat Popover Window */
+.schrodinger-chat-window {
+  position: fixed;
+  bottom: 90px;
+  right: 26px;
+  width: 390px;
+  max-width: calc(100vw - 32px);
+  height: 540px;
+  max-height: calc(100vh - 120px);
+  background: rgba(10, 12, 18, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-md);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9);
+  z-index: 2600;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  animation: slideUpFade 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.schrodinger-chat-window.open {
+  display: flex;
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Chat Header */
+.schrodinger-chat-header {
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.schrodinger-header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.schrodinger-chat-close {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+.schrodinger-chat-close:hover {
+  color: #ffffff;
+}
+
+/* Chat Body */
+.schrodinger-chat-body {
+  flex-grow: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-bubble {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.chat-bubble.bot {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  align-self: flex-start;
+  border-bottom-left-radius: 2px;
+}
+
+.chat-bubble.user {
+  background: #ffffff;
+  color: #040508;
+  font-weight: 500;
+  align-self: flex-end;
+  border-bottom-right-radius: 2px;
+}
+
+/* Suggestions Chips */
+.chat-suggestions {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 8px 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chip-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #cbd5e1;
+  font-size: 0.76rem;
+  font-family: var(--font-display);
+  padding: 5px 10px;
+  border-radius: 9999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+.chip-btn:hover {
+  background: #ffffff;
+  color: #040508;
+  border-color: #ffffff;
+}
+
+/* Footer / Input Bar */
+.schrodinger-chat-footer {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  background: rgba(10, 12, 18, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.chat-input {
+  flex-grow: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+.chat-input:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.chat-send-btn {
+  background: #ffffff;
+  border: none;
+  color: #040508;
+  font-weight: bold;
+  padding: 0 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+.chat-send-btn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .schrodinger-widget-launcher {
+    bottom: 24px;
+    right: 16px;
+  }
+  .schrodinger-chat-window {
+    bottom: 80px;
+    right: 16px;
+    height: 460px;
+  }
+}

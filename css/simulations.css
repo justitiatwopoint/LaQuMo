@@ -1,0 +1,574 @@
+/* ==========================================================================
+   QUANTUM LAB & SIMULATION INTERFACE STYLES (LIGHT / DAYTIME SPEC)
+   ========================================================================== */
+
+/* Simulator Layout Grid */
+.sim-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 24px;
+  background: #ffffff;
+  border: 1px solid var(--silver-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+@media (max-width: 1040px) {
+  .sim-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Control Panel */
+.sim-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--bg-panel);
+  border: 1px solid var(--silver-border);
+  border-radius: var(--radius-md);
+  padding: 22px;
+}
+
+.sim-panel-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--crimson-vintage);
+  border-bottom: 1px solid var(--silver-border);
+  padding-bottom: 12px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.control-val-tag {
+  font-family: var(--font-mono);
+  color: var(--crimson-bright);
+  background: var(--crimson-dim);
+  border: 1px solid var(--crimson-border);
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+/* Crisp Sliders */
+.sim-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 9999px;
+  background: #e2e8f0;
+  outline: none;
+  transition: all var(--transition-smooth);
+}
+
+.sim-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--crimson-bright);
+  border: 2px solid #ffffff;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(190, 18, 60, 0.4);
+  transition: transform var(--transition-smooth);
+}
+
+.sim-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Gate Buttons Grid */
+.gate-btn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.gate-btn {
+  background: #ffffff;
+  border: 1px solid var(--silver-border);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 8px 4px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-smooth);
+}
+
+.gate-btn:hover {
+  border-color: var(--crimson-bright);
+  background: var(--crimson-dim);
+  color: var(--crimson-bright);
+  transform: translateY(-1px);
+}
+
+.gate-btn.active {
+  background: linear-gradient(135deg, #be123c 0%, #9f1239 100%);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+/* Canvas Viewport (Clean Laboratory Graph Viewport) */
+.sim-viewport {
+  position: relative;
+  height: 460px;
+  max-height: 460px;
+  background: rgba(10, 12, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sim-canvas-wrap {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.sim-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.sim-overlay-hud {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.hud-pill {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--silver-border);
+  backdrop-filter: blur(8px);
+  padding: 5px 14px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  pointer-events: auto;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.hud-pill span {
+  color: var(--crimson-bright);
+  font-weight: 700;
+}
+
+/* Probability Bars & Amplitudes */
+.amplitude-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+
+.amplitude-card {
+  background: #ffffff;
+  border: 1px solid var(--silver-border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.amp-ket {
+  font-family: var(--font-mono);
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.amp-percent {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--crimson-bright);
+}
+
+.amp-bar-track {
+  width: 100%;
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 9999px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.amp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #be123c, #d97706);
+  border-radius: 9999px;
+  transition: width 0.25s ease-out;
+}
+
+/* Energy Spectrum Ladder Diagram */
+.spectrum-box {
+  background: #f8fafc;
+  border: 1px solid var(--silver-border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin: 16px 0;
+  position: relative;
+}
+
+.energy-ladder {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.ladder-rung {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  transition: all var(--transition-smooth);
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: var(--radius-xs);
+}
+.ladder-rung:hover {
+  background: var(--gold-dim);
+  color: var(--gold-antique);
+}
+.ladder-rung.ground-state {
+  color: var(--crimson-vintage);
+  font-weight: 700;
+}
+
+.ladder-line {
+  flex-grow: 1;
+  height: 2px;
+  background: #cbd5e1;
+}
+.ladder-rung.ground-state .ladder-line {
+  background: var(--crimson-vintage);
+}
+
+/* Density Matrix Grid */
+.matrix-grid {
+  display: inline-grid;
+  grid-template-columns: repeat(2, 48px);
+  gap: 4px;
+  padding: 8px;
+  background: #ffffff;
+  border: 1px solid var(--silver-border);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.matrix-cell {
+  background: #f8fafc;
+  padding: 6px 2px;
+  border-radius: 2px;
+  color: var(--crimson-bright);
+  font-weight: 700;
+}
+
+/* Systems Grid */
+.systems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 22px;
+}
+
+.system-card {
+  background: #ffffff;
+  border: 1px solid var(--silver-border);
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  transition: all var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+}
+.system-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-border);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.system-tag {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--crimson-bright);
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.system-name {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.system-props-table {
+  width: 100%;
+  font-size: 0.86rem;
+  margin: 12px 0;
+  border-collapse: collapse;
+}
+
+.system-props-table td {
+  padding: 6px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+.system-props-table td:last-child {
+  text-align: right;
+  font-family: var(--font-mono);
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  z-index: 3000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-backdrop.open {
+  display: flex;
+}
+
+.modal-content {
+  background: #ffffff;
+  border: 1px solid var(--silver-border);
+  border-radius: var(--radius-xl);
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 36px;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.25);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #f1f5f9;
+  border: 1px solid var(--silver-border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+}
+.modal-close-btn:hover {
+  background: var(--crimson-bright);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   LAQUMO STELLAR DARK MODE OVERRIDES
+   ========================================================================== */
+body {
+  background-color: #040508 !important;
+  color: #e2e8f0 !important;
+}
+
+.sim-grid, .sim-panel, .sim-viewport, .amplitude-card, .spectrum-box, .matrix-grid, .system-card {
+  background: rgba(10, 12, 18, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #e2e8f0 !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8) !important;
+}
+
+.sim-panel-title {
+  color: #ffffff !important;
+  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.control-label {
+  color: #cbd5e1 !important;
+}
+
+.control-val-tag {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.sim-slider {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.sim-slider::-webkit-slider-thumb {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5) !important;
+}
+
+.gate-btn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.gate-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
+  font-family: var(--font-mono);
+  border-radius: var(--radius-sm) !important;
+  padding: 10px 4px !important;
+  cursor: pointer;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  transition: all var(--transition-fast) !important;
+  height: auto !important;
+  min-height: 56px !important;
+}
+
+.gate-symbol {
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  line-height: 1 !important;
+}
+
+.gate-sub {
+  font-size: 0.72rem !important;
+  color: #9aa0b4 !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+  font-family: var(--font-sans) !important;
+}
+
+.gate-btn:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.12) !important;
+}
+
+.gate-btn:hover .gate-sub {
+  color: #ffffff !important;
+}
+
+.gate-btn.active {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.25) !important;
+}
+
+.lab-tab-nav {
+  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.lab-tab-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #cbd5e1 !important;
+}
+
+.lab-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+.lab-tab-btn.active {
+  background: #ffffff !important;
+  color: #040508 !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3) !important;
+}
+
+.hud-pill {
+  background: rgba(10, 12, 18, 0.9) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+.hud-pill span {
+  color: #ffffff !important;
+}
+
+.amplitude-card {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.amp-ket {
+  color: #ffffff !important;
+}
+
+.amp-percent {
+  color: #ffffff !important;
+}
+
+.amp-bar-track {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.amp-bar-fill {
+  background: #ffffff !important;
+}
