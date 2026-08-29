@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LaQuMo | Virtual Quantum Physics Laboratory</title>
+  <meta name="description" content="LaQuMo Virtual Quantum Lab: Interactive in-browser simulations for Bloch Sphere 3D, Rydberg Atom Lattice, Schrödinger Tunneling, Double-Slit, and Bell Entanglement.">
+  
+  <!-- Stylesheets (Exact Same Soothing Dark Obsidian Theme as index.html) -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/simulations.css">
+  <link rel="stylesheet" href="css/schrodinger-bot.css">
+
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    .lab-tab-nav {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border-medium);
+    }
+    .lab-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+      backdrop-filter: var(--backdrop-blur);
+    }
+    .lab-tab-btn:hover {
+      color: var(--accent-white);
+      border-color: var(--border-medium);
+      background: var(--bg-card-hover);
+    }
+    .lab-tab-btn.active {
+      color: #040406;
+      background: #ffffff;
+      border-color: #ffffff;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      font-weight: 700;
+    }
+    .lab-content-section {
+      display: none;
+    }
+    .lab-content-section.active {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Quantum Node Canvas -->
+  <canvas id="quantum-canvas"></canvas>
+  <div class="vignette-overlay"></div>
+
+  <!-- Navigation Bar (Matching index.html) -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
+          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+        </svg>
+      </div>
+      <span class="brand-text">LaQuMo</span>
+      <span class="brand-tag">VIRTUAL LAB</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="lab.html" class="active" style="color: var(--accent-white); font-weight: bold;">Virtual Lab</a></li>
+      <li><a href="index.html#architecture">Architecture</a></li>
+      <li><a href="index.html#benchmarks">Complexity &amp; Bounds</a></li>
+      <li><a href="index.html#api">Developer API</a></li>
+      <li><a href="index.html#double-slit">Double-Slit</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <!-- Cleaned up redundant action buttons -->
+    </div>
+  </nav>
+
+  <!-- Lab Workspace Container -->
+  <div class="container" style="padding-top: 130px; padding-bottom: 80px;">
+    
+    <div style="margin-bottom: 32px;">
+      <div class="hero-badge" style="margin-bottom: 12px;">
+        <span class="badge-dot"></span>
+        <span>SCIENTIFIC VIRTUAL LAB &bull; EXPERIMENTAL SUITE</span>
+      </div>
+      <h1 class="hero-title" style="font-size: 2.5rem; text-align: left; margin-bottom: 8px;">
+        Virtual Quantum Physics Laboratory
+      </h1>
+      <p class="hero-subtitle" style="text-align: left; max-width: 820px; margin: 0; font-size: 1rem;">
+        Adjust physical parameters, calculate wavefunctions, and observe quantum mechanical phenomena in real time across 4 interactive simulation environments.
+      </p>
+    </div>
+
+    <!-- Simulator Navigation Tabs -->
+    <div class="lab-tab-nav">
+      <button class="lab-tab-btn active" data-target="tab-bloch">
+        3D Bloch Sphere
+      </button>
+      <button class="lab-tab-btn" data-target="tab-circuit">
+        2-Qubit Quantum Circuit Grid
+      </button>
+      <button class="lab-tab-btn" data-target="tab-rydberg">
+        Neutral-Atom Rydberg Lattice
+      </button>
+      <button class="lab-tab-btn" data-target="tab-schrodinger">
+        Schrödinger Tunneling
+      </button>
+      <button class="lab-tab-btn" data-target="tab-doubleslit">
+        Double-Slit Interference
+      </button>
+    </div>
+
+    <!-- TAB 1: BLOCH SPHERE -->
+    <section id="tab-bloch" class="lab-content-section active">
+      <div class="sim-grid">
+        <div class="sim-panel">
+          <div class="sim-panel-title">
+            Qubit Parameters
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Polar Angle \(\theta\)</span>
+              <span class="control-val-tag" id="val-theta">60°</span>
+            </div>
+            <input type="range" id="bloch-theta" class="sim-slider" min="0" max="180" value="60">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Azimuthal Angle \(\phi\)</span>
+              <span class="control-val-tag" id="val-phi">45°</span>
+            </div>
+            <input type="range" id="bloch-phi" class="sim-slider" min="0" max="360" value="45">
+          </div>
+
+          <div class="control-group" style="margin-top: 6px;">
+            <label style="font-size: 0.84rem; color: var(--text-secondary); font-weight: 600;">Single-Qubit Unitary Gates</label>
+            <div class="gate-btn-grid">
+              <button class="gate-btn" data-gate="H" title="Hadamard Gate"><span class="gate-symbol">H</span><span class="gate-sub">Hadamard</span></button>
+              <button class="gate-btn" data-gate="X" title="Pauli-X Gate"><span class="gate-symbol">X</span><span class="gate-sub">Pauli-X</span></button>
+              <button class="gate-btn" data-gate="Y" title="Pauli-Y Gate"><span class="gate-symbol">Y</span><span class="gate-sub">Pauli-Y</span></button>
+              <button class="gate-btn" data-gate="Z" title="Pauli-Z Gate"><span class="gate-symbol">Z</span><span class="gate-sub">Pauli-Z</span></button>
+              <button class="gate-btn" data-gate="S" title="Phase Gate S"><span class="gate-symbol">S</span><span class="gate-sub">Phase S</span></button>
+              <button class="gate-btn" data-gate="T" title="Phase Gate T"><span class="gate-symbol">T</span><span class="gate-sub">Phase T</span></button>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-top: 10px;">
+            <button class="btn btn-outline btn-sm" style="flex: 1;" data-gate="RESET_0">|0⟩ Ground</button>
+            <button class="btn btn-outline btn-sm" style="flex: 1;" data-gate="RESET_1">|1⟩ Excited</button>
+          </div>
+
+          <div class="math-block" style="font-size: 0.88rem; margin-top: 14px;">
+            \[ |\psi\rangle = \cos(\theta/2)|0\rangle + e^{i\phi}\sin(\theta/2)|1\rangle \]
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.04); padding: 12px; border-radius: var(--radius-xs); border: 1px solid rgba(255, 255, 255, 0.12);">
+            <div style="font-size: 0.78rem; color: var(--text-secondary); font-weight: 600;">Current State Vector:</div>
+            <div id="bloch-state-formula" style="font-family: var(--font-mono); font-size: 0.84rem; color: #ffffff; font-weight: 700; margin-top: 4px;">
+              |\psi\rangle = 0.866|0\rangle + (0.354 + 0.354i)|1\rangle
+            </div>
+          </div>
+        </div>
+
+        <div class="sim-viewport">
+          <div class="sim-overlay-hud">
+            <div class="hud-pill">Drag canvas to rotate 3D Bloch Sphere</div>
+            <div class="hud-pill">Purity: <span>Tr(ρ²) = 1.00</span></div>
+          </div>
+
+          <div class="sim-canvas-wrap">
+            <canvas id="bloch-canvas" class="sim-canvas"></canvas>
+          </div>
+
+          <div style="padding: 16px; background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.12);">
+            <div class="amplitude-grid">
+              <div class="amplitude-card">
+                <div class="amp-ket">|0⟩ Probability</div>
+                <div class="amp-percent" id="bloch-prob-0">75.0%</div>
+                <div class="amp-bar-track">
+                  <div class="amp-bar-fill" id="bloch-bar-0" style="width: 75%;"></div>
+                </div>
+              </div>
+
+              <div class="amplitude-card">
+                <div class="amp-ket">|1⟩ Probability</div>
+                <div class="amp-percent" id="bloch-prob-1">25.0%</div>
+                <div class="amp-bar-track">
+                  <div class="amp-bar-fill" id="bloch-bar-1" style="width: 25%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: 2-QUBIT QUANTUM CIRCUIT GRID -->
+    <section id="tab-circuit" class="lab-content-section">
+      <div class="circuit-builder-container" style="padding: 28px; background: rgba(10, 12, 18, 0.85); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-md);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h3 style="font-family: var(--font-display); font-size: 1.3rem; color: #ffffff; margin-bottom: 4px;">2-Qubit Quantum Circuit Grid &amp; Entanglement Engine</h3>
+            <p style="font-size: 0.88rem; color: var(--slate-light);">
+              Select a target wire (q₀ or q₁) and click gates to append unitaries. Add <strong>CNOT</strong> to entangle q₀ &amp; q₁ into a Bell state!
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 0.82rem; color: var(--slate-light); font-family: var(--font-mono);">Target Wire:</span>
+            <button class="target-wire-btn active" data-wire="q0" id="btn-select-q0">q₀</button>
+            <button class="target-wire-btn" data-wire="q1" id="btn-select-q1">q₁</button>
+            <div style="width: 1px; height: 24px; background: rgba(255,255,255,0.2); margin: 0 4px;"></div>
+            <button class="gate-btn" data-gate="H" title="Hadamard Gate (Equal Superposition)">H</button>
+            <button class="gate-btn" data-gate="X" title="Pauli-X Gate (Bit Flip / NOT)">X</button>
+            <button class="gate-btn" data-gate="Y" title="Pauli-Y Gate">Y</button>
+            <button class="gate-btn" data-gate="Z" title="Pauli-Z Gate (Phase Flip)">Z</button>
+            <button class="gate-btn" data-gate="S" title="S Gate (90° Phase Shift)">S</button>
+            <button class="gate-btn" data-gate="T" title="T Gate (45° Phase Shift)">T</button>
+            <button class="gate-btn gate-btn-cnot" data-gate="CNOT" title="CNOT Entangling Gate (Control q0 → Target q1)" style="width: auto; padding: 0 10px; font-size: 0.8rem;">CNOT (q₀→q₁)</button>
+            <button class="btn btn-outline btn-sm" id="btn-circuit-reset" style="padding: 6px 14px; margin-left: 6px;">Reset Grid</button>
+          </div>
+        </div>
+
+        <!-- 2-Qubit Parallel Grid Lines -->
+        <div class="circuit-grid-board" style="background: rgba(0,0,0,0.65); padding: 28px 32px; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 24px; position: relative;">
+          
+          <!-- Qubit Wire 0 (q0) -->
+          <div class="qubit-wire-row" id="wire-row-q0" style="display: flex; align-items: center; gap: 16px; position: relative;">
+            <span class="wire-label" style="font-family: var(--font-mono); color: #ffffff; font-weight: bold; font-size: 0.95rem; min-width: 45px;">q₀: |0⟩</span>
+            <div style="flex-grow: 1; height: 2px; background: rgba(255,255,255,0.2); position: absolute; left: 60px; right: 45px; top: 50%; z-index: 1;"></div>
+            <div class="wire-slots-container" id="slots-q0" style="display: flex; justify-content: space-around; width: 100%; position: relative; z-index: 2; margin-left: 50px; margin-right: 40px;">
+              <div class="circuit-slot" data-wire="q0" data-step="0"><span class="slot-placeholder">+</span></div>
+              <div class="circuit-slot" data-wire="q0" data-step="1"><span class="slot-placeholder">+</span></div>
+              <div class="circuit-slot" data-wire="q0" data-step="2"><span class="slot-placeholder">+</span></div>
+              <div class="circuit-slot" data-wire="q0" data-step="3"><span class="slot-placeholder">+</span></div>
+              <div class="circuit-slot" data-wire="q0" data-step="4"><span class="slot-placeholder">+</span></div>
+            </div>
+            <span class="wire-out-label" style="font-family: var(--font-mono); color: var(--slate-light); font-size: 0.85rem; min-width: 35px; text-align: right;">out₀</span>
+          </div>
+
+          <!-- Qubit Wire 1 (q1) -->
+          <div class="qubit-wire-row" id="wire-row-q1" style="display: flex; align-items: center; gap: 16px; position: relative;">
+            <span class="wire-label" style="font-family: var(--font-mono); color: #ffffff; font-weight: bold; font-size: 0.95rem; min-width: 45px;">q₁: |0⟩</span>
+            <div style="flex-grow: 1; height: 2px; background: rgba(255,255,255,0.2); position: absolute; left: 60px; right: 45px; top: 50%; z-index: 1;"></div>
+            <div class="wire-slots-container" id="slots-q1" style="display: flex; justify-content: space-around; width: 100%; position: relative; z-index: 2; margin-left: 50px; margin-right: 40px;">
+              <div class="circuit-slot" data-wire="q1" data-step="0"><span class="slot-placeholder">+</span></div>
+              <div class="circuit-slot" data-wire="q1" data-step="1"><span class="slot-placeholder">+</span></div>
+              <div class="circuit-slot" data-wire="q1" data-step="2"><span class="slot-placeholder">+</span></div>
+              <div class="circuit-slot" data-wire="q1" data-step="3"><span class="slot-placeholder">+</span></div>
+              <div class="circuit-slot" data-wire="q1" data-step="4"><span class="slot-placeholder">+</span></div>
+            </div>
+            <span class="wire-out-label" style="font-family: var(--font-mono); color: var(--slate-light); font-size: 0.85rem; min-width: 35px; text-align: right;">out₁</span>
+          </div>
+
+        </div>
+
+        <!-- Exact 2-Qubit Statevector Math Display -->
+        <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; font-family: var(--font-mono); font-size: 0.85rem;">
+          <div style="background: rgba(255,255,255,0.03); padding: 14px 18px; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.1);">
+            <span style="color: var(--slate-light); display: block; margin-bottom: 4px;">Computed 2-Qubit Statevector |Ψ⟩:</span>
+            <span id="circuit-math-statevector" style="color: #ffffff; font-weight: 600;">1.000|00⟩ + 0.000|01⟩ + 0.000|10⟩ + 0.000|11⟩</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); padding: 14px 18px; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.1);">
+            <span style="color: var(--slate-light); display: block; margin-bottom: 4px;">State Amplitudes &amp; Entanglement:</span>
+            <span id="circuit-math-probs" style="color: #ffffff; font-weight: 600;">P(00)=100.0% | P(01)=0.0% | P(10)=0.0% | P(11)=0.0%</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: NEUTRAL-ATOM RYDBERG LATTICE (QUERA AQUILA SPEC) -->
+    <section id="tab-rydberg" class="lab-content-section">
+      <div class="sim-grid">
+        <div class="sim-panel">
+          <div class="sim-panel-title">
+            Optical Tweezer &amp; Pulse
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Rabi Frequency \(\Omega(t)\)</span>
+              <span class="control-val-tag" id="val-rabi">2.5 rad/μs</span>
+            </div>
+            <input type="range" id="slider-rabi" class="sim-slider" min="0.5" max="5.0" step="0.1" value="2.5">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Laser Detuning \(\Delta(t)\)</span>
+              <span class="control-val-tag" id="val-delta">1.2 rad/μs</span>
+            </div>
+            <input type="range" id="slider-delta" class="sim-slider" min="-2.0" max="4.0" step="0.1" value="1.2">
+          </div>
+
+          <div class="math-block" style="font-size: 0.84rem;">
+            \[ R_b = \left(\frac{C_6}{\hbar \Omega}\right)^{1/6}, \quad C_6 = 862\, \text{GHz}\cdot\mu\text{m}^6 \]
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.04); padding: 12px; border-radius: var(--radius-xs); border: 1px solid rgba(255, 255, 255, 0.12);">
+            <div style="font-size: 0.78rem; color: var(--text-secondary); font-weight: 600;">Blockade Radius \(R_b\):</div>
+            <div id="val-rydberg-rb" style="font-family: var(--font-mono); font-size: 1.1rem; color: #ffffff; font-weight: 800; margin-top: 2px;">
+              7.6 μm
+            </div>
+            <div style="font-size: 0.76rem; color: var(--slate-light); margin-top: 4px;">
+              Rubidium-87 \(|70S_{1/2}\rangle\) Rydberg excitation state.
+            </div>
+          </div>
+        </div>
+
+        <div class="sim-viewport">
+          <div class="sim-overlay-hud">
+            <div class="hud-pill">Drag atoms with mouse to reposition optical tweezers</div>
+            <div class="hud-pill">Excited: <span id="val-rydberg-excited" style="color: var(--crimson-bright); font-weight: 700;">Calculating...</span></div>
+          </div>
+
+          <div class="sim-canvas-wrap">
+            <canvas id="rydberg-canvas" class="sim-canvas"></canvas>
+          </div>
+
+          <div style="padding: 14px 18px; background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.12); display: flex; justify-content: space-between; align-items: center; font-size: 0.84rem; color: var(--slate-medium);">
+            <div><span style="color: #ffffff; font-weight: 800;">● |r⟩</span> Rydberg Excited State ($n=70$)</div>
+            <div><span style="color: #cbd5e1; font-weight: 800;">● |g⟩</span> Ground State ($5S_{1/2}$)</div>
+            <div><span>---</span> Blockade Sphere ($R_b$)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: SCHRÖDINGER TUNNELING -->
+    <section id="tab-schrodinger" class="lab-content-section">
+      <div class="sim-grid">
+        <div class="sim-panel">
+          <div class="sim-panel-title">
+            Wavepacket &amp; Barrier
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">Potential Profile \(V(x)\)</label>
+            <select id="sch-potential-select" class="search-input" style="padding-left: 12px; cursor: pointer;">
+              <option value="tunneling">Tunneling Barrier (Square)</option>
+              <option value="well">Finite Quantum Well</option>
+              <option value="oscillator">Harmonic Oscillator \(\frac{1}{2}kx^2\)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Barrier Potential \(V_0\)</span>
+              <span class="control-val-tag" id="val-sch-v0">45 eV</span>
+            </div>
+            <input type="range" id="sch-v0" class="sim-slider" min="10" max="90" value="45">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Wavepacket Momentum \(k_0\)</span>
+              <span class="control-val-tag" id="val-sch-k0">0.55</span>
+            </div>
+            <input type="range" id="sch-k0" class="sim-slider" min="0.2" max="1.0" step="0.05" value="0.55">
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-top: 10px;">
+            <button id="sch-btn-play" class="btn btn-primary btn-sm" style="flex: 1;">Pause</button>
+            <button id="sch-btn-reset" class="btn btn-outline btn-sm" style="flex: 1;">Reset Wave</button>
+          </div>
+
+          <div class="math-block" style="font-size: 0.84rem;">
+            \[ i\hbar \frac{\partial \psi}{\partial t} = -\frac{\hbar^2}{2m}\nabla^2\psi + V(x)\psi \]
+          </div>
+
+          <div style="display: flex; gap: 10px; font-size: 0.78rem; font-weight: 600;">
+            <span style="color: #be123c;">■ Re(ψ)</span>
+            <span style="color: #64748b;">■ Im(ψ)</span>
+            <span style="color: #d97706;">■ |ψ|² Probability</span>
+            <span style="color: #b45309;">■ V(x)</span>
+          </div>
+        </div>
+
+        <div class="sim-viewport">
+          <div class="sim-overlay-hud">
+            <div class="hud-pill">Reflection (R): <span id="sch-refl-tag">0.0%</span></div>
+            <div class="hud-pill">Transmission (T): <span id="sch-trans-tag" style="color: #059669;">0.0%</span></div>
+          </div>
+
+          <div class="sim-canvas-wrap">
+            <canvas id="schrodinger-canvas" class="sim-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: DOUBLE SLIT INTERFERENCE -->
+    <section id="tab-doubleslit" class="lab-content-section">
+      <div class="sim-grid">
+        <div class="sim-panel">
+          <div class="sim-panel-title">
+            Slit &amp; Laser Optics
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Slit Separation \(d\)</span>
+              <span class="control-val-tag" id="val-ds-d">40 μm</span>
+            </div>
+            <input type="range" id="ds-slit-d" class="sim-slider" min="15" max="80" value="40">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Wavelength \(\lambda\)</span>
+              <span class="control-val-tag" id="val-ds-lambda">580 nm</span>
+            </div>
+            <input type="range" id="ds-lambda" class="sim-slider" min="400" max="700" value="580">
+          </div>
+
+          <div class="control-group">
+            <button id="ds-btn-clear" class="btn btn-outline btn-sm" style="margin-top: 6px;">
+              Clear Detector Screen
+            </button>
+          </div>
+
+          <div class="math-block" style="font-size: 0.82rem;">
+            \[ I(\theta) = I_0 \cos^2\left(\frac{\pi d \sin\theta}{\lambda}\right) \text{sinc}^2\left(\frac{\pi a \sin\theta}{\lambda}\right) \]
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.04); padding: 12px; border-radius: var(--radius-xs); border: 1px solid rgba(255, 255, 255, 0.12);">
+            <div style="font-size: 0.78rem; color: var(--text-secondary); font-weight: 600;">Detected Single Photons:</div>
+            <div id="val-ds-photons" style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: 800; color: #ffffff;">0</div>
+          </div>
+        </div>
+
+        <div class="sim-viewport">
+          <div class="sim-overlay-hud">
+            <div class="hud-pill">Incident Waves &bull; Slits &bull; Detector Screen</div>
+            <div class="hud-pill">Wave-Particle Duality</div>
+          </div>
+
+          <div class="sim-canvas-wrap">
+            <canvas id="doubleslit-canvas" class="sim-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- Scripts -->
+  <script src="js/data-store.js"></script>
+  <script src="js/quantum-bg.js"></script>
+  <script src="js/sim-bloch.js"></script>
+  <script src="js/sim-rydberg.js"></script>
+  <script src="js/sim-schrodinger.js"></script>
+  <script src="js/sim-doubleslit.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/schrodinger-bot.js"></script>
+  <script src="js/main.js"></script>
+  <script src="app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const bloch = new BlochSphereSimulator('bloch-canvas');
+      let rydberg = null;
+      let schrodinger = null;
+      let doubleslit = null;
+
+      const tabBtns = document.querySelectorAll('.lab-tab-btn');
+      const tabSections = document.querySelectorAll('.lab-content-section');
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          tabBtns.forEach(b => b.classList.remove('active'));
+          tabSections.forEach(s => s.classList.remove('active'));
+
+          e.currentTarget.classList.add('active');
+          const targetId = e.currentTarget.getAttribute('data-target');
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            targetSection.classList.add('active');
+
+            if (targetId === 'tab-rydberg') {
+              if (!rydberg) rydberg = new RydbergLatticeSimulator('rydberg-canvas');
+              else rydberg.resize();
+            } else if (targetId === 'tab-schrodinger') {
+              if (!schrodinger) schrodinger = new SchrodingerSimulator('schrodinger-canvas');
+              else schrodinger.resize();
+            } else if (targetId === 'tab-doubleslit') {
+              if (!doubleslit) doubleslit = new DoubleSlitSimulator('doubleslit-canvas');
+              else doubleslit.resize();
+            } else if (targetId === 'tab-bloch') {
+              bloch.resize();
+            }
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

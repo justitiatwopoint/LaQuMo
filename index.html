@@ -42,11 +42,10 @@
     </a>
 
     <ul class="nav-links">
-      <li><a href="#simulator">Simulator &amp; Circuit</a></li>
+      <li><a href="#simulator">3D Bloch Sphere</a></li>
+      <li><a href="lab.html" style="color: var(--accent-white); font-weight: 600;">Virtual Lab</a></li>
       <li><a href="#architecture">Architecture</a></li>
       <li><a href="#benchmarks">Complexity &amp; Bounds</a></li>
-      <li><a href="#api">Developer API</a></li>
-      <li><a href="#double-slit">Double-Slit</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
 
@@ -81,13 +80,9 @@
       </div>
 
       <div class="hero-cta">
-        <a href="#simulator" class="btn btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-          Interactive State &amp; Circuit Builder
-        </a>
-        <a href="#api" class="btn btn-outline">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path></svg>
-          SDK &amp; Code Playground
+        <a href="lab.html" class="btn btn-outline btn-glowing-edges">
+          <span class="btn-blink-icon">+</span>
+          Try Virtual Lab
         </a>
       </div>
 
@@ -106,20 +101,19 @@
           <div class="stat-lbl">LaTeX Mathematical Notation</div>
         </div>
         <div class="stat-card">
-          <div class="stat-val">Wave Optics</div>
-          <div class="stat-lbl">Double-Slit Interference Physics</div>
+          <div class="stat-val">Virtual Lab</div>
+          <div class="stat-lbl">Interactive Simulation Engines</div>
         </div>
       </div>
     </section>
 
-    <!-- Interactive Quantum Simulator & Circuit Builder Section -->
+    <!-- Interactive Quantum Simulator Section -->
     <section class="section" id="simulator">
       <div class="section-header">
         <span class="section-tag">// INTERACTIVE EXPERIMENT</span>
-        <h2 class="section-title">Quantum State, Bloch Sphere &amp; Circuit Builder</h2>
+        <h2 class="section-title">Quantum State &amp; 3D Bloch Sphere Visualizer</h2>
         <p class="section-desc">
-          Adjust state vector parameters or build custom gate sequences below to observe real-time 
-          Bloch sphere rotations, state amplitudes, and measurement probability distributions.
+          Adjust state vector parameters below to observe real-time 3D Bloch sphere rotations, state amplitudes, and measurement probability distributions.
         </p>
       </div>
 
@@ -188,76 +182,6 @@
 
         </div>
 
-        <!-- 2-Qubit Interactive Circuit Grid Builder Component -->
-        <div class="circuit-builder-container" style="margin-top: 32px; padding: 24px; background: rgba(10, 12, 18, 0.75); border: 1px solid var(--border-medium); border-radius: var(--radius-md);">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
-            <div>
-              <h3 style="font-family: var(--font-display); font-size: 1.2rem; color: var(--accent-white); margin-bottom: 4px;">2-Qubit Quantum Circuit Grid &amp; Entanglement Engine</h3>
-              <p style="font-size: 0.85rem; color: var(--text-secondary);">
-                Select a target wire (q₀ or q₁) and click gates to append unitaries. Add <strong>CNOT</strong> to entangle q₀ &amp; q₁ into a Bell state!
-              </p>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-              <span style="font-size: 0.82rem; color: var(--text-muted); font-family: var(--font-mono);">Target Wire:</span>
-              <button class="target-wire-btn active" data-wire="q0" id="btn-select-q0">q₀</button>
-              <button class="target-wire-btn" data-wire="q1" id="btn-select-q1">q₁</button>
-              <div style="width: 1px; height: 24px; background: var(--border-medium); margin: 0 4px;"></div>
-              <button class="gate-btn" data-gate="H" title="Hadamard Gate (Equal Superposition)">H</button>
-              <button class="gate-btn" data-gate="X" title="Pauli-X Gate (Bit Flip / NOT)">X</button>
-              <button class="gate-btn" data-gate="Y" title="Pauli-Y Gate">Y</button>
-              <button class="gate-btn" data-gate="Z" title="Pauli-Z Gate (Phase Flip)">Z</button>
-              <button class="gate-btn" data-gate="S" title="S Gate (90° Phase Shift)">S</button>
-              <button class="gate-btn" data-gate="T" title="T Gate (45° Phase Shift)">T</button>
-              <button class="gate-btn gate-btn-cnot" data-gate="CNOT" title="CNOT Entangling Gate (Control q0 → Target q1)" style="width: auto; padding: 0 10px; font-size: 0.8rem;">CNOT (q₀→q₁)</button>
-              <button class="btn btn-outline btn-sm" id="btn-circuit-reset" style="padding: 6px 14px; margin-left: 6px;">Reset Grid</button>
-            </div>
-          </div>
-
-          <!-- 2-Qubit Parallel Grid Lines -->
-          <div class="circuit-grid-board" style="background: rgba(0,0,0,0.65); padding: 24px 28px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 24px; position: relative;">
-            
-            <!-- Qubit Wire 0 (q0) -->
-            <div class="qubit-wire-row" id="wire-row-q0" style="display: flex; align-items: center; gap: 16px; position: relative;">
-              <span class="wire-label" style="font-family: var(--font-mono); color: var(--accent-white); font-weight: bold; font-size: 0.95rem; min-width: 45px;">q₀: |0⟩</span>
-              <div style="flex-grow: 1; height: 2px; background: var(--border-medium); position: absolute; left: 60px; right: 45px; top: 50%; z-index: 1;"></div>
-              <div class="wire-slots-container" id="slots-q0" style="display: flex; justify-content: space-around; width: 100%; position: relative; z-index: 2; margin-left: 50px; margin-right: 40px;">
-                <div class="circuit-slot" data-wire="q0" data-step="0"><span class="slot-placeholder">+</span></div>
-                <div class="circuit-slot" data-wire="q0" data-step="1"><span class="slot-placeholder">+</span></div>
-                <div class="circuit-slot" data-wire="q0" data-step="2"><span class="slot-placeholder">+</span></div>
-                <div class="circuit-slot" data-wire="q0" data-step="3"><span class="slot-placeholder">+</span></div>
-                <div class="circuit-slot" data-wire="q0" data-step="4"><span class="slot-placeholder">+</span></div>
-              </div>
-              <span class="wire-out-label" style="font-family: var(--font-mono); color: var(--text-muted); font-size: 0.85rem; min-width: 35px; text-align: right;">out₀</span>
-            </div>
-
-            <!-- Qubit Wire 1 (q1) -->
-            <div class="qubit-wire-row" id="wire-row-q1" style="display: flex; align-items: center; gap: 16px; position: relative;">
-              <span class="wire-label" style="font-family: var(--font-mono); color: var(--accent-white); font-weight: bold; font-size: 0.95rem; min-width: 45px;">q₁: |0⟩</span>
-              <div style="flex-grow: 1; height: 2px; background: var(--border-medium); position: absolute; left: 60px; right: 45px; top: 50%; z-index: 1;"></div>
-              <div class="wire-slots-container" id="slots-q1" style="display: flex; justify-content: space-around; width: 100%; position: relative; z-index: 2; margin-left: 50px; margin-right: 40px;">
-                <div class="circuit-slot" data-wire="q1" data-step="0"><span class="slot-placeholder">+</span></div>
-                <div class="circuit-slot" data-wire="q1" data-step="1"><span class="slot-placeholder">+</span></div>
-                <div class="circuit-slot" data-wire="q1" data-step="2"><span class="slot-placeholder">+</span></div>
-                <div class="circuit-slot" data-wire="q1" data-step="3"><span class="slot-placeholder">+</span></div>
-                <div class="circuit-slot" data-wire="q1" data-step="4"><span class="slot-placeholder">+</span></div>
-              </div>
-              <span class="wire-out-label" style="font-family: var(--font-mono); color: var(--text-muted); font-size: 0.85rem; min-width: 35px; text-align: right;">out₁</span>
-            </div>
-
-          </div>
-
-          <!-- Exact 2-Qubit Statevector Math Display -->
-          <div style="margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; font-family: var(--font-mono); font-size: 0.85rem;">
-            <div style="background: rgba(255,255,255,0.03); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
-              <span style="color: var(--text-muted); display: block; margin-bottom: 4px;">Computed 2-Qubit Statevector |Ψ⟩:</span>
-              <span id="circuit-math-statevector" style="color: var(--accent-white); font-weight: 600;">1.000|00⟩ + 0.000|01⟩ + 0.000|10⟩ + 0.000|11⟩</span>
-            </div>
-            <div style="background: rgba(255,255,255,0.03); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
-              <span style="color: var(--text-muted); display: block; margin-bottom: 4px;">State Amplitudes &amp; Entanglement:</span>
-              <span id="circuit-math-probs" style="color: var(--accent-white); font-weight: 600;">P(00)=100.0% | P(01)=0.0% | P(10)=0.0% | P(11)=0.0%</span>
-            </div>
-          </div>
-        </div>
 
       </div>
     </section>
@@ -378,63 +302,7 @@
       </div>
     </section>
 
-    <!-- Developer API & SDK Playground Section -->
-    <section class="section" id="api">
-      <div class="section-header">
-        <span class="section-tag">// CODE &amp; SDK</span>
-        <h2 class="section-title">Developer API &amp; SDK Playground</h2>
-        <p class="section-desc">
-          Executable Python code examples for quantum circuit synthesis and variational state preparation using Qiskit, PennyLane, or PyTorch.
-        </p>
-      </div>
 
-      <div class="code-window">
-        <div class="code-header">
-          <div class="code-dots">
-            <div class="code-dot"></div>
-            <div class="code-dot"></div>
-            <div class="code-dot"></div>
-          </div>
-          <div class="code-tabs">
-            <button class="code-tab active" data-lang="python">Python (Qiskit)</button>
-            <button class="code-tab" data-lang="pennylane">PennyLane SDK</button>
-            <button class="code-tab" data-lang="pytorch">PyTorch Hybrid</button>
-          </div>
-          <button class="btn btn-outline btn-sm" id="btn-copy-code">Copy</button>
-        </div>
-
-        <div class="code-body">
-          <pre id="code-content"><span class="code-keyword">from</span> qiskit <span class="code-keyword">import</span> QuantumCircuit
-<span class="code-keyword">from</span> qiskit.quantum_info <span class="code-keyword">import</span> Statevector
-
-<span class="code-comment"># Initialize 4-Qubit Variational Quantum Circuit (VQC)</span>
-qc = QuantumCircuit(<span class="code-func">4</span>)
-qc.h(<span class="code-func">0</span>)  <span class="code-comment"># Equal superposition on Qubit 0</span>
-qc.cx(<span class="code-func">0</span>, <span class="code-func">1</span>)  <span class="code-comment"># Entangle Qubit 0 and Qubit 1 (Bell Pair)</span>
-qc.ry(<span class="code-func">0.785</span>, <span class="code-func">2</span>)  <span class="code-comment"># Variational rotation on Qubit 2</span>
-
-<span class="code-comment"># Calculate exact statevector representation</span>
-state = Statevector.from_instruction(qc)
-print(<span class="code-str">"Statevector:"</span>, state)
-print(<span class="code-str">"Probabilities:"</span>, state.probabilities_dict())</pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- Double-Slit Experiment Simulation Section -->
-    <section class="section" id="double-slit">
-      <div class="section-header">
-        <span class="section-tag">// QUANTUM WAVE-PARTICLE DUALITY</span>
-        <h2 class="section-title">Double-Slit Interference Simulation</h2>
-        <p class="section-desc" style="max-width: 840px; margin: 0 auto; line-height: 1.75;">
-          Here we simulate the double slit experiment. The interference fringe patterns provides an essential foundation for modeling phase coherence, amplitude reinforcement, and wave function collapse in multi-qubit architectures.
-        </p>
-      </div>
-
-      <div style="display: flex; justify-content: center; align-items: center; margin-top: 32px; width: 100%;">
-        <iframe src="double_slit_anim.html" title="Double-Slit Interference Simulation" style="width: 100%; max-width: 840px; height: 580px; border: 1px solid var(--border-medium); border-radius: var(--radius-md); background: #07090e; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);"></iframe>
-      </div>
-    </section>
 
     <!-- Clean Contact Section -->
     <section class="section" id="contact">
