@@ -174,20 +174,20 @@
 }
 
 .hud-pill {
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid var(--silver-border);
-  backdrop-filter: blur(8px);
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  backdrop-filter: var(--backdrop-blur);
   padding: 5px 14px;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   font-size: 0.8rem;
   font-family: var(--font-mono);
-  color: var(--text-secondary);
+  color: var(--text-primary);
   pointer-events: auto;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 2px 8px var(--accent-glow);
 }
 
 .hud-pill span {
-  color: var(--crimson-bright);
+  color: var(--text-primary);
   font-weight: 700;
 }
 
@@ -199,19 +199,19 @@
 }
 
 .amplitude-card {
-  background: #ffffff;
-  border: 1px solid var(--silver-border);
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
   border-radius: var(--radius-sm);
   padding: 12px;
   text-align: center;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 8px var(--accent-glow);
 }
 
 .amp-ket {
   font-family: var(--font-mono);
-  font-size: 0.94rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
   margin-bottom: 4px;
 }
 
@@ -219,13 +219,13 @@
   font-family: var(--font-mono);
   font-size: 1.15rem;
   font-weight: 800;
-  color: var(--crimson-bright);
+  color: var(--text-primary);
 }
 
 .amp-bar-track {
   width: 100%;
   height: 6px;
-  background: #f1f5f9;
+  background: var(--border-medium);
   border-radius: 9999px;
   margin-top: 8px;
   overflow: hidden;
@@ -233,7 +233,7 @@
 
 .amp-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #be123c, #d97706);
+  background: var(--text-primary);
   border-radius: 9999px;
   transition: width 0.25s ease-out;
 }
@@ -422,44 +422,40 @@
 }
 
 /* ==========================================================================
-   LAQUMO STELLAR DARK MODE OVERRIDES
+   LAQUMO DYNAMIC LIGHT & DARK SIMULATION STYLES
    ========================================================================== */
-body {
-  background-color: #040508 !important;
-  color: #e2e8f0 !important;
-}
 
 .sim-grid, .sim-panel, .sim-viewport, .amplitude-card, .spectrum-box, .matrix-grid, .system-card {
-  background: rgba(10, 12, 18, 0.85) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  color: #e2e8f0 !important;
-  backdrop-filter: blur(12px) !important;
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8) !important;
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px var(--accent-glow);
 }
 
 .sim-panel-title {
-  color: #ffffff !important;
-  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-medium);
 }
 
 .control-label {
-  color: #cbd5e1 !important;
+  color: var(--text-secondary);
 }
 
 .control-val-tag {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(255, 255, 255, 0.25) !important;
+  color: var(--text-primary);
+  background: var(--bg-obsidian);
+  border: 1px solid var(--border-medium);
 }
 
 .sim-slider {
-  background: rgba(255, 255, 255, 0.15) !important;
+  background: var(--border-medium);
 }
 
 .sim-slider::-webkit-slider-thumb {
-  background: #ffffff !important;
-  border: 2px solid #000000 !important;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5) !important;
+  background: var(--text-primary);
+  border: 2px solid var(--bg-pitch);
+  box-shadow: 0 0 10px var(--accent-glow-intense);
 }
 
 .gate-btn-grid {
@@ -469,35 +465,84 @@ body {
 }
 
 .gate-btn {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.16) !important;
-  color: #ffffff !important;
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
   font-family: var(--font-mono);
-  border-radius: var(--radius-sm) !important;
-  padding: 10px 4px !important;
+  border-radius: var(--radius-sm);
+  padding: 10px 4px;
   cursor: pointer;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 3px !important;
-  transition: all var(--transition-fast) !important;
-  height: auto !important;
-  min-height: 56px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  transition: all var(--transition-fast);
+  height: auto;
+  min-height: 56px;
+}
+
+.gate-btn:hover {
+  background: var(--bg-obsidian);
+  border-color: var(--border-focus);
 }
 
 .gate-symbol {
-  font-size: 1.05rem !important;
-  font-weight: 800 !important;
-  color: #ffffff !important;
-  line-height: 1 !important;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
 }
 
 .gate-sub {
-  font-size: 0.72rem !important;
-  color: #9aa0b4 !important;
-  font-weight: 500 !important;
-  line-height: 1 !important;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* Dark Mode Overrides */
+[data-theme="dark"] .sim-grid,
+[data-theme="dark"] .sim-panel,
+[data-theme="dark"] .sim-viewport,
+[data-theme="dark"] .amplitude-card,
+[data-theme="dark"] .spectrum-box,
+[data-theme="dark"] .matrix-grid,
+[data-theme="dark"] .system-card {
+  background: rgba(10, 12, 18, 0.85);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="dark"] .sim-panel-title {
+  color: #ffffff;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .control-label {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .control-val-tag {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+[data-theme="dark"] .gate-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .gate-symbol {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .gate-sub {
+  color: #9aa0b4;
+}
   font-family: var(--font-sans) !important;
 }
 
@@ -520,55 +565,366 @@ body {
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.25) !important;
 }
 
-.lab-tab-nav {
-  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+[data-theme="dark"] .lab-tab-nav {
+  border-bottom-color: rgba(255, 255, 255, 0.12);
 }
 
-.lab-tab-btn {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
-  color: #cbd5e1 !important;
+[data-theme="dark"] .lab-tab-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
 }
 
-.lab-tab-btn:hover {
-  background: rgba(255, 255, 255, 0.12) !important;
-  color: #ffffff !important;
+[data-theme="dark"] .lab-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
 }
 
-.lab-tab-btn.active {
-  background: #ffffff !important;
-  color: #040508 !important;
-  border-color: #ffffff !important;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3) !important;
+[data-theme="dark"] .lab-tab-btn.active {
+  background: #ffffff;
+  color: #040508;
+  border-color: #ffffff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
-.hud-pill {
-  background: rgba(10, 12, 18, 0.9) !important;
-  border-color: rgba(255, 255, 255, 0.15) !important;
-  color: #ffffff !important;
+[data-theme="dark"] .hud-pill {
+  background: rgba(10, 12, 18, 0.9);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
 }
 
-.hud-pill span {
-  color: #ffffff !important;
+[data-theme="dark"] .hud-pill span {
+  color: #ffffff;
 }
 
-.amplitude-card {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
+[data-theme="dark"] .amplitude-card {
+  background: rgba(10, 12, 18, 0.85);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
 }
 
-.amp-ket {
-  color: #ffffff !important;
+[data-theme="dark"] .amp-ket {
+  color: #9aa0b4;
 }
 
-.amp-percent {
-  color: #ffffff !important;
+[data-theme="dark"] .amp-percent {
+  color: #ffffff;
 }
 
-.amp-bar-track {
-  background: rgba(255, 255, 255, 0.1) !important;
+[data-theme="dark"] .amp-bar-track {
+  background: rgba(255, 255, 255, 0.15);
 }
 
-.amp-bar-fill {
-  background: #ffffff !important;
+[data-theme="dark"] .amp-bar-fill {
+  background: #ffffff;
+}
+
+/* 2-Qubit Quantum Circuit Grid Component */
+.circuit-builder-container {
+  padding: 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 40px var(--accent-glow);
+  backdrop-filter: var(--backdrop-blur);
+}
+
+.circuit-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.circuit-subtitle {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.target-wire-label {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.target-wire-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.target-wire-btn:hover {
+  border-color: var(--border-focus);
+  background: var(--bg-obsidian);
+}
+
+.target-wire-btn.active {
+  background: var(--text-primary);
+  color: var(--bg-pitch);
+  border-color: var(--text-primary);
+}
+
+.wire-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border-medium);
+  margin: 0 4px;
+}
+
+.circuit-grid-board {
+  background: var(--bg-obsidian);
+  padding: 28px 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-medium);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  margin-top: 20px;
+}
+
+.qubit-wire-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.wire-label {
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  font-weight: bold;
+  font-size: 0.95rem;
+  min-width: 55px;
+}
+
+.wire-line {
+  flex-grow: 1;
+  height: 2px;
+  background: var(--border-medium);
+  position: absolute;
+  left: 65px;
+  right: 50px;
+  top: 50%;
+  z-index: 1;
+}
+
+.wire-slots-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  margin-left: 55px;
+  margin-right: 45px;
+}
+
+.circuit-slot {
+  background: var(--bg-card);
+  border: 1px dashed var(--border-medium);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: all var(--transition-fast);
+}
+
+.circuit-slot:hover {
+  border-color: var(--border-focus);
+  background: var(--bg-obsidian);
+  color: var(--text-primary);
+}
+
+.circuit-slot.occupied {
+  background: var(--text-primary);
+  color: var(--bg-pitch);
+  border: 1px solid var(--text-primary);
+  box-shadow: 0 4px 12px var(--accent-glow-intense);
+}
+
+.wire-out-label {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  min-width: 35px;
+  text-align: right;
+}
+
+.circuit-math-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.circuit-math-card {
+  background: var(--bg-card);
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-medium);
+  box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+.math-card-label {
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.82rem;
+}
+
+.math-card-value {
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+/* 2-Qubit Circuit Dark Mode Overrides */
+[data-theme="dark"] .circuit-builder-container {
+  background: rgba(10, 12, 18, 0.85);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .circuit-title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .circuit-subtitle {
+  color: #9aa0b4;
+}
+
+[data-theme="dark"] .target-wire-label {
+  color: #9aa0b4;
+}
+
+[data-theme="dark"] .target-wire-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .target-wire-btn.active {
+  background: #ffffff;
+  color: #040508;
+  border-color: #ffffff;
+}
+
+[data-theme="dark"] .wire-divider {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .circuit-grid-board {
+  background: rgba(0, 0, 0, 0.65);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .wire-label {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .wire-line {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .wire-out-label {
+  color: #9aa0b4;
+}
+
+[data-theme="dark"] .circuit-slot {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #9aa0b4;
+}
+
+[data-theme="dark"] .circuit-slot.occupied {
+  background: #ffffff;
+  color: #040508;
+  border-color: #ffffff;
+}
+
+[data-theme="dark"] .circuit-math-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .math-card-label {
+  color: #9aa0b4;
+}
+
+[data-theme="dark"] .math-card-value {
+  color: #ffffff;
+}
+
+/* Mobile Responsive Overrides for Simulations & Virtual Lab */
+@media (max-width: 768px) {
+  .lab-tab-nav {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    white-space: nowrap;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-medium);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lab-tab-btn {
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    flex-shrink: 0;
+  }
+
+  .sim-panel-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .sim-panel {
+    padding: 16px;
+  }
+
+  .circuit-grid-board {
+    padding: 18px 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .qubit-wire-row {
+    min-width: 460px;
+  }
+
+  .circuit-math-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .sim-overlay-hud {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .hud-pill {
+    font-size: 0.72rem;
+    padding: 4px 10px;
+  }
+
+  .amplitude-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
 }

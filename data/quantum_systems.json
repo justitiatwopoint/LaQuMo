@@ -1,0 +1,132 @@
+[
+  {
+    "id": "rydberg-neutral-atom",
+    "name": "Neutral Rubidium-87 Rydberg Atom Array (QuEra Aquila)",
+    "category": "Hardware",
+    "type": "Neutral Atom QPU",
+    "qubits_required": 256,
+    "ground_state_energy": "-12.450 rad/μs",
+    "hamiltonian": "\\hat{\\mathcal{H}} = \\sum_{i} \\frac{\\Omega(t)}{2}\\hat{\\sigma}_i^x - \\sum_i \\Delta(t)\\hat{n}_i + \\sum_{i < j} \\frac{C_6}{|r_i - r_j|^6}\\hat{n}_i \\hat{n}_j",
+    "energy_levels": [-12.450, -9.820, -7.140, -4.320, 0.000],
+    "description": "QuEra Aquila 256-atom neutral qubit architecture. Trapped in optical tweezers in vacuum, interacting via long-range van der Waals Rydberg blockade.",
+    "properties": {
+      "Atom Species": "87Rb (Rubidium-87)",
+      "Rydberg State": "|70S_{1/2}⟩",
+      "Interaction Coeff (C6)": "862,000 GHz·μm^6",
+      "Blockade Radius (Rb)": "7.6 μm",
+      "Coherence Time (T2*)": "4.2 μs",
+      "QPU Capacity": "256 Analog Atoms"
+    },
+    "tags": ["Neutral Atom", "QuEra", "Rydberg", "Aquila", "Optical Tweezers"]
+  },
+  {
+    "id": "lih-molecule",
+    "name": "Lithium Hydride (LiH)",
+    "category": "Quantum Chemistry",
+    "type": "Molecular Hamiltonian",
+    "qubits_required": 4,
+    "ground_state_energy": "-7.8827 Hartree",
+    "hamiltonian": "H = -7.88 + 0.17 Z_0 - 0.22 Z_1 + 0.12 X_0 X_1 Z_2 + 0.08 Y_0 Y_1 Z_2",
+    "energy_levels": [-7.8827, -7.5412, -7.1235, -6.4819, -5.9201],
+    "description": "Benchmark molecule for Variational Quantum Eigensolver (VQE) and quantum chemistry simulation on NISQ devices.",
+    "properties": {
+      "Bond Length": "1.595 Å",
+      "Dipole Moment": "5.88 Debye",
+      "Basis Set": "STO-3G",
+      "Ansatz": "UCCSD / Hardware-Efficient"
+    },
+    "tags": ["VQE", "Chemistry", "NISQ", "Fermionic"]
+  },
+  {
+    "id": "heisenberg-spin-chain",
+    "name": "1D Heisenberg Spin-1/2 Chain",
+    "category": "Condensed Matter",
+    "type": "Many-Body Spin Model",
+    "qubits_required": 8,
+    "ground_state_energy": "-3.5620 J",
+    "hamiltonian": "H = J \\sum_{i=1}^{N} (S_i^x S_{i+1}^x + S_i^y S_{i+1}^y + \\Delta S_i^z S_{i+1}^z) + h \\sum_i S_i^z",
+    "energy_levels": [-3.5620, -3.1250, -2.8910, -2.4500, -1.8200],
+    "description": "Fundamental quantum magnetism model exhibiting quantum phase transitions, spinons, and fractional excitations.",
+    "properties": {
+      "Anisotropy (Δ)": "1.0 (Isotropic)",
+      "Boundary": "Periodic (PBC)",
+      "Method": "DMRG / Tensor Networks (MPS)",
+      "Entanglement Scaling": "c/3 * log(L)"
+    },
+    "tags": ["Spin Systems", "DMRG", "Magnetism", "Tensor Networks"]
+  },
+  {
+    "id": "transmon-qubit",
+    "name": "Superconducting Transmon Qubit",
+    "category": "Quantum Hardware",
+    "type": "Nonlinear Resonator",
+    "qubits_required": 1,
+    "ground_state_energy": "0.0000 GHz",
+    "hamiltonian": "H = 4 E_C (\\hat{n} - n_g)^2 - E_J \\cos(\\hat{\\phi})",
+    "energy_levels": [0.000, 4.950, 9.620, 14.010, 18.120],
+    "description": "The gold standard qubit architecture utilized by IBM Quantum, Google Quantum AI, and Rigetti computing devices.",
+    "properties": {
+      "Charging Energy (E_C)": "280 MHz",
+      "Josephson Energy (E_J)": "18.5 GHz",
+      "Ratio (E_J / E_C)": "66.1 (Transmon regime)",
+      "Anharmonicity (α)": "-280 MHz",
+      "T1 Relaxation": "85 μs",
+      "T2 Dephasing": "110 μs"
+    },
+    "tags": ["Hardware", "Superconducting", "Cavity QED", "Transmon"]
+  },
+  {
+    "id": "majorana-kitaev-chain",
+    "name": "Topological Kitaev Wire (Majorana Zero Modes)",
+    "category": "Topological Matter",
+    "type": "Topological Superconductor",
+    "qubits_required": 12,
+    "ground_state_energy": "-4.2100 Δ",
+    "hamiltonian": "H = -\\mu \\sum_i c_i^\\dagger c_i - t \\sum_i (c_i^\\dagger c_{i+1} + h.c.) + \\Delta \\sum_i (c_i c_{i+1} + h.c.)",
+    "energy_levels": [-4.2100, -4.2099, -2.1500, -1.8200, 0.0000],
+    "description": "1D p-wave superconducting lattice hosting non-Abelian Majorana zero modes at wire boundaries for fault-tolerant topological quantum computation.",
+    "properties": {
+      "Topological Invariant": "Z_2 = -1 (Nontrivial)",
+      "Edge Mode Splitting": "δE ~ e^(-L / ξ)",
+      "Chemical Potential (μ)": "0.5 t",
+      "Pairing Gap (Δ)": "0.8 t"
+    },
+    "tags": ["Majorana", "Topological", "Fault-Tolerant", "Superconductor"]
+  },
+  {
+    "id": "graphene-hexagonal-lattice",
+    "name": "2D Graphene Dirac Cone Lattice",
+    "category": "2D Materials & Electronic Structure",
+    "type": "Tight-Binding Electronic Model",
+    "qubits_required": 16,
+    "ground_state_energy": "-15.624 eV",
+    "hamiltonian": "H = -t \\sum_{\\langle i,j \\rangle, \\sigma} (a_{i\\sigma}^\\dagger b_{j\\sigma} + h.c.) - t' \\sum_{\\langle\\langle i,j \\rangle\\rangle, \\sigma} (a_{i\\sigma}^\\dagger a_{j\\sigma} + b_{i\\sigma}^\\dagger b_{j\\sigma})",
+    "energy_levels": [-15.624, -9.200, -2.700, 0.000, 2.700],
+    "description": "Honeycomb carbon allotrope with massless Dirac fermions, linear dispersion near K/K' points, and relativistic Berry phase.",
+    "properties": {
+      "Hopping Parameter (t)": "2.8 eV",
+      "Next-Nearest (t')": "0.1 eV",
+      "Fermi Velocity (v_F)": "10^6 m/s",
+      "Lattice Constant (a)": "2.46 Å"
+    },
+    "tags": ["Graphene", "Dirac Fermions", "Tight-Binding", "2D Materials"]
+  },
+  {
+    "id": "quantum-dot-coupled",
+    "name": "Coupled Double Quantum Dot (Singlet-Triplet Qubit)",
+    "category": "Semiconductor Qubits",
+    "type": "Exchange Interaction Model",
+    "qubits_required": 2,
+    "ground_state_energy": "-1.450 meV",
+    "hamiltonian": "H = J(\\epsilon) \\vec{S}_1 \\cdot \\vec{S}_2 + g \\mu_B \\vec{B} \\cdot (\\vec{S}_1 + \\vec{S}_2) + \\Delta B_z (S_{1z} - S_{2z})",
+    "energy_levels": [-1.450, -0.920, -0.410, 0.000, 0.850],
+    "description": "Two coupled GaAs/Si-MOS quantum dots hosting electron spins with electric-field tunable exchange interaction J(ε).",
+    "properties": {
+      "Exchange Splitting (J)": "120 MHz",
+      "Tunnel Coupling (t_c)": "1.2 GHz",
+      "Magnetic Field (B)": "200 mT",
+      "Decoherence Time (T2*)": "1.5 μs"
+    },
+    "tags": ["Quantum Dot", "Semiconductor", "Singlet-Triplet", "Spin Qubit"]
+  }
+]
