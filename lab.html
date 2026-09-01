@@ -79,6 +79,14 @@
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
+  <!-- Theme Manager (Prevents color flash on load) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('laqumo_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <script src="js/theme.js" defer></script>
 </head>
 <body>
 
@@ -105,13 +113,13 @@
       <li><a href="lab.html" class="active" style="color: var(--accent-white); font-weight: bold;">Virtual Lab</a></li>
       <li><a href="index.html#architecture">Architecture</a></li>
       <li><a href="index.html#benchmarks">Complexity &amp; Bounds</a></li>
-      <li><a href="index.html#api">Developer API</a></li>
-      <li><a href="index.html#double-slit">Double-Slit</a></li>
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
 
     <div class="nav-actions">
-      <!-- Cleaned up redundant action buttons -->
+      <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Light/Dark Theme">
+        <span class="theme-text">Light</span>
+      </button>
     </div>
   </nav>
 
@@ -195,9 +203,9 @@
             \[ |\psi\rangle = \cos(\theta/2)|0\rangle + e^{i\phi}\sin(\theta/2)|1\rangle \]
           </div>
 
-          <div style="background: rgba(255, 255, 255, 0.04); padding: 12px; border-radius: var(--radius-xs); border: 1px solid rgba(255, 255, 255, 0.12);">
+          <div style="background: var(--bg-card); padding: 12px; border-radius: var(--radius-xs); border: 1px solid var(--border-medium);">
             <div style="font-size: 0.78rem; color: var(--text-secondary); font-weight: 600;">Current State Vector:</div>
-            <div id="bloch-state-formula" style="font-family: var(--font-mono); font-size: 0.84rem; color: #ffffff; font-weight: 700; margin-top: 4px;">
+            <div id="bloch-state-formula" style="font-family: var(--font-mono); font-size: 0.84rem; color: var(--text-primary); font-weight: 700; margin-top: 4px;">
               |\psi\rangle = 0.866|0\rangle + (0.354 + 0.354i)|1\rangle
             </div>
           </div>
@@ -213,7 +221,7 @@
             <canvas id="bloch-canvas" class="sim-canvas"></canvas>
           </div>
 
-          <div style="padding: 16px; background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.12);">
+          <div style="padding: 16px; background: var(--bg-obsidian); border-top: 1px solid var(--border-medium);">
             <div class="amplitude-grid">
               <div class="amplitude-card">
                 <div class="amp-ket">|0⟩ Probability</div>
@@ -238,72 +246,72 @@
 
     <!-- TAB 2: 2-QUBIT QUANTUM CIRCUIT GRID -->
     <section id="tab-circuit" class="lab-content-section">
-      <div class="circuit-builder-container" style="padding: 28px; background: rgba(10, 12, 18, 0.85); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-md);">
+      <div class="circuit-builder-container">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
           <div>
-            <h3 style="font-family: var(--font-display); font-size: 1.3rem; color: #ffffff; margin-bottom: 4px;">2-Qubit Quantum Circuit Grid &amp; Entanglement Engine</h3>
-            <p style="font-size: 0.88rem; color: var(--slate-light);">
+            <h3 class="circuit-title">2-Qubit Quantum Circuit Grid &amp; Entanglement Engine</h3>
+            <p class="circuit-subtitle">
               Select a target wire (q₀ or q₁) and click gates to append unitaries. Add <strong>CNOT</strong> to entangle q₀ &amp; q₁ into a Bell state!
             </p>
           </div>
           <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-            <span style="font-size: 0.82rem; color: var(--slate-light); font-family: var(--font-mono);">Target Wire:</span>
+            <span class="target-wire-label">Target Wire:</span>
             <button class="target-wire-btn active" data-wire="q0" id="btn-select-q0">q₀</button>
             <button class="target-wire-btn" data-wire="q1" id="btn-select-q1">q₁</button>
-            <div style="width: 1px; height: 24px; background: rgba(255,255,255,0.2); margin: 0 4px;"></div>
-            <button class="gate-btn" data-gate="H" title="Hadamard Gate (Equal Superposition)">H</button>
-            <button class="gate-btn" data-gate="X" title="Pauli-X Gate (Bit Flip / NOT)">X</button>
-            <button class="gate-btn" data-gate="Y" title="Pauli-Y Gate">Y</button>
-            <button class="gate-btn" data-gate="Z" title="Pauli-Z Gate (Phase Flip)">Z</button>
-            <button class="gate-btn" data-gate="S" title="S Gate (90° Phase Shift)">S</button>
-            <button class="gate-btn" data-gate="T" title="T Gate (45° Phase Shift)">T</button>
-            <button class="gate-btn gate-btn-cnot" data-gate="CNOT" title="CNOT Entangling Gate (Control q0 → Target q1)" style="width: auto; padding: 0 10px; font-size: 0.8rem;">CNOT (q₀→q₁)</button>
-            <button class="btn btn-outline btn-sm" id="btn-circuit-reset" style="padding: 6px 14px; margin-left: 6px;">Reset Grid</button>
+            <div class="wire-divider"></div>
+            <button class="gate-btn" data-gate="H" title="Hadamard Gate (Equal Superposition)"><span class="gate-symbol">H</span></button>
+            <button class="gate-btn" data-gate="X" title="Pauli-X Gate (Bit Flip / NOT)"><span class="gate-symbol">X</span></button>
+            <button class="gate-btn" data-gate="Y" title="Pauli-Y Gate"><span class="gate-symbol">Y</span></button>
+            <button class="gate-btn" data-gate="Z" title="Pauli-Z Gate (Phase Flip)"><span class="gate-symbol">Z</span></button>
+            <button class="gate-btn" data-gate="S" title="S Gate (90° Phase Shift)"><span class="gate-symbol">S</span></button>
+            <button class="gate-btn" data-gate="T" title="T Gate (45° Phase Shift)"><span class="gate-symbol">T</span></button>
+            <button class="gate-btn gate-btn-cnot" data-gate="CNOT" title="CNOT Entangling Gate (Control q0 → Target q1)">CNOT (q₀→q₁)</button>
+            <button class="btn btn-outline btn-sm" id="btn-circuit-reset">Reset Grid</button>
           </div>
         </div>
 
         <!-- 2-Qubit Parallel Grid Lines -->
-        <div class="circuit-grid-board" style="background: rgba(0,0,0,0.65); padding: 28px 32px; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 24px; position: relative;">
+        <div class="circuit-grid-board">
           
           <!-- Qubit Wire 0 (q0) -->
-          <div class="qubit-wire-row" id="wire-row-q0" style="display: flex; align-items: center; gap: 16px; position: relative;">
-            <span class="wire-label" style="font-family: var(--font-mono); color: #ffffff; font-weight: bold; font-size: 0.95rem; min-width: 45px;">q₀: |0⟩</span>
-            <div style="flex-grow: 1; height: 2px; background: rgba(255,255,255,0.2); position: absolute; left: 60px; right: 45px; top: 50%; z-index: 1;"></div>
-            <div class="wire-slots-container" id="slots-q0" style="display: flex; justify-content: space-around; width: 100%; position: relative; z-index: 2; margin-left: 50px; margin-right: 40px;">
+          <div class="qubit-wire-row" id="wire-row-q0">
+            <span class="wire-label">q₀: |0⟩</span>
+            <div class="wire-line"></div>
+            <div class="wire-slots-container" id="slots-q0">
               <div class="circuit-slot" data-wire="q0" data-step="0"><span class="slot-placeholder">+</span></div>
               <div class="circuit-slot" data-wire="q0" data-step="1"><span class="slot-placeholder">+</span></div>
               <div class="circuit-slot" data-wire="q0" data-step="2"><span class="slot-placeholder">+</span></div>
               <div class="circuit-slot" data-wire="q0" data-step="3"><span class="slot-placeholder">+</span></div>
               <div class="circuit-slot" data-wire="q0" data-step="4"><span class="slot-placeholder">+</span></div>
             </div>
-            <span class="wire-out-label" style="font-family: var(--font-mono); color: var(--slate-light); font-size: 0.85rem; min-width: 35px; text-align: right;">out₀</span>
+            <span class="wire-out-label">out₀</span>
           </div>
 
           <!-- Qubit Wire 1 (q1) -->
-          <div class="qubit-wire-row" id="wire-row-q1" style="display: flex; align-items: center; gap: 16px; position: relative;">
-            <span class="wire-label" style="font-family: var(--font-mono); color: #ffffff; font-weight: bold; font-size: 0.95rem; min-width: 45px;">q₁: |0⟩</span>
-            <div style="flex-grow: 1; height: 2px; background: rgba(255,255,255,0.2); position: absolute; left: 60px; right: 45px; top: 50%; z-index: 1;"></div>
-            <div class="wire-slots-container" id="slots-q1" style="display: flex; justify-content: space-around; width: 100%; position: relative; z-index: 2; margin-left: 50px; margin-right: 40px;">
+          <div class="qubit-wire-row" id="wire-row-q1">
+            <span class="wire-label">q₁: |0⟩</span>
+            <div class="wire-line"></div>
+            <div class="wire-slots-container" id="slots-q1">
               <div class="circuit-slot" data-wire="q1" data-step="0"><span class="slot-placeholder">+</span></div>
               <div class="circuit-slot" data-wire="q1" data-step="1"><span class="slot-placeholder">+</span></div>
               <div class="circuit-slot" data-wire="q1" data-step="2"><span class="slot-placeholder">+</span></div>
               <div class="circuit-slot" data-wire="q1" data-step="3"><span class="slot-placeholder">+</span></div>
               <div class="circuit-slot" data-wire="q1" data-step="4"><span class="slot-placeholder">+</span></div>
             </div>
-            <span class="wire-out-label" style="font-family: var(--font-mono); color: var(--slate-light); font-size: 0.85rem; min-width: 35px; text-align: right;">out₁</span>
+            <span class="wire-out-label">out₁</span>
           </div>
 
         </div>
 
         <!-- Exact 2-Qubit Statevector Math Display -->
-        <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; font-family: var(--font-mono); font-size: 0.85rem;">
-          <div style="background: rgba(255,255,255,0.03); padding: 14px 18px; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.1);">
-            <span style="color: var(--slate-light); display: block; margin-bottom: 4px;">Computed 2-Qubit Statevector |Ψ⟩:</span>
-            <span id="circuit-math-statevector" style="color: #ffffff; font-weight: 600;">1.000|00⟩ + 0.000|01⟩ + 0.000|10⟩ + 0.000|11⟩</span>
+        <div class="circuit-math-grid">
+          <div class="circuit-math-card">
+            <span class="math-card-label">Computed 2-Qubit Statevector |Ψ⟩:</span>
+            <span id="circuit-math-statevector" class="math-card-value">1.000|00⟩ + 0.000|01⟩ + 0.000|10⟩ + 0.000|11⟩</span>
           </div>
-          <div style="background: rgba(255,255,255,0.03); padding: 14px 18px; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.1);">
-            <span style="color: var(--slate-light); display: block; margin-bottom: 4px;">State Amplitudes &amp; Entanglement:</span>
-            <span id="circuit-math-probs" style="color: #ffffff; font-weight: 600;">P(00)=100.0% | P(01)=0.0% | P(10)=0.0% | P(11)=0.0%</span>
+          <div class="circuit-math-card">
+            <span class="math-card-label">State Amplitudes &amp; Entanglement:</span>
+            <span id="circuit-math-probs" class="math-card-value">P(00)=100.0% | P(01)=0.0% | P(10)=0.0% | P(11)=0.0%</span>
           </div>
         </div>
       </div>

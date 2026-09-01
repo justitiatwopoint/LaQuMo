@@ -72,12 +72,15 @@ function initParticleNetwork() {
 
       p.pulse += 0.02;
       const currentAlpha = p.alpha + Math.sin(p.pulse) * 0.15;
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const particleRgb = isDark ? '240, 242, 248' : '15, 23, 42';
+      const lineRgb = isDark ? '220, 225, 240' : '51, 65, 85';
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(240, 242, 248, ${Math.max(0.1, currentAlpha)})`;
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = 'rgba(255, 255, 255, 0.4)';
+      ctx.fillStyle = `rgba(${particleRgb}, ${Math.max(0.12, currentAlpha)})`;
+      ctx.shadowBlur = isDark ? 8 : 3;
+      ctx.shadowColor = isDark ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.2)';
       ctx.fill();
 
       // Entanglement Pairs (Connecting Nearby Particles)
@@ -88,11 +91,11 @@ function initParticleNetwork() {
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < 120) {
-          const lineAlpha = (1 - dist / 120) * 0.15;
+          const lineAlpha = (1 - dist / 120) * (isDark ? 0.15 : 0.12);
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(p2.x, p2.y);
-          ctx.strokeStyle = `rgba(220, 225, 240, ${lineAlpha})`;
+          ctx.strokeStyle = `rgba(${lineRgb}, ${lineAlpha})`;
           ctx.lineWidth = 0.7;
           ctx.stroke();
         }
@@ -183,17 +186,23 @@ function initBlochSphere() {
       targetPhi = window.blochPhi + animTime * 0.3;
     }
 
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const ringColor = isDark ? 'rgba(255, 255, 255, 0.25)' : 'rgba(0, 0, 0, 0.25)';
+    const equatorColor = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.15)';
+    const axisColor = isDark ? 'rgba(255, 255, 255, 0.35)' : 'rgba(0, 0, 0, 0.4)';
+    const textColor = isDark ? '#ffffff' : '#000000';
+
     // Outer Sphere Ring
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+    ctx.strokeStyle = ringColor;
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
     // Equator Ellipse
     ctx.beginPath();
     ctx.ellipse(cx, cy, r, r * 0.3, 0, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.strokeStyle = equatorColor;
     ctx.setLineDash([4, 4]);
     ctx.stroke();
     ctx.setLineDash([]);
@@ -202,13 +211,13 @@ function initBlochSphere() {
     ctx.beginPath();
     ctx.moveTo(cx, cy - r - 15);
     ctx.lineTo(cx, cy + r + 15);
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+    ctx.strokeStyle = axisColor;
     ctx.lineWidth = 1;
     ctx.stroke();
 
     // Axis Labels
-    ctx.fillStyle = '#ffffff';
-    ctx.font = '12px "JetBrains Mono", monospace';
+    ctx.fillStyle = textColor;
+    ctx.font = 'bold 12px "JetBrains Mono", monospace';
     ctx.fillText('|0⟩', cx - 8, cy - r - 12);
     ctx.fillText('|1⟩', cx - 8, cy + r + 24);
     ctx.fillText('|i+⟩', cx + r + 12, cy + 4);
@@ -225,17 +234,17 @@ function initBlochSphere() {
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.lineTo(px, py);
-    ctx.strokeStyle = '#ffffff';
+    ctx.strokeStyle = textColor;
     ctx.lineWidth = 2.5;
-    ctx.shadowBlur = 12;
-    ctx.shadowColor = '#ffffff';
+    ctx.shadowBlur = isDark ? 12 : 4;
+    ctx.shadowColor = isDark ? '#ffffff' : 'rgba(0, 0, 0, 0.3)';
     ctx.stroke();
     ctx.shadowBlur = 0;
 
     // Endpoint Bead
     ctx.beginPath();
     ctx.arc(px, py, 6, 0, Math.PI * 2);
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = textColor;
     ctx.fill();
 
     requestAnimationFrame(renderBlochSphere);

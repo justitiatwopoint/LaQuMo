@@ -20,6 +20,14 @@
     };
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!-- Theme Manager (Prevents color flash on load) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('laqumo_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <script src="js/theme.js" defer></script>
 </head>
 <body>
 
@@ -50,7 +58,9 @@
     </ul>
 
     <div class="nav-actions">
-      <!-- Cleaned up redundant action buttons -->
+      <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Light/Dark Theme">
+        <span class="theme-text">Light</span>
+      </button>
     </div>
   </nav>
 
@@ -144,7 +154,7 @@
 
             <div style="margin-top: 12px; font-size: 0.82rem; color: var(--text-muted);">
               Current State Vector Equation:
-              <div id="dynamic-state-latex" style="margin-top: 8px; font-family: var(--font-mono); color: var(--accent-white);">
+              <div id="dynamic-state-latex" style="margin-top: 8px; font-family: var(--font-mono); color: var(--text-primary);">
                 \(|\Psi_{LaQuMo}\rangle = 0.71|00\dots 0\rangle + 0.71e^{i\phi}|11\dots 1\rangle\)
               </div>
             </div>
@@ -278,7 +288,7 @@
               <td>-7.82 Hartree (HF Approx.)</td>
               <td>-7.8827 Hartree (FCI Exact)</td>
               <td><span class="tag-highlight">&le; 1.6 mHartree Target</span></td>
-              <td>Peruzzo et al. (Nature 2014)</td>
+              <td>Kandala et al. (Nature 2017)</td>
             </tr>
             <tr>
               <td><strong>MAX-CUT Combinatorial Optimization</strong></td>
