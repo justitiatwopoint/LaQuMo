@@ -4,7 +4,7 @@ This guide walks you through publishing **LaQuMo** directly on **GitHub Pages** 
 
 ---
 
-## Table of Contents
+## 📋 Table of Contents
 1. [Step 1: Push Project to GitHub](#step-1-push-project-to-github)
 2. [Step 2: Enable GitHub Pages](#step-2-enable-github-pages)
 3. [Step 3: Configure DNS Records at Your Domain Registrar](#step-3-configure-dns-records-at-your-domain-registrar)
@@ -95,7 +95,7 @@ Create a **CNAME** record to route `www` traffic to your GitHub Pages domain:
 
 ---
 
-## Verification & Troubleshooting
+## 🔍 Verification & Troubleshooting
 
 - **Check DNS Propagation**: Run `nslookup yourdomain.com` or use [dnschecker.org](https://dnschecker.org) to verify all 4 GitHub IP addresses are resolved.
 - **SSL Certificate Delay**: GitHub issues free TLS/SSL certificates via Let's Encrypt automatically. If you see a warning initially, give it 15–30 minutes for certificate provisioning.
