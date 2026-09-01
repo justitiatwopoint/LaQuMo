@@ -4,7 +4,7 @@ This guide walks you through publishing **LaQuMo** directly on **GitHub Pages** 
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 1. [Step 1: Push Project to GitHub](#step-1-push-project-to-github)
 2. [Step 2: Enable GitHub Pages](#step-2-enable-github-pages)
 3. [Step 3: Configure DNS Records at Your Domain Registrar](#step-3-configure-dns-records-at-your-domain-registrar)
