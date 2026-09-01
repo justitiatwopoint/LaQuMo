@@ -6,8 +6,26 @@
   <title>LaQuMo | Virtual Quantum Physics Laboratory</title>
   <meta name="description" content="LaQuMo Virtual Quantum Lab: Interactive in-browser simulations for Bloch Sphere 3D, Rydberg Atom Lattice, Schrödinger Tunneling, Double-Slit, and Bell Entanglement.">
   
+  <!-- Inline Safety Fallback (Prevents Canvas Drag-Down & Layout Flashes) -->
+  <style>
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background-color: #FFFFFF;
+    }
+    #quantum-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -2;
+      pointer-events: none;
+    }
+  </style>
+
   <!-- Stylesheets (Exact Same Soothing Dark Obsidian Theme as index.html) -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/simulations.css">
   <link rel="stylesheet" href="css/schrodinger-bot.css">
 
@@ -504,7 +522,7 @@
   <script src="js/auth.js"></script>
   <script src="js/schrodinger-bot.js"></script>
   <script src="js/main.js"></script>
-  <script src="app.js"></script>
+  <script src="js/app.js"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
