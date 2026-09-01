@@ -11,19 +11,19 @@ This repository contains the interactive scientific web application showcase for
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
-- **⚡ Live Quantum AI Prompt Simulator**: Real-time terminal interface streaming VQC ansatz execution, NISQ noise mitigation, state collapse, and tensor outputs.
-- **⚛️ Interactive Quantum State Visualizer**: Live 3D Bloch sphere vector projection canvas, 128-Qubit state sliders, T2 decoherence noise controls, and real-time probability amplitude distribution charts ($|0000\rangle \dots |1111\rangle$).
-- **🌌 Quantum Neon Canvas**: Particle entanglement background physics simulation rendered on HTML5 canvas with mouse interaction physics.
-- **🧮 LaTeX Mathematical Equations**: Native MathJax v3 integration rendering continuous quantum operator equations and Variational Quantum Circuit (VQC) ansatzes.
-- **📊 Scientific Benchmarks**: Quantitative evaluations comparing LaQuMo-3.0 against classical models (GPT-4, Claude 3.5 Sonnet, Gemini 1.5 Pro) across VQE energy estimation, FeMoco active site simulation, and Max-Cut optimization.
-- **💻 Developer SDK Playground**: Interactive code viewer supporting PyTorch, Qiskit, PennyLane, and cURL REST API with copy functionality.
-- **🌐 GitHub Pages + Custom Domain**: Fully optimized for GitHub Pages hosting with custom 3rd-party domain mapping.
+- **Live Quantum AI Prompt Simulator**: Real-time terminal interface streaming VQC ansatz execution, NISQ noise mitigation, state collapse, and tensor outputs.
+- **Interactive Quantum State Visualizer**: Live 3D Bloch sphere vector projection canvas, 128-Qubit state sliders, T2 decoherence noise controls, and real-time probability amplitude distribution charts ($|0000\rangle \dots |1111\rangle$).
+- **Quantum Neon Canvas**: Particle entanglement background physics simulation rendered on HTML5 canvas with mouse interaction physics.
+- **LaTeX Mathematical Equations**: Native MathJax v3 integration rendering continuous quantum operator equations and Variational Quantum Circuit (VQC) ansatzes.
+- **Scientific Benchmarks**: Quantitative evaluations comparing LaQuMo-3.0 against classical models (GPT-4, Claude 3.5 Sonnet, Gemini 1.5 Pro) across VQE energy estimation, FeMoco active site simulation, and Max-Cut optimization.
+- **Developer SDK Playground**: Interactive code viewer supporting PyTorch, Qiskit, PennyLane, and cURL REST API with copy functionality.
+- **GitHub Pages + Custom Domain**: Fully optimized for GitHub Pages hosting with custom 3rd-party domain mapping.
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
 ├── index.html                  # Main interactive scientific single-page web app
@@ -36,7 +36,7 @@ This repository contains the interactive scientific web application showcase for
 
 ---
 
-## 🚀 Quick Start (Local Development)
+## Quick Start (Local Development)
 
 ### Prerequisites
 - Node.js (v18+) or any standard static web server.
@@ -59,7 +59,7 @@ This repository contains the interactive scientific web application showcase for
 
 ---
 
-## 🌐 Hosting on GitHub Pages with Custom Domain
+## Hosting on GitHub Pages with Custom Domain
 
 To publish this website using **GitHub Pages** with your custom third-party domain:
 
@@ -78,7 +78,7 @@ To publish this website using **GitHub Pages** with your custom third-party doma
 
 ---
 
-## 🔬 Mathematical Formulation
+## Mathematical Formulation
 
 LaQuMo represents multi-qubit system state vectors in Hilbert space:
 
@@ -90,6 +90,6 @@ $$\text{Attention}(Q,K,V) = \text{Softmax}\left( \frac{|\langle \psi_Q | \psi_K 
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the [MIT License](LICENSE).
