@@ -95,7 +95,7 @@ Create a **CNAME** record to route `www` traffic to your GitHub Pages domain:
 
 ---
 
-## 🔍 Verification & Troubleshooting
+## Verification & Troubleshooting
 
 - **Check DNS Propagation**: Run `nslookup yourdomain.com` or use [dnschecker.org](https://dnschecker.org) to verify all 4 GitHub IP addresses are resolved.
 - **SSL Certificate Delay**: GitHub issues free TLS/SSL certificates via Let's Encrypt automatically. If you see a warning initially, give it 15–30 minutes for certificate provisioning.
