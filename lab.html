@@ -167,6 +167,12 @@
       <button class="lab-tab-btn" data-target="tab-circuit">
         2-Qubit Quantum Circuit Grid
       </button>
+      <button class="lab-tab-btn" data-target="tab-vqe">
+        VQE Energy Estimation
+      </button>
+      <button class="lab-tab-btn" data-target="tab-maxcut">
+        Max-Cut QAOA Optimization
+      </button>
       <button class="lab-tab-btn" data-target="tab-rydberg">
         Neutral-Atom Rydberg Lattice
       </button>
@@ -332,6 +338,108 @@
           <div class="circuit-math-card">
             <span class="math-card-label">State Amplitudes &amp; Entanglement:</span>
             <span id="circuit-math-probs" class="math-card-value">P(00)=100.0% | P(01)=0.0% | P(10)=0.0% | P(11)=0.0%</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: VQE ENERGY ESTIMATION -->
+    <section id="tab-vqe" class="lab-content-section">
+      <div class="sim-grid">
+        <div class="sim-panel">
+          <div class="sim-panel-title">
+            VQE Pauli Expectation &amp; Ansatz
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+            Evaluates real Pauli expectation values \(\langle ZI \rangle, \langle IZ \rangle, \langle ZZ \rangle, \langle XX \rangle, \langle YY \rangle\) on a 2-qubit UCC statevector \(|\Psi(\theta)\rangle\) for \(\text{H}_2\) (\(R = 0.75\text{ \AA}\)).
+          </p>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Variational Parameter \(\theta\)</span>
+              <span class="control-val-tag" id="val-vqe-theta">-1.456 rad (-83.4°)</span>
+            </div>
+            <input type="range" id="vqe-theta" class="sim-slider" min="-3.14159" max="3.14159" step="0.001" value="-1.456">
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-top: 14px;">
+            <button class="btn btn-primary btn-sm" id="vqe-btn-optimize" style="flex: 1;">Run VQE Auto-Optimizer</button>
+          </div>
+
+          <div class="math-block" style="font-size: 0.84rem; margin-top: 16px;">
+            \[ E(\theta) = \langle \Psi(\theta) | \hat{H}_{\text{elec}} | \Psi(\theta) \rangle + V_{\text{nuc}} \]
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.04); padding: 12px; border-radius: var(--radius-xs); border: 1px solid rgba(255, 255, 255, 0.12); margin-top: 10px;">
+            <div style="font-size: 0.82rem; color: var(--text-secondary);">VQE Computed Energy: <strong id="vqe-energy-tag" style="color: #10b981;">-1.145630 Hartree</strong></div>
+            <div style="font-size: 0.82rem; color: var(--text-secondary);">FCI Target Energy \(E_0\): <strong style="color: #ffffff;">-1.137306 Hartree</strong></div>
+            <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;" id="vqe-pauli-tag">⟨ZI⟩= -0.978 | ⟨IZ⟩= 0.978 | ⟨XX⟩= -0.208</div>
+            <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;">Energy Error: <span id="vqe-error-tag" style="color: #f59e0b;">8.3241 mHartree</span></div>
+            <div style="font-size: 0.78rem; font-weight: 700; margin-top: 6px; color: #f59e0b;" id="vqe-status-tag">VARIATIONAL BOUND REACHED (8.32 mHartree)</div>
+          </div>
+        </div>
+
+        <div class="sim-viewport">
+          <div class="sim-overlay-hud">
+            <div class="hud-pill">O'Malley et al. PRX 2016 Hamiltonian</div>
+            <div class="hud-pill">Continuous Energy Landscape \(E(\theta)\)</div>
+          </div>
+          <div class="sim-canvas-wrap">
+            <canvas id="vqe-canvas" class="sim-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: MAX-CUT QAOA OPTIMIZATION -->
+    <section id="tab-maxcut" class="lab-content-section">
+      <div class="sim-grid">
+        <div class="sim-panel">
+          <div class="sim-panel-title">
+            QAOA 16D Statevector Unitaries
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+            Solves 4-node ring graph Max-Cut partition using 16-dimensional QAOA statevector \(|\gamma, \beta\rangle = e^{-i \beta H_M} e^{-i \gamma H_C} |+\rangle^{\otimes 4}\).
+          </p>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Cost Unitary \(\gamma\) (Gamma)</span>
+              <span class="control-val-tag" id="val-qaoa-gamma">0.785 rad (45.0°)</span>
+            </div>
+            <input type="range" id="qaoa-gamma" class="sim-slider" min="0" max="3.14159" step="0.01" value="0.7854">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Mixer Unitary \(\beta\) (Beta)</span>
+              <span class="control-val-tag" id="val-qaoa-beta">0.393 rad (22.5°)</span>
+            </div>
+            <input type="range" id="qaoa-beta" class="sim-slider" min="0" max="1.57079" step="0.01" value="0.3927">
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-top: 14px;">
+            <button class="btn btn-primary btn-sm" id="qaoa-btn-optimize" style="flex: 1;">Run QAOA Auto-Optimizer</button>
+          </div>
+
+          <div class="math-block" style="font-size: 0.84rem; margin-top: 16px;">
+            \[ \langle C \rangle = \langle \gamma, \beta | H_C | \gamma, \beta \rangle = \sum_x P(x) \text{Cut}(x) \]
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.04); padding: 12px; border-radius: var(--radius-xs); border: 1px solid rgba(255, 255, 255, 0.12); margin-top: 10px;">
+            <div style="font-size: 0.82rem; color: var(--text-secondary);">Expected Cut Value \(\langle C \rangle\): <strong id="qaoa-cut-tag" style="color: #f59e0b;">3.0000 / 4.0</strong></div>
+            <div style="font-size: 0.82rem; color: var(--text-secondary);">Approximation Ratio: <strong id="qaoa-ratio-tag" style="color: #10b981;">75.00%</strong></div>
+            <div style="font-size: 0.78rem; color: #ffffff; margin-top: 4px;" id="qaoa-partition-tag">Top Bitstring |0101⟩ → Cut=4/4 (26.6% Prob)</div>
+          </div>
+        </div>
+
+        <div class="sim-viewport">
+          <div class="sim-overlay-hud">
+            <div class="hud-pill">4-Node Graph Topology</div>
+            <div class="hud-pill">Statevector Probability Histogram</div>
+          </div>
+          <div class="sim-canvas-wrap">
+            <canvas id="maxcut-canvas" class="sim-canvas"></canvas>
           </div>
         </div>
       </div>
@@ -515,6 +623,8 @@
   <script src="js/data-store.js"></script>
   <script src="js/quantum-bg.js"></script>
   <script src="js/sim-bloch.js"></script>
+  <script src="js/sim-vqe.js"></script>
+  <script src="js/sim-maxcut.js"></script>
   <script src="js/sim-rydberg.js"></script>
   <script src="js/sim-schrodinger.js"></script>
   <script src="js/sim-doubleslit.js"></script>
@@ -527,6 +637,8 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const bloch = new BlochSphereSimulator('bloch-canvas');
+      let vqe = null;
+      let maxcut = null;
       let rydberg = null;
       let schrodinger = null;
       let doubleslit = null;
@@ -546,7 +658,13 @@
             targetSection.classList.add('active');
 
             requestAnimationFrame(() => {
-              if (targetId === 'tab-rydberg') {
+              if (targetId === 'tab-vqe') {
+                if (!vqe) vqe = new VQESimulator('vqe-canvas');
+                else vqe.resize();
+              } else if (targetId === 'tab-maxcut') {
+                if (!maxcut) maxcut = new MaxCutQAOASimulator('maxcut-canvas');
+                else maxcut.resize();
+              } else if (targetId === 'tab-rydberg') {
                 if (!rydberg) rydberg = new RydbergLatticeSimulator('rydberg-canvas');
                 else rydberg.resize();
               } else if (targetId === 'tab-schrodinger') {
