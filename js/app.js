@@ -25,37 +25,45 @@ document.addEventListener('DOMContentLoaded', () => {
 function initParticleNetwork() {
   const canvas = document.getElementById('quantum-canvas');
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', { alpha: true });
 
   let width = (canvas.width = window.innerWidth);
   let height = (canvas.height = window.innerHeight);
+  let isMobile = width <= 768;
+  let animFrameId = null;
 
   window.addEventListener('resize', () => {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
-  });
+    isMobile = width <= 768;
+  }, { passive: true });
 
-  const particleCount = Math.floor((width * height) / 16000);
+  const particleCount = isMobile 
+    ? Math.min(16, Math.floor((width * height) / 36000)) 
+    : Math.min(45, Math.floor((width * height) / 18000));
+    
   const particles = [];
 
   for (let i = 0; i < particleCount; i++) {
     particles.push({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
+      vx: (Math.random() - 0.5) * (isMobile ? 0.25 : 0.4),
+      vy: (Math.random() - 0.5) * (isMobile ? 0.25 : 0.4),
       radius: Math.random() * 1.8 + 0.8,
       alpha: Math.random() * 0.5 + 0.2,
       pulse: Math.random() * Math.PI * 2
     });
   }
 
-  let mouse = { x: null, y: null, radius: 150 };
+  let mouse = { x: null, y: null, radius: 120 };
 
-  window.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  });
+  if (!isMobile) {
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    }, { passive: true });
+  }
 
   function draw() {
     ctx.clearRect(0, 0, width, height);
@@ -79,19 +87,21 @@ function initParticleNetwork() {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${particleRgb}, ${Math.max(0.12, currentAlpha)})`;
-      ctx.shadowBlur = isDark ? 8 : 3;
-      ctx.shadowColor = isDark ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.2)';
+      ctx.shadowBlur = isMobile ? 0 : (isDark ? 8 : 3);
+      ctx.shadowColor = isMobile ? 'transparent' : (isDark ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.2)');
       ctx.fill();
 
-      // Entanglement Pairs (Connecting Nearby Particles)
+      // Entanglement Pairs (Connecting Nearby Particles - Skipped on small mobile screens for 60 FPS)
+      const maxConnectDist = isMobile ? 85 : 120;
       for (let j = i + 1; j < particles.length; j++) {
         const p2 = particles[j];
         const dx = p.x - p2.x;
         const dy = p.y - p2.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+        const distSq = dx * dx + dy * dy;
 
-        if (dist < 120) {
-          const lineAlpha = (1 - dist / 120) * (isDark ? 0.15 : 0.12);
+        if (distSq < maxConnectDist * maxConnectDist) {
+          const dist = Math.sqrt(distSq);
+          const lineAlpha = (1 - dist / maxConnectDist) * (isDark ? 0.15 : 0.12);
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(p2.x, p2.y);
@@ -102,7 +112,7 @@ function initParticleNetwork() {
       }
 
       // Mouse Interactivity
-      if (mouse.x !== null) {
+      if (mouse.x !== null && !isMobile) {
         const mdx = p.x - mouse.x;
         const mdy = p.y - mouse.y;
         const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
@@ -114,8 +124,18 @@ function initParticleNetwork() {
       }
     }
 
-    requestAnimationFrame(draw);
+    if (!document.hidden) {
+      animFrameId = requestAnimationFrame(draw);
+    }
   }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+    } else {
+      draw();
+    }
+  });
 
   draw();
 }

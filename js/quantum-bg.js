@@ -13,12 +13,15 @@
   let mouse = { x: null, y: null, radius: 150 };
   let scrollY = 0;
 
-  const PARTICLE_COUNT = 50;
-  const CONNECT_DISTANCE = 140;
+  let isMobile = window.innerWidth <= 768;
+  const PARTICLE_COUNT = isMobile ? 16 : 40;
+  const CONNECT_DISTANCE = isMobile ? 90 : 140;
+  let animFrameId = null;
 
   function resize() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
+    isMobile = width <= 768;
   }
 
   class ParallaxParticle {
@@ -48,7 +51,7 @@
       if (this.y < 0) this.y = height;
       if (this.y > height) this.y = 0;
 
-      if (mouse.x !== null && mouse.y !== null) {
+      if (!isMobile && mouse.x !== null && mouse.y !== null) {
         const dx = mouse.x - this.x;
         const dy = mouse.y - currentY;
         const dist = Math.hypot(dx, dy);
@@ -93,9 +96,10 @@
 
         const dx = p1.x - p2.x;
         const dy = p1Y - p2Y;
-        const dist = Math.hypot(dx, dy);
+        const distSq = dx * dx + dy * dy;
 
-        if (dist < CONNECT_DISTANCE) {
+        if (distSq < CONNECT_DISTANCE * CONNECT_DISTANCE) {
+          const dist = Math.sqrt(distSq);
           const alpha = (1 - dist / CONNECT_DISTANCE) * 0.12 * Math.min(p1.depth, p2.depth);
           ctx.beginPath();
           ctx.moveTo(p1.x, p1Y);
@@ -112,10 +116,12 @@
       p.draw();
     });
 
-    requestAnimationFrame(animate);
+    if (!document.hidden) {
+      animFrameId = requestAnimationFrame(animate);
+    }
   }
 
-  // Scroll and Parallax Handlers
+  // Scroll and Parallax Handlers (Passive for 60 FPS mobile scrolling)
   window.addEventListener('scroll', () => {
     scrollY = window.scrollY || window.pageYOffset;
 
@@ -127,17 +133,27 @@
       bar.style.width = `${progress}%`;
     }
 
-    // Parallax Orbs
-    const orb1 = document.querySelector('.orb-1');
-    const orb2 = document.querySelector('.orb-2');
-    const orb3 = document.querySelector('.orb-3');
+    // Parallax Orbs (Only on desktop for performance)
+    if (!isMobile) {
+      const orb1 = document.querySelector('.orb-1');
+      const orb2 = document.querySelector('.orb-2');
+      const orb3 = document.querySelector('.orb-3');
 
-    if (orb1) orb1.style.transform = `translateY(${scrollY * 0.12}px)`;
-    if (orb2) orb2.style.transform = `translateY(${-scrollY * 0.08}px)`;
-    if (orb3) orb3.style.transform = `translateY(${scrollY * 0.05}px)`;
+      if (orb1) orb1.style.transform = `translateY(${scrollY * 0.12}px)`;
+      if (orb2) orb2.style.transform = `translateY(${-scrollY * 0.08}px)`;
+      if (orb3) orb3.style.transform = `translateY(${scrollY * 0.05}px)`;
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', () => resize(), { passive: true });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+    } else {
+      animate();
+    }
   });
-
-  window.addEventListener('resize', () => resize());
   window.addEventListener('mousemove', (e) => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;

@@ -1357,3 +1357,22 @@ html:not([data-theme="dark"]) .moon-icon { display: inline-block; }
   font-size: 0.85rem;
   color: var(--text-muted);
 }
+
+/* Mobile GPU Performance & Smooth Scrolling Overrides (width <= 768px) */
+@media (max-width: 768px) {
+  /* Replace heavy 18px backdrop-filter blur on mobile GPUs for silky 60 FPS scrolling */
+  .navbar, .simulator-wrapper, .arch-layer, .circuit-builder-container, .stat-card, .prompt-simulator-container, .math-block, .arch-math {
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+
+  /* Eliminate 300ms mobile touch tap latency */
+  button, a, input, select, textarea, .circuit-slot, .gate-btn, .lab-tab-btn, .theme-toggle-btn {
+    touch-action: manipulation;
+  }
+
+  /* Prevent canvas touch drag from blocking vertical page scroll */
+  canvas {
+    touch-action: pan-y;
+  }
+}
