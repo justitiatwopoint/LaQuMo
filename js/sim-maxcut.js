@@ -236,7 +236,7 @@ class MaxCutQAOASimulator {
       ctx.stroke();
 
       ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 12px "JetBrains Mono", Consolas, monospace';
+      ctx.font = 'bold 12px "IBM Plex Mono", Consolas, monospace';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(n.label, n.x, n.y);
@@ -248,7 +248,7 @@ class MaxCutQAOASimulator {
     ctx.fillRect(barX - 10, 20, w * 0.14, h - 40);
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = '10px "JetBrains Mono", Consolas, monospace';
+    ctx.font = '10px "IBM Plex Mono", Consolas, monospace';
     ctx.textAlign = 'center';
     ctx.fillText('TOP STATES', barX + (w * 0.07) - 10, 34);
 

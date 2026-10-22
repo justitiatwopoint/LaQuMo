@@ -247,7 +247,7 @@ class BlochSphereSimulator {
     this.ctx.lineWidth = 1.4;
     this.ctx.stroke();
 
-    this.ctx.font = 'bold 11px "JetBrains Mono", monospace';
+    this.ctx.font = 'bold 11px "IBM Plex Mono", monospace';
     this.ctx.fillStyle = color;
     this.ctx.fillText(label, end.x + 6, end.y - 4);
   }

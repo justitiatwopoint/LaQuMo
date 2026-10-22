@@ -81,8 +81,8 @@ function initParticleNetwork() {
       p.pulse += 0.02;
       const currentAlpha = p.alpha + Math.sin(p.pulse) * 0.15;
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      const particleRgb = isDark ? '240, 242, 248' : '15, 23, 42';
-      const lineRgb = isDark ? '220, 225, 240' : '51, 65, 85';
+      const particleRgb = isDark ? '240, 242, 248' : '58, 50, 38';
+      const lineRgb = isDark ? '220, 225, 240' : '96, 86, 70';
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -210,7 +210,7 @@ function initBlochSphere() {
     const ringColor = isDark ? 'rgba(255, 255, 255, 0.25)' : 'rgba(0, 0, 0, 0.25)';
     const equatorColor = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.15)';
     const axisColor = isDark ? 'rgba(255, 255, 255, 0.35)' : 'rgba(0, 0, 0, 0.4)';
-    const textColor = isDark ? '#ffffff' : '#000000';
+    const textColor = isDark ? '#ffffff' : '#2B2823';
 
     // Outer Sphere Ring
     ctx.beginPath();
@@ -237,7 +237,7 @@ function initBlochSphere() {
 
     // Axis Labels
     ctx.fillStyle = textColor;
-    ctx.font = 'bold 12px "JetBrains Mono", monospace';
+    ctx.font = 'bold 12px "IBM Plex Mono", monospace';
     ctx.fillText('|0⟩', cx - 8, cy - r - 12);
     ctx.fillText('|1⟩', cx - 8, cy + r + 24);
     ctx.fillText('|i+⟩', cx + r + 12, cy + 4);

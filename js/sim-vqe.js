@@ -184,7 +184,7 @@ class VQESimulator {
     ctx.setLineDash([]);
 
     ctx.fillStyle = '#ef4444';
-    ctx.font = '10px "JetBrains Mono", Consolas, monospace';
+    ctx.font = '10px "IBM Plex Mono", Consolas, monospace';
     ctx.fillText('Exact (-1.1373 Hartree)', w - 180, fciY - 6);
 
     // Plot E(theta) Curve
@@ -217,7 +217,7 @@ class VQESimulator {
     ctx.stroke();
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 11px "JetBrains Mono", Consolas, monospace';
+    ctx.font = 'bold 11px "IBM Plex Mono", Consolas, monospace';
     ctx.fillText(`E(θ) = ${currentRes.energy.toFixed(4)} Ha`, Math.min(cx + 10, w - 150), Math.max(cy - 10, 20));
   }
 }

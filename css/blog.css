@@ -1,0 +1,381 @@
+/* ==========================================================================
+   LAQUMO BLOG (css/blog.css)
+   Loaded after styles.css on blog pages. Uses the site's theme tokens.
+   ========================================================================== */
+
+.blog-main {
+  padding-top: 140px;
+}
+
+.nav-links a.active {
+  color: var(--accent-white);
+  font-weight: 600;
+}
+
+/* ---------- Blog index ---------- */
+.blog-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 56px;
+}
+
+.blog-header .section-title {
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+}
+
+.post-list {
+  display: grid;
+  gap: 20px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.post-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.post-card:hover {
+  border-color: var(--border-focus);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px var(--accent-glow);
+}
+
+.post-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+
+.post-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  letter-spacing: -0.02em;
+  margin: 10px 0 8px;
+  color: var(--text-primary);
+}
+
+.post-card p {
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+}
+
+.post-card .read-more {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent-white);
+}
+
+.post-list-note {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-top: 28px;
+  font-family: var(--font-mono);
+}
+
+/* ---------- Article ---------- */
+.article {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.article-back {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.article-back:hover { color: var(--accent-white); }
+
+.article-head {
+  margin: 24px 0 40px;
+}
+
+.article-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin: 14px 0 18px;
+  color: var(--text-primary);
+}
+
+.article-lede {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  max-width: 68ch;
+}
+
+.article-body p {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  max-width: 70ch;
+}
+
+.article-body strong { color: var(--text-primary); }
+
+/* Stats */
+.nobel-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 36px 0;
+}
+
+.nobel-stat {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+}
+
+.nobel-stat-val {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.nobel-stat-lbl {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Controls */
+.nobel-controls {
+  position: sticky;
+  top: 88px;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  background: var(--bg-pitch);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  box-shadow: 0 8px 24px var(--accent-glow);
+  margin-bottom: 28px;
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+}
+
+.nobel-search {
+  flex: 1 1 220px;
+  min-width: 0;
+  background: var(--bg-glass-input);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.92rem;
+  padding: 9px 12px;
+}
+
+.nobel-search:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.era-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.era-chip {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  padding: 7px 11px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-medium);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.era-chip:hover { color: var(--text-primary); border-color: var(--border-focus); }
+
+.era-chip[aria-pressed="true"] {
+  background: var(--accent-white);
+  border-color: var(--accent-white);
+  color: var(--bg-pitch);
+}
+
+.nobel-count {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+/* Timeline */
+.nobel-decade {
+  margin-bottom: 8px;
+}
+
+.nobel-decade-title {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 22px 0 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nobel-year {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  scroll-margin-top: 170px;
+}
+
+.nobel-year-num {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.nobel-award + .nobel-award {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.nobel-names {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1.02rem;
+}
+
+.nobel-names .woman {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.nobel-why {
+  color: var(--text-secondary);
+  font-size: 0.93rem;
+  margin-top: 2px;
+}
+
+.nobel-year.is-none .nobel-year-num,
+.nobel-year.is-none .nobel-why {
+  color: var(--text-muted);
+}
+
+.nobel-year.is-none .nobel-why { font-style: italic; }
+
+.nobel-year.is-latest {
+  background: var(--accent-glow);
+  border-radius: var(--radius-sm);
+  padding-left: 12px;
+  padding-right: 12px;
+  margin: 0 -12px;
+}
+
+.nobel-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  margin-left: 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-medium);
+  color: var(--text-secondary);
+  vertical-align: middle;
+}
+
+mark {
+  background: var(--accent-glow-intense);
+  color: inherit;
+  border-radius: 2px;
+}
+
+.nobel-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 0;
+}
+
+.article-notes {
+  margin-top: 40px;
+  padding: 22px 24px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.article-notes h3 {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.article-notes ul { padding-left: 18px; }
+.article-notes li { margin-bottom: 6px; }
+.article-notes a { color: var(--accent-white); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .nobel-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .navbar {
+    flex-wrap: wrap;
+    border-radius: var(--radius-lg);
+    padding: 10px 16px;
+    gap: 8px;
+    width: calc(100% - 32px);
+  }
+  .navbar .brand-tag { display: none; }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    gap: 18px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 2px;
+  }
+  .blog-main { padding-top: 150px; }
+  .container { padding: 0 16px; }
+  .nobel-controls { position: static; }
+  .nobel-year { grid-template-columns: 1fr; gap: 6px; scroll-margin-top: 220px; }
+  .nobel-year-num { font-size: 1.25rem; }
+  .post-card { padding: 22px 20px; }
+}

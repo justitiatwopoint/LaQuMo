@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Every Nobel Prize in Physics, 1901–2026 | LaQuMo Blog</title>
+  <meta name="description" content="A chronological list of every Nobel Prize in Physics laureate from 1901 to 2026, with what each prize was awarded for.">
+  <script>
+    (function() {
+      var t = 'light';
+      try { t = localStorage.getItem('laqumo_theme') || 'light'; } catch (e) {}
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/blog.css">
+  <script src="../js/theme.js" defer></script>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
+          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+        </svg>
+      </div>
+      <span class="brand-text">LaQuMo</span>
+      <span class="brand-tag">BLOG</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../lab.html">Virtual Lab</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Light/Dark Theme">
+        <span class="theme-icon sun-icon">☀️</span>
+        <span class="theme-icon moon-icon">🌙</span>
+        <span class="theme-text">Light</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="container blog-main">
+    <article class="article">
+      <a href="index.html" class="article-back">← All posts</a>
+
+      <header class="article-head">
+        <div class="post-meta">
+          <span>History of Physics</span>
+          <span>·</span>
+          <time datetime="2026-10-22">22 Oct 2026</time>
+          <span>·</span>
+          <span>Reference list</span>
+        </div>
+        <h1 class="article-title">Every Nobel Prize in Physics, 1901–2026</h1>
+        <p class="article-lede">
+          From Röntgen's X-rays to the IceCube neutrino observatory: the complete, chronological record of who won
+          the Nobel Prize in Physics and what they won it for.
+        </p>
+      </header>
+
+      <div class="article-body">
+        <p>
+          The first Nobel Prize in Physics was awarded in 1901, five years after Alfred Nobel's will set aside his
+          fortune for "those who, during the preceding year, shall have conferred the greatest benefit to humankind."
+          Since then the prize has traced the arc of modern physics: the discovery of radioactivity and the electron,
+          the quantum revolution of the 1920s, the particle zoo of the post-war decades, and, more recently, lasers,
+          topological matter, gravitational waves and the quantum circuits at the heart of today's quantum computers.
+        </p>
+        <p>
+          The list below runs year by year. Where a prize was split between separate discoveries, each is shown on its
+          own line. Use the search box to find a name, a year or a topic (try <strong>quantum</strong>,
+          <strong>neutrino</strong> or <strong>laser</strong>), or jump to an era.
+        </p>
+      </div>
+
+      <div class="nobel-stats" aria-label="Summary statistics">
+        <div class="nobel-stat"><div class="nobel-stat-val" id="stat-prizes">–</div><div class="nobel-stat-lbl">Prizes awarded</div></div>
+        <div class="nobel-stat"><div class="nobel-stat-val" id="stat-laureates">–</div><div class="nobel-stat-lbl">Individual laureates</div></div>
+        <div class="nobel-stat"><div class="nobel-stat-val" id="stat-women">–</div><div class="nobel-stat-lbl">Women laureates</div></div>
+        <div class="nobel-stat"><div class="nobel-stat-val" id="stat-none">–</div><div class="nobel-stat-lbl">Years with no prize</div></div>
+      </div>
+
+      <div class="nobel-controls">
+        <input type="search" id="nobel-search" class="nobel-search" placeholder="Search name, year or topic…" aria-label="Search laureates">
+        <div class="era-chips" id="era-chips" role="group" aria-label="Filter by era"></div>
+      </div>
+
+      <div class="nobel-count" id="nobel-count" aria-live="polite"></div>
+      <div id="nobel-timeline"></div>
+
+      <aside class="article-notes">
+        <h3>Notes</h3>
+        <ul>
+          <li>Years are the prize year. A few prizes (for example 1917, 1918, 1921 and 1943) were held back and formally presented the following year.</li>
+          <li>No physics prize was awarded in 1916, 1931, 1934 and 1940–1942, mostly because of the World Wars or because no nomination met the criteria.</li>
+          <li>John Bardeen is the only person to have won the physics prize twice (1956 and 1972), so he is counted once in the laureate total.</li>
+          <li>Underlined names are women laureates. Marie Curie also won the 1911 Nobel Prize in Chemistry.</li>
+          <li>Prize descriptions are condensed from the official citations. Full citations are at <a href="https://www.nobelprize.org/prizes/lists/all-nobel-prizes-in-physics/" target="_blank" rel="noopener">nobelprize.org</a>.</li>
+        </ul>
+      </aside>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </div>
+        <span class="brand-text">LaQuMo</span>
+      </div>
+      <div style="font-size:0.88rem; color:var(--text-secondary);">
+        Direct Inquiry: <a href="mailto:info@laqumo.com" style="color:var(--accent-white); text-decoration:none; font-weight:600;">info@laqumo.com</a>
+      </div>
+      <div class="footer-copy">
+        &copy; 2026 LaQuMo Research Collective. Scientific Virtual Lab &amp; Educational Visualization Dashboard.
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/nobel-physics-data.js"></script>
+  <script src="../js/blog-nobel.js"></script>
+</body>
+</html>

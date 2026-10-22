@@ -3,32 +3,32 @@
   Palette: Pitch Black (#040406), Obsidian (#090a0f), Pure White (#ffffff), Platinum Silver (#d1d5e6), Charcoal, Glassmorphism
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,500;6..12,600;6..12,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
-  /* BRIGHT LIGHT MODE (Pure Bright Positive) */
-  --bg-pitch: #FFFFFF;            /* Pure Bright White */
-  --bg-obsidian: #F8FAFC;         /* Soft Off-White Accent Surface */
-  --bg-card: rgba(255, 255, 255, 0.96); /* Bright White Card Surface */
-  --bg-card-hover: #FFFFFF;
-  --bg-glass-input: #FFFFFF;       /* Pure White Input Background */
-  
-  --border-subtle: rgba(0, 0, 0, 0.08);
-  --border-medium: rgba(0, 0, 0, 0.16);
-  --border-focus: rgba(0, 0, 0, 0.5);
+  /* SOFT IVORY LIGHT MODE (warm, low-glare) */
+  --bg-pitch: #FBF8F1;            /* Ivory page background */
+  --bg-obsidian: #F4EFE3;         /* Deeper ivory accent surface */
+  --bg-card: rgba(254, 252, 247, 0.94); /* Ivory card surface */
+  --bg-card-hover: #FFFDF8;
+  --bg-glass-input: #FFFDF8;      /* Ivory input background */
 
-  --text-primary: #000000;         /* Pure Pitch Black Text for absolute highest contrast */
-  --text-secondary: #334155;       /* Charcoal Slate */
-  --text-muted: #64748B;
+  --border-subtle: rgba(74, 60, 36, 0.10);
+  --border-medium: rgba(74, 60, 36, 0.18);
+  --border-focus: rgba(74, 60, 36, 0.45);
 
-  --accent-white: #000000;         /* Solid Black Accents */
-  --accent-silver: #475569;        /* Medium Slate Highlight */
-  --accent-glow: rgba(0, 0, 0, 0.06);
-  --accent-glow-intense: rgba(0, 0, 0, 0.16);
+  --text-primary: #2B2823;        /* Warm charcoal instead of pure black */
+  --text-secondary: #575046;      /* Soft umber grey */
+  --text-muted: #8C8477;
 
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --accent-white: #2B2823;        /* Warm charcoal accents */
+  --accent-silver: #6B6356;
+  --accent-glow: rgba(74, 60, 36, 0.06);
+  --accent-glow-intense: rgba(74, 60, 36, 0.14);
+
+  --font-sans: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', Consolas, monospace;
 
   --backdrop-blur: blur(18px);
   --radius-sm: 8px;
@@ -51,11 +51,11 @@
   --border-medium: rgba(255, 255, 255, 0.18);
   --border-focus: rgba(255, 255, 255, 0.4);
 
-  --text-primary: #FFFFFF;         /* Pure White Text for absolute highest contrast */
+  --text-primary: #EEECE6;         /* Soft off-white text (less glare) */
   --text-secondary: #9aa0b4;       /* Silver Gray */
   --text-muted: #5e6478;
 
-  --accent-white: #FFFFFF;         /* Solid White Accents */
+  --accent-white: #EEECE6;         /* Soft off-white accents */
   --accent-silver: #d1d5e6;        /* Platinum Silver Highlight */
   --accent-glow: rgba(255, 255, 255, 0.12);
   --accent-glow-intense: rgba(255, 255, 255, 0.28);
@@ -91,8 +91,11 @@ body {
   background-color: var(--bg-pitch);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  line-height: 1.6;
+  line-height: 1.7;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   position: relative;
   min-height: 100vh;
 }
@@ -115,7 +118,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(248, 250, 252, 0.6) 100%);
+  background: radial-gradient(circle at 50% 50%, rgba(251, 248, 241, 0.1) 0%, rgba(244, 239, 227, 0.55) 100%);
   pointer-events: none;
   z-index: -1;
   transition: background var(--transition-normal);
@@ -1375,4 +1378,212 @@ html:not([data-theme="dark"]) .moon-icon { display: inline-block; }
   canvas {
     touch-action: pan-y;
   }
+}
+
+
+/* ==========================================================================
+   SOFT TYPOGRAPHY & IVORY REFINEMENTS
+   Gentler type rhythm for both themes, plus ivory replacements for surfaces
+   that were hard-coded to pure white in light mode.
+   ========================================================================== */
+
+/* Serif display headings: lighter weight, open tracking */
+h1, h2,
+.hero-title, .section-title, .article-title, .contact-simple-title,
+.post-card h2, .stat-val, .nobel-stat-val {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0;
+  font-variant-numeric: lining-nums;
+}
+
+.hero-title { line-height: 1.08; }
+.section-title, .article-title { line-height: 1.15; }
+
+/* Display numerals & small UI labels read better in the sans */
+h3, h4, h5, .nobel-year-num, .arch-num, .brand-text,
+.btn, .btn-submit-simple, html .lab-tab-btn, .theme-toggle-btn, label,
+.sim-panel-title, .hud-pill, .gate-btn {
+  font-family: var(--font-sans);
+}
+
+h3, h4, h5 { font-weight: 600; letter-spacing: 0; }
+html .lab-tab-btn { font-weight: 500; }
+html .lab-tab-btn.active { font-weight: 600; }
+
+.brand-text { font-weight: 600; letter-spacing: 0.01em; }
+.stat-val { line-height: 1.15; }
+html .nobel-stat-val { font-size: 2.2rem; font-variant-numeric: lining-nums tabular-nums; }
+html .stat-val { font-variant-numeric: lining-nums; }
+.nobel-year-num { font-weight: 500; }
+
+/* Calmer body copy */
+p, li, .section-desc, .hero-subtitle, .article-lede {
+  font-weight: 400;
+}
+.section-desc, .hero-subtitle, .article-lede { line-height: 1.75; }
+
+strong, b { font-weight: 600; }
+
+/* Mono: softer weight */
+.section-tag, .brand-tag, .post-meta, code, pre { font-weight: 400; }
+
+/* ---- Light mode: replace hard-coded whites with ivory ---- */
+html:not([data-theme="dark"]) body { background-color: var(--bg-pitch); }
+
+html:not([data-theme="dark"]) .sim-grid,
+html:not([data-theme="dark"]) .spectrum-box,
+html:not([data-theme="dark"]) .matrix-cell {
+  background: var(--bg-card);
+}
+
+html:not([data-theme="dark"]) .system-props-table td { border-bottom-color: var(--border-subtle); }
+html:not([data-theme="dark"]) .sim-slider,
+html:not([data-theme="dark"]) input[type="range"] { accent-color: var(--text-primary); }
+
+html:not([data-theme="dark"]) .btn-primary,
+html:not([data-theme="dark"]) .lab-tab-btn.active,
+html:not([data-theme="dark"]) .era-chip[aria-pressed="true"] {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  color: var(--bg-pitch);
+  box-shadow: 0 4px 14px rgba(74, 60, 36, 0.14);
+}
+
+html:not([data-theme="dark"]) .btn-primary:hover {
+  background: #3d3830;
+  box-shadow: 0 6px 18px rgba(74, 60, 36, 0.18);
+}
+
+html:not([data-theme="dark"]) .btn-outline { background: rgba(254, 252, 247, 0.6); }
+
+html:not([data-theme="dark"]) .badge-dot,
+html:not([data-theme="dark"]) .amp-bar-fill { background: var(--text-primary); }
+
+html:not([data-theme="dark"]) .navbar:hover { box-shadow: 0 6px 24px rgba(74, 60, 36, 0.08); }
+
+/* ==========================================================================
+   FIXES FOR ALL SCREEN SIZES
+   ========================================================================== */
+
+/* Gate buttons: fill their grid cell instead of a fixed 36px box */
+.gate-btn-grid .gate-btn { width: auto; height: auto; min-height: 52px; }
+
+/* Grid children may shrink below their content width (prevents overflow) */
+.sim-grid > * { min-width: 0; }
+
+/* Light-mode footer: ivory instead of black, so the logo text is readable */
+html:not([data-theme="dark"]) .footer { background: var(--bg-obsidian); }
+
+/* ==========================================================================
+   MOBILE LAYOUT (phones and small tablets)
+   ========================================================================== */
+@media (max-width: 760px) {
+  /* Navigation: brand + theme toggle on top, links in a swipeable row below */
+  .navbar {
+    flex-wrap: wrap;
+    top: 10px;
+    width: calc(100% - 24px);
+    border-radius: var(--radius-lg);
+    padding: 10px 16px;
+    gap: 6px 8px;
+  }
+  .navbar .brand-tag { display: none; }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    gap: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 2px 0 4px;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent);
+            mask-image: linear-gradient(90deg, #000 85%, transparent);
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a { font-size: 0.92rem; }
+  .theme-toggle-btn .theme-text { display: none; }
+
+  .container { padding: 0 16px; }
+
+  /* Hero */
+  .hero { padding: 140px 0 64px; }
+  .hero-title { font-size: clamp(2.3rem, 10vw, 3rem); }
+  .hero-subtitle { font-size: 1rem; }
+  .hero-badge { font-size: 0.68rem; }
+  .math-block { font-size: 0.85rem; padding: 14px; overflow-x: auto; }
+  .hero-stats { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+  .stat-card { padding: 16px; }
+  .stat-val { font-size: 1.35rem; }
+  .stat-lbl { font-size: 0.75rem; }
+
+  /* Sections */
+  .section { padding: 64px 0; }
+  .section-header { margin-bottom: 36px; }
+  .section-title { font-size: 1.9rem; }
+  .section-desc { font-size: 0.95rem; }
+
+  /* Simulator (home page) */
+  .simulator-wrapper { padding: 16px; }
+  .sim-grid { gap: 20px; }
+  .sim-view { padding: 14px; }
+  .state-amplitudes { grid-template-columns: 1fr 1fr; gap: 8px; }
+  #dynamic-state-latex { overflow-x: auto; font-size: 0.8rem; }
+
+  /* Architecture cards: stack text above the equation */
+  .arch-layer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 18px;
+  }
+  .arch-left { width: 100%; }
+  .arch-math {
+    max-width: 100%;
+    overflow-x: auto;
+    font-size: 0.8rem;
+  }
+
+  /* Benchmark table scrolls sideways inside its card */
+  .bench-table { min-width: 640px; font-size: 0.84rem; }
+  .bench-table th, .bench-table td { padding: 12px 14px; }
+
+  /* Virtual Lab */
+  .lab-tab-nav { margin-bottom: 18px; }
+  html .lab-tab-btn { padding: 8px 14px; font-size: 0.85rem; }
+  .sim-grid { padding: 14px; }
+  .sim-panel { padding: 16px; }
+  .sim-overlay-hud { top: 8px; left: 8px; right: 8px; gap: 6px; }
+  .hud-pill { font-size: 0.68rem; padding: 3px 9px; }
+  .circuit-grid-board { padding: 18px 12px; overflow-x: auto; }
+  .wire-slots-container { width: auto; flex: 1; min-width: 0; margin-left: 8px; }
+
+  /* Contact + footer */
+  .contact-simple-title { font-size: 2rem; }
+  .footer { padding: 28px 0; margin-top: 40px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
+
+@media (max-width: 380px) {
+  .hero-stats { grid-template-columns: 1fr !important; }
+  .state-amplitudes { grid-template-columns: 1fr 1fr; }
+}
+
+/* Light mode: "Try Virtual Lab" button and "+" icon were white-on-ivory */
+@keyframes border-glow-pulse-light {
+  0%, 100% { border-color: rgba(74, 60, 36, 0.25); box-shadow: 0 0 0 rgba(74, 60, 36, 0); }
+  50%      { border-color: rgba(74, 60, 36, 0.6);  box-shadow: 0 4px 18px rgba(74, 60, 36, 0.12); }
+}
+html:not([data-theme="dark"]) .btn-glowing-edges {
+  animation-name: border-glow-pulse-light;
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+html:not([data-theme="dark"]) .btn-blink-icon { color: var(--text-primary); text-shadow: none; }
+html:not([data-theme="dark"]) .badge-dot { box-shadow: none; }
+
+/* Virtual Lab overlay labels on phones (needs extra specificity over simulations.css) */
+@media (max-width: 760px) {
+  html .sim-overlay-hud .hud-pill { font-size: 0.66rem; padding: 3px 8px; line-height: 1.4; max-width: 48%; }
+  html .sim-overlay-hud .hud-pill:first-child { display: none; } /* "Drag canvas to rotate" hint */
 }

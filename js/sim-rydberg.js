@@ -235,7 +235,7 @@ class RydbergLatticeSimulator {
       this.ctx.stroke();
 
       // State Label
-      this.ctx.font = '10px JetBrains Mono';
+      this.ctx.font = '10px "IBM Plex Mono", monospace';
       this.ctx.fillStyle = atom.isExcited ? '#9f1239' : '#b45309';
       this.ctx.textAlign = 'center';
       this.ctx.fillText(atom.isExcited ? '|r⟩' : '|g⟩', atom.x, atom.y - 12);

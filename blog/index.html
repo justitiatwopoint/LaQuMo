@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | LaQuMo</title>
+  <meta name="description" content="LaQuMo blog: articles on quantum physics, its history and quantum computing.">
+  <script>
+    (function() {
+      var t = 'light';
+      try { t = localStorage.getItem('laqumo_theme') || 'light'; } catch (e) {}
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/blog.css">
+  <script src="../js/theme.js" defer></script>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
+          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+        </svg>
+      </div>
+      <span class="brand-text">LaQuMo</span>
+      <span class="brand-tag">BLOG</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../lab.html">Virtual Lab</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Light/Dark Theme">
+        <span class="theme-icon sun-icon">☀️</span>
+        <span class="theme-icon moon-icon">🌙</span>
+        <span class="theme-text">Light</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="container blog-main">
+    <header class="blog-header">
+      <span class="section-tag">// LAQUMO JOURNAL</span>
+      <h1 class="section-title">Blog</h1>
+      <p class="section-desc">
+        Notes on quantum physics, the people who built it, and the ideas behind our virtual lab.
+      </p>
+    </header>
+
+    <div class="post-list">
+      <a class="post-card" href="nobel-prize-physics.html">
+        <div class="post-meta">
+          <span>History of Physics</span>
+          <span>·</span>
+          <time datetime="2026-10-22">22 Oct 2026</time>
+        </div>
+        <h2>Every Nobel Prize in Physics, 1901–2026</h2>
+        <p>
+          The complete chronological list of physics laureates, from Röntgen's X-rays in 1901 to Francis Halzen and
+          the IceCube neutrino observatory in 2026, with what each prize was awarded for.
+        </p>
+        <span class="read-more">Read the list →</span>
+      </a>
+    </div>
+
+    <p class="post-list-note">More posts coming soon.</p>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </div>
+        <span class="brand-text">LaQuMo</span>
+      </div>
+      <div style="font-size:0.88rem; color:var(--text-secondary);">
+        Direct Inquiry: <a href="mailto:info@laqumo.com" style="color:var(--accent-white); text-decoration:none; font-weight:600;">info@laqumo.com</a>
+      </div>
+      <div class="footer-copy">
+        &copy; 2026 LaQuMo Research Collective. Scientific Virtual Lab &amp; Educational Visualization Dashboard.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
