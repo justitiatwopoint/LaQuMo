@@ -1,46 +1,50 @@
 /* ==========================================================================
-   PROF. ERWIN SCHRÖDINGER AI ASSISTANT (css/schrodinger-bot.css)
-   Stellar Dark Mode Obsidian Theme & Glassmorphism
+   PROF. SCHRÖDINGER CHAT WIDGET (css/schrodinger-bot.css)
+   Uses the site's theme tokens, so it is ivory in light mode, dark in dark.
    ========================================================================== */
 
-/* Floating Launcher Button */
+/* Launcher button */
 .schrodinger-widget-launcher {
   position: fixed;
-  bottom: 26px;
-  right: 26px;
+  bottom: 24px;
+  right: 24px;
   z-index: 2500;
   display: flex;
   align-items: center;
   gap: 12px;
-  background: rgba(10, 12, 18, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 10px 18px 10px 10px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  padding: 8px 18px 8px 8px;
   border-radius: 9999px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(40, 32, 20, 0.14);
   cursor: pointer;
+  font: inherit;
+  text-align: left;
   backdrop-filter: blur(16px);
-  transition: all var(--transition-fast);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
 }
 .schrodinger-widget-launcher:hover {
-  transform: translateY(-3px) scale(1.02);
-  border-color: #ffffff;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(40, 32, 20, 0.2);
 }
+[data-theme="dark"] .schrodinger-widget-launcher { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); }
 
 .schrodinger-avatar-badge {
   width: 38px;
   height: 38px;
+  flex: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  display: flex;
+  background: var(--text-primary);
+  color: var(--bg-pitch);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.3);
   position: relative;
-  color: #ffffff;
   font-family: var(--font-display);
-  font-weight: bold;
-  font-size: 0.9rem;
+  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 .schrodinger-status-dot {
@@ -50,197 +54,194 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #ffffff;
-  border: 2px solid #040508;
-  box-shadow: 0 0 8px #ffffff;
+  background: #4f9d69;
+  border: 2px solid var(--bg-pitch);
 }
 
-.schrodinger-launcher-text {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-.schrodinger-launcher-title {
-  font-family: var(--font-display);
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1.2;
-}
-.schrodinger-launcher-sub {
-  font-size: 0.72rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
+.schrodinger-launcher-text { display: flex; flex-direction: column; line-height: 1.25; }
+.schrodinger-launcher-title { font-weight: 600; font-size: 0.9rem; }
+.schrodinger-launcher-sub { font-size: 0.74rem; color: var(--text-muted); }
 
-/* Chat Popover Window */
+/* Chat window */
 .schrodinger-chat-window {
   position: fixed;
-  bottom: 90px;
-  right: 26px;
+  bottom: 92px;
+  right: 24px;
+  z-index: 2600;
   width: 390px;
   max-width: calc(100vw - 32px);
-  height: 540px;
+  height: 560px;
   max-height: calc(100vh - 120px);
-  background: rgba(10, 12, 18, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: var(--radius-md);
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9);
-  z-index: 2600;
-  display: none;
+  display: flex;
   flex-direction: column;
+  background: var(--bg-pitch);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(40, 32, 20, 0.22);
   overflow: hidden;
-  backdrop-filter: blur(20px);
-  animation: slideUpFade 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px) scale(0.98);
+  transform-origin: bottom right;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
 }
-.schrodinger-chat-window.open {
-  display: flex;
-}
+[data-theme="dark"] .schrodinger-chat-window { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75); }
+.schrodinger-chat-window.open { opacity: 1; visibility: visible; transform: none; }
 
-@keyframes slideUpFade {
-  from { opacity: 0; transform: translateY(20px) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-/* Chat Header */
 .schrodinger-chat-header {
-  padding: 14px 18px;
-  background: rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-obsidian);
 }
+.schrodinger-header-info { display: flex; align-items: center; gap: 10px; }
+.schrodinger-header-title { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; line-height: 1.1; }
+.schrodinger-header-sub { font-size: 0.72rem; color: var(--text-muted); }
+.schrodinger-header-actions { display: flex; align-items: center; gap: 4px; }
 
-.schrodinger-header-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
+.schrodinger-chat-reset,
 .schrodinger-chat-close {
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   color: var(--text-secondary);
-  font-size: 1.4rem;
   cursor: pointer;
-  transition: color var(--transition-fast);
+  font: inherit;
+  border-radius: 8px;
 }
-.schrodinger-chat-close:hover {
-  color: #ffffff;
-}
+.schrodinger-chat-reset { font-size: 0.74rem; padding: 4px 8px; border-color: var(--border-subtle); white-space: nowrap; }
+.schrodinger-chat-close { font-size: 1.5rem; line-height: 1; width: 34px; height: 34px; }
+.schrodinger-chat-reset:hover,
+.schrodinger-chat-close:hover { color: var(--text-primary); background: var(--accent-glow); }
 
-/* Chat Body */
 .schrodinger-chat-body {
-  flex-grow: 1;
-  padding: 16px;
+  flex: 1;
   overflow-y: auto;
+  padding: 16px 14px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+  overscroll-behavior: contain;
 }
 
 .chat-bubble {
-  max-width: 85%;
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 0.86rem;
-  line-height: 1.5;
-  word-wrap: break-word;
+  max-width: 86%;
+  padding: 10px 13px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
 }
-
+.chat-bubble mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
 .chat-bubble.bot {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #e2e8f0;
   align-self: flex-start;
-  border-bottom-left-radius: 2px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  border-bottom-left-radius: 4px;
 }
-
 .chat-bubble.user {
-  background: #ffffff;
-  color: #040508;
-  font-weight: 500;
   align-self: flex-end;
-  border-bottom-right-radius: 2px;
+  background: var(--text-primary);
+  color: var(--bg-pitch);
+  border-bottom-right-radius: 4px;
 }
+.chat-bubble em { color: var(--text-secondary); }
 
-/* Suggestions Chips */
+/* Typing indicator */
+.chat-bubble.typing { display: inline-flex; gap: 4px; padding: 12px 14px; }
+.chat-bubble.typing span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--text-muted);
+  animation: sbot-dot 1.2s infinite ease-in-out;
+}
+.chat-bubble.typing span:nth-child(2) { animation-delay: 0.15s; }
+.chat-bubble.typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes sbot-dot { 0%, 80%, 100% { opacity: 0.3; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+
+/* Suggestion chips */
 .chat-suggestions {
   display: flex;
   gap: 6px;
+  padding: 8px 12px;
   overflow-x: auto;
-  padding: 8px 14px;
-  background: rgba(0, 0, 0, 0.4);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  scrollbar-width: none;
+  border-top: 1px solid var(--border-subtle);
 }
-
+.chat-suggestions::-webkit-scrollbar { display: none; }
 .chip-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: #cbd5e1;
-  font-size: 0.76rem;
-  font-family: var(--font-display);
-  padding: 5px 10px;
+  flex: none;
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  color: var(--text-secondary);
   border-radius: 9999px;
+  padding: 5px 11px;
+  font: inherit;
+  font-size: 0.76rem;
   cursor: pointer;
   white-space: nowrap;
-  transition: all var(--transition-fast);
 }
-.chip-btn:hover {
-  background: #ffffff;
-  color: #040508;
-  border-color: #ffffff;
-}
+.chip-btn:hover { color: var(--text-primary); border-color: var(--border-focus); }
 
-/* Footer / Input Bar */
+/* Input */
 .schrodinger-chat-footer {
   display: flex;
   gap: 8px;
-  padding: 12px 14px;
-  background: rgba(10, 12, 18, 0.95);
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px 12px 6px;
 }
-
 .chat-input {
-  flex-grow: 1;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--radius-sm);
-  padding: 8px 14px;
-  color: #ffffff;
-  font-family: var(--font-sans);
-  font-size: 0.86rem;
+  flex: 1;
+  min-width: 0;
+  background: var(--bg-glass-input);
+  border: 1px solid var(--border-medium);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 16px; /* 16px stops iPhones zooming in */
   outline: none;
-  transition: border-color var(--transition-fast);
 }
-.chat-input:focus {
-  border-color: #ffffff;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-}
-
+.chat-input:focus { border-color: var(--border-focus); }
 .chat-send-btn {
-  background: #ffffff;
+  background: var(--text-primary);
+  color: var(--bg-pitch);
   border: none;
-  color: #040508;
-  font-weight: bold;
+  border-radius: 10px;
   padding: 0 16px;
-  border-radius: var(--radius-sm);
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.88rem;
   cursor: pointer;
-  transition: opacity var(--transition-fast);
 }
-.chat-send-btn:hover {
-  opacity: 0.9;
+.chat-send-btn:disabled { opacity: 0.5; cursor: default; }
+
+.schrodinger-disclaimer {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 0 12px 10px;
 }
 
-@media (max-width: 768px) {
-  .schrodinger-widget-launcher {
-    bottom: 24px;
-    right: 16px;
-  }
+/* Phones: compact launcher, full-width chat sheet */
+@media (max-width: 760px) {
+  .schrodinger-widget-launcher { bottom: 16px; right: 16px; padding: 6px; }
+  .schrodinger-launcher-text { display: none; }
+  .schrodinger-avatar-badge { width: 44px; height: 44px; font-size: 1.3rem; }
+
   .schrodinger-chat-window {
-    bottom: 80px;
-    right: 16px;
-    height: 460px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    width: auto;
+    max-width: none;
+    height: auto;
+    top: 10px;
+    max-height: none;
+    border-radius: 16px;
   }
+  body.schrodinger-chat-open .schrodinger-widget-launcher { opacity: 0; pointer-events: none; }
+  .schrodinger-header-sub { display: none; }
 }

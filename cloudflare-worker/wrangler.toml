@@ -1,0 +1,9 @@
+# Optional: only needed if you deploy from the command line with
+#   npx wrangler deploy
+# instead of pasting the code into the Cloudflare dashboard.
+name = "laqumo-chat"
+main = "schrodinger-worker.js"
+compatibility_date = "2026-10-01"
+
+[ai]
+binding = "AI"
