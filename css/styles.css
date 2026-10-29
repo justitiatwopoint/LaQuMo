@@ -1587,3 +1587,19 @@ html:not([data-theme="dark"]) .badge-dot { box-shadow: none; }
   html .sim-overlay-hud .hud-pill { font-size: 0.66rem; padding: 3px 8px; line-height: 1.4; max-width: 48%; }
   html .sim-overlay-hud .hud-pill:first-child { display: none; } /* "Drag canvas to rotate" hint */
 }
+
+/* Contact form: honest feedback (readable in both themes) + hidden spam trap */
+.form-feedback-simple.is-success,
+.form-feedback-simple.is-error {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-medium);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+.form-feedback-simple.is-success { color: var(--text-primary); background: var(--accent-glow); }
+.form-feedback-simple.is-error { color: #a1452f; background: rgba(180, 83, 60, 0.08); border-color: rgba(180, 83, 60, 0.35); }
+[data-theme="dark"] .form-feedback-simple.is-error { color: #f0a08c; }
+.form-feedback-simple a { color: var(--accent-white); }
+.btn-submit-simple:disabled { opacity: 0.6; cursor: default; }
+.hp-field { position: absolute !important; left: -10000px !important; width: 1px; height: 1px; overflow: hidden; }

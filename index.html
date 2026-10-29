@@ -3,34 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LaQuMo | Scientific Virtual Lab</title>
-  <meta name="description" content="LaQuMo (Large Quantum Model) - An interactive web-based educational virtual lab and visualization framework for hybrid quantum-classical machine learning concepts.">
-  
-  <!-- Inline Safety Fallback (Prevents Canvas Drag-Down & Layout Flashes) -->
-  <style>
-    body {
-      margin: 0;
-      overflow-x: hidden;
-      background-color: #FBF8F1;
-    }
-    #quantum-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -2;
-      pointer-events: none;
-    }
-  </style>
+  <title>LaQuMo | Large Quantum Model, Neutral-Atom QPUs & Science Portal</title>
+  <meta name="description" content="LaQuMo - Next-generation neutral-atom quantum computing, physical simulation engines, Bloqade SDK, and peer-reviewed scientific publishing.">
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/styles.css">
+  <!-- Google Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/simulations.css">
   <link rel="stylesheet" href="css/schrodinger-bot.css">
 
-  <!-- MathJax for Scientific LaTeX Notation -->
+  <!-- Quantum Physics Preloader -->
+  <script src="js/preloader.js"></script>
+
+  <!-- MathJax Configuration for LaTeX Notation -->
   <script>
-    MathJax = {
+    window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$', '$$'], ['\\[', '\\]']]
@@ -39,385 +29,785 @@
     };
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <!-- Theme Manager (Prevents color flash on load) -->
-  <script>
-    (function() {
-      const savedTheme = localStorage.getItem('laqumo_theme') || 'light';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    })();
-  </script>
-  <script src="js/theme.js" defer></script>
 </head>
 <body>
 
-  <!-- Background Quantum Node Canvas -->
-  <canvas id="quantum-canvas"></canvas>
-  <div class="vignette-overlay"></div>
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress-bar" id="reading-progress"></div>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar" id="navbar">
-    <a href="#" class="brand">
-      <div class="brand-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="9"></circle>
-          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
-          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
-        </svg>
-      </div>
-      <span class="brand-text">LaQuMo</span>
-      <span class="brand-tag">VIRTUAL LAB</span>
-    </a>
+  <!-- Parallax Floating Quantum Orbs -->
+  <div class="parallax-orb orb-1"></div>
+  <div class="parallax-orb orb-2"></div>
+  <div class="parallax-orb orb-3"></div>
 
-    <ul class="nav-links">
-      <li><a href="#simulator">3D Bloch Sphere</a></li>
-      <li><a href="lab.html" style="color: var(--accent-white); font-weight: 600;">Virtual Lab</a></li>
-      <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#benchmarks">Complexity &amp; Bounds</a></li>
-      <li><a href="blog/index.html">Blog</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+  <!-- Ambient Quantum Canvas Background -->
+  <canvas id="quantum-bg-canvas"></canvas>
 
-    <div class="nav-actions">
-      <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Light/Dark Theme">
-        <span class="theme-icon sun-icon">☀️</span>
-        <span class="theme-icon moon-icon">🌙</span>
-        <span class="theme-text">Light</span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Main Container -->
-  <div class="container">
-
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        <span>SCIENTIFIC VIRTUAL LAB &bull; QUANTUM AI VISUALIZER</span>
-      </div>
-
-      <h1 class="hero-title">
-        LaQuMo: Large Quantum Model
-      </h1>
-
-      <p class="hero-subtitle">
-        An interactive web-based educational virtual lab and visualization framework for hybrid quantum-classical 
-        machine learning concepts, Hilbert space representations, and variational algorithms.
-      </p>
-
-      <div style="margin-bottom: 36px;">
-        <div class="math-block">
-          \(\hat{\mathcal{H}}_{LaQuMo} |\Psi(\theta)\rangle = \sum_{k=1}^{N} \alpha_k \left( \bigotimes_{i=1}^{q} U_i(\theta_i) \right) |0\rangle^{\otimes q} = E_0 |\Psi\rangle\)
-        </div>
-      </div>
-
-      <div class="hero-cta">
-        <a href="lab.html" class="btn btn-outline btn-glowing-edges">
-          <span class="btn-blink-icon">+</span>
-          Try Virtual Lab
-        </a>
-      </div>
-
-      <!-- Verified Engine Specs -->
-      <div class="hero-stats">
-        <div class="stat-card">
-          <div class="stat-val">Client-Side JS</div>
-          <div class="stat-lbl">In-Browser Vector Math Engine</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-val">3D Bloch Sphere</div>
-          <div class="stat-lbl">Trigonometric State Visualizer</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-val">MathJax v3</div>
-          <div class="stat-lbl">LaTeX Mathematical Notation</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-val">Virtual Lab</div>
-          <div class="stat-lbl">Interactive Simulation Engines</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Interactive Quantum Simulator Section -->
-    <section class="section" id="simulator">
-      <div class="section-header">
-        <span class="section-tag">// INTERACTIVE EXPERIMENT</span>
-        <h2 class="section-title">Quantum State &amp; 3D Bloch Sphere Visualizer</h2>
-        <p class="section-desc">
-          Adjust state vector parameters below to observe real-time 3D Bloch sphere rotations, state amplitudes, and measurement probability distributions.
-        </p>
-      </div>
-
-      <div class="simulator-wrapper">
-        <div class="sim-grid">
-          
-          <!-- Controls -->
-          <div class="sim-controls">
-            <div class="control-group">
-              <label>Qubit Register Size <span id="val-qubits">16</span></label>
-              <input type="range" id="slider-qubits" class="slider-input" min="4" max="64" value="16">
-            </div>
-
-            <div class="control-group">
-              <label>Circuit Layer Depth <span id="val-depth">12</span></label>
-              <input type="range" id="slider-depth" class="slider-input" min="2" max="32" value="12">
-            </div>
-
-            <div class="control-group">
-              <label>Entanglement Entropy S(ρ) <span id="val-entropy">0.45</span></label>
-              <input type="range" id="slider-entropy" class="slider-input" min="0" max="1" step="0.05" value="0.45">
-            </div>
-
-            <div class="control-group">
-              <label>Quantum Attention Heads <span id="val-heads">8</span></label>
-              <input type="range" id="slider-heads" class="slider-input" min="1" max="16" value="8">
-            </div>
-
-            <div style="margin-top: 12px; font-size: 0.82rem; color: var(--text-muted);">
-              Current State Vector Equation:
-              <div id="dynamic-state-latex" style="margin-top: 8px; font-family: var(--font-mono); color: var(--text-primary);">
-                \(|\Psi_{LaQuMo}\rangle = 0.71|00\dots 0\rangle + 0.71e^{i\phi}|11\dots 1\rangle\)
-              </div>
-            </div>
-          </div>
-
-          <!-- Canvas & Probabilities -->
-          <div class="sim-view">
-            <div class="sim-canvas-container">
-              <canvas id="bloch-canvas"></canvas>
-            </div>
-
-            <div class="state-amplitudes">
-              <div class="amplitude-box">
-                <div class="amp-state">|0000⟩</div>
-                <div class="amp-val" id="amp-val-0">48.2%</div>
-                <div class="amp-bar-bg"><div class="amp-bar-fill" id="amp-bar-0" style="width: 48.2%;"></div></div>
-              </div>
-              <div class="amplitude-box">
-                <div class="amp-state">|0001⟩</div>
-                <div class="amp-val" id="amp-val-1">32.5%</div>
-                <div class="amp-bar-bg"><div class="amp-bar-fill" id="amp-bar-1" style="width: 32.5%;"></div></div>
-              </div>
-              <div class="amplitude-box">
-                <div class="amp-state">|0110⟩</div>
-                <div class="amp-val" id="amp-val-2">11.8%</div>
-                <div class="amp-bar-bg"><div class="amp-bar-fill" id="amp-bar-2" style="width: 11.8%;"></div></div>
-              </div>
-              <div class="amplitude-box">
-                <div class="amp-state">|1111⟩</div>
-                <div class="amp-val" id="amp-val-3">7.5%</div>
-                <div class="amp-bar-bg"><div class="amp-bar-fill" id="amp-bar-3" style="width: 7.5%;"></div></div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-
-      </div>
-    </section>
-
-    <!-- Architecture Visualizer Section -->
-    <section class="section" id="architecture">
-      <div class="section-header">
-        <span class="section-tag">// CONCEPTUAL ARCHITECTURE DESIGN SKETCH</span>
-        <h2 class="section-title">Theoretical Model Architecture</h2>
-        <p class="section-desc">
-          A conceptual design sketch outlining how quantum Hilbert space representations can interface with transformer embedding layers in hybrid quantum-classical machine learning research.
-        </p>
-      </div>
-
-      <div class="arch-flow">
-        <div class="arch-layer">
-          <div class="arch-left">
-            <div class="arch-num">01</div>
-            <div class="arch-info">
-              <h4>Quantum State Embedding Layer</h4>
-              <p>Maps high-dimensional discrete tokens into parameterized continuous Qubit state vectors.</p>
-            </div>
-          </div>
-          <div class="arch-math">
-            \(|\psi_i\rangle = R_y(\theta_i) R_z(\phi_i) |0\rangle\)
-          </div>
-        </div>
-
-        <div class="arch-layer">
-          <div class="arch-left">
-            <div class="arch-num">02</div>
-            <div class="arch-info">
-              <h4>Variational Quantum Circuit (VQC) Ansatz</h4>
-              <p>Multi-layer parameterized CNOT and Hadamard gates generating full quantum entanglement across token registers.</p>
-            </div>
-          </div>
-          <div class="arch-math">
-            \(U(\vec{\theta}) = \prod_{l=1}^L \left[ \bigotimes_{j=1}^n R_x(\theta_{l,j}) \cdot \text{CNOT}_{j, j+1} \right]\)
-          </div>
-        </div>
-
-        <div class="arch-layer">
-          <div class="arch-left">
-            <div class="arch-num">03</div>
-            <div class="arch-info">
-              <h4>Quantum Multi-Head Self-Attention (Q-MHA)</h4>
-              <p>Calculates overlap inner products \(\langle \psi_Q | \psi_K \rangle\) directly via Hilbert space inner product kernels.</p>
-            </div>
-          </div>
-          <div class="arch-math">
-            \(\text{Attention}(Q,K,V) = \text{softmax}\left( \frac{|\langle \psi_Q | \psi_K \rangle|^2}{\sqrt{d_k}} \right) V\)
-          </div>
-        </div>
-
-        <div class="arch-layer">
-          <div class="arch-left">
-            <div class="arch-num">04</div>
-            <div class="arch-info">
-              <h4>Classical Transformer Decoder Backbone</h4>
-              <p>Decodes measured Pauli expectation values \(\langle Z_i \rangle\) into discrete generated outputs.</p>
-            </div>
-          </div>
-          <div class="arch-math">
-            \(y_{next} = \text{Softmax}(W_o \cdot \vec{\langle Z \rangle} + b)\)
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Factually Grounded Complexity & Theoretical Bounds Section -->
-    <section class="section" id="benchmarks">
-      <div class="section-header">
-        <span class="section-tag">// ALGORITHMIC FOUNDATIONS &amp; LITERATURE BOUNDS</span>
-        <h2 class="section-title">Quantum vs Classical Theoretical Complexity Bounds</h2>
-        <p class="section-desc">
-          Established theoretical complexity limits documented in published quantum computing literature (e.g., Goemans-Williamson 1995, Peruzzo et al. 2014) serving as theoretical context for virtual lab simulations.
-        </p>
-      </div>
-
-      <div class="bench-table-container">
-        <table class="bench-table">
-          <thead>
-            <tr>
-              <th>Computational Domain</th>
-              <th>Classical Standard Limit</th>
-              <th>Theoretical Exact Limit</th>
-              <th>Quantum Upper Bound</th>
-              <th>Literature Citation</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Molecular VQE Energy ($\text{LiH}$ Ground State)</strong></td>
-              <td>-7.82 Hartree (HF Approx.)</td>
-              <td>-7.8827 Hartree (FCI Exact)</td>
-              <td><span class="tag-highlight">&le; 1.6 mHartree Target</span></td>
-              <td>Kandala et al. (Nature 2017)</td>
-            </tr>
-            <tr>
-              <td><strong>MAX-CUT Combinatorial Optimization</strong></td>
-              <td>84.2% (Greedy Heuristic)</td>
-              <td>87.856% (GW SDP Limit)</td>
-              <td><span class="tag-highlight">QAOA $p \ge 5$ Ansätze</span></td>
-              <td>Goemans &amp; Williamson (JACM 1995)</td>
-            </tr>
-            <tr>
-              <td><strong>Quantum Density Matrix State Vector Encoding</strong></td>
-              <td>\(\mathcal{O}(d)\) Vector Space</td>
-              <td>\(\mathcal{O}(d)\) State Dimension</td>
-              <td><span class="tag-highlight">\(\mathcal{O}(\log_2 d)\) Subspace Encoding (Quantum PCA)</span></td>
-              <td>Lloyd, Mohseni &amp; Rebentrost (Nat. Phys. 2014)</td>
-            </tr>
-          </tbody>
-        </table>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; font-style: italic;">
-          * Note: Theoretical bounds listed above are established mathematical limits from published quantum computing literature and are presented solely for educational reference.
-        </p>
-      </div>
-    </section>
-
-
-
-    <!-- Clean Contact Section -->
-    <section class="section" id="contact">
-      <div class="contact-simple-container">
-        
-        <div class="contact-simple-header">
-          <h2 class="contact-simple-title">Connect with Us</h2>
-          <p class="contact-simple-subtitle">
-            Submit your research inquiries, technical architecture questions, or quantum compute requests below.
-          </p>
-          <p style="margin-top: 12px; font-size: 0.95rem; color: var(--text-secondary);">
-            Direct Email Inquiry: <a href="mailto:info@laqumo.com" style="color: var(--accent-white); text-decoration: underline; font-weight: 500;">info@laqumo.com</a>
-          </p>
-        </div>
-
-        <form class="contact-simple-form" id="contact-form">
-          <div class="form-row-2col">
-            <div class="form-group-simple">
-              <label for="contact-name">Name *</label>
-              <input type="text" id="contact-name" class="form-input-simple" required>
-            </div>
-            <div class="form-group-simple">
-              <label for="contact-email">Email *</label>
-              <input type="email" id="contact-email" class="form-input-simple" required>
-            </div>
-          </div>
-
-          <div class="form-group-simple">
-            <label for="contact-phone">Phone number</label>
-            <input type="tel" id="contact-phone" class="form-input-simple">
-          </div>
-
-          <div class="form-group-simple">
-            <label for="contact-message">Message *</label>
-            <textarea id="contact-message" class="form-input-simple form-textarea-simple" rows="5" placeholder="Your message" required></textarea>
-          </div>
-
-          <button type="submit" class="btn-submit-simple" id="btn-send-contact">
-            SUBMIT
-          </button>
-
-          <div id="contact-feedback" class="form-feedback-simple"></div>
-        </form>
-      </div>
-    </section>
-
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="brand">
-        <div class="brand-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Elevated Glassmorphic Navbar (Proportional & Unified) -->
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="9"></circle>
             <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
             <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
           </svg>
         </div>
-        <span class="brand-text">LaQuMo</span>
+        <div>
+          <span class="brand-text">LaQuMo</span>
+          <span class="brand-tag">v3.0 QUANTUM</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="nav-link active" data-i18n="nav_home">Home</a></li>
+        <li><a href="lab.html" class="nav-link" data-i18n="nav_lab">Virtual Lab</a></li>
+        <li><a href="database.html" class="nav-link" data-i18n="nav_db">Systems DB</a></li>
+        <li><a href="articles.html" class="nav-link" data-i18n="nav_articles">Articles</a></li>
+        <li><a href="libraries.html" class="nav-link" data-i18n="nav_sdk">SDKs</a></li>
+        <li><a href="editor.html" class="nav-link" data-i18n="nav_editor">✍️ Editor</a></li>
+        <li><a href="dashboard.html" class="nav-link" data-i18n="nav_dashboard">Portal</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="lang-selector-wrap"></div>
+        <a href="dashboard.html" class="btn btn-outline btn-sm" id="nav-user-btn">
+          <span>👨‍🔬</span> Dr. Feynman
+        </a>
+        <a href="lab.html" class="btn btn-primary btn-sm" data-i18n="btn_launch_lab">
+          🧪 Lab
+        </a>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile-First Sidebar Drawer & Backdrop -->
+  <div class="mobile-sidebar-backdrop" id="mobile-sidebar-backdrop"></div>
+  <aside class="mobile-sidebar-drawer" id="mobile-sidebar-drawer">
+    <div class="sidebar-header">
+      <div class="brand-logo">
+        <div class="brand-icon-box" style="width: 32px; height: 32px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"></circle></svg>
+        </div>
+        <span class="brand-text" style="font-size: 1.2rem;">LaQuMo</span>
+      </div>
+      <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close menu">✕</button>
+    </div>
+
+    <div class="sidebar-profile-card">
+      <div style="font-size: 1.8rem;">👨‍🔬</div>
+      <div>
+        <div style="font-weight: 700; font-size: 0.9rem; color: #0f172a;">Dr. Richard Feynman</div>
+        <div style="font-size: 0.74rem; color: var(--crimson-bright); font-weight: 700;">🟢 256 QPU ATOMS ACTIVE</div>
+      </div>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group-title">LABORATUVAR & SİMÜLASYONLAR</div>
+      <a href="lab.html" class="sidebar-nav-link">
+        <span class="sidebar-icon">🧪</span>
+        <span>5'i 1 Arada Sanal Lab</span>
+      </a>
+      <a href="lab.html" class="sidebar-nav-link">
+        <span class="sidebar-icon">⚛️</span>
+        <span>2D Rydberg Lazer Cımbızı</span>
+      </a>
+      <a href="lab.html" class="sidebar-nav-link">
+        <span class="sidebar-icon">🌐</span>
+        <span>3D Bloch Küresi & Qubitler</span>
+      </a>
+
+      <div class="sidebar-group-title">ARAŞTIRMA & VERİTABANI</div>
+      <a href="database.html" class="sidebar-nav-link">
+        <span class="sidebar-icon">🔬</span>
+        <span>Kuantum Sistemleri & VQE DB</span>
+      </a>
+      <a href="libraries.html" class="sidebar-nav-link">
+        <span class="sidebar-icon">💻</span>
+        <span>QuEra Bloqade & SDKs</span>
+      </a>
+
+      <div class="sidebar-group-title">BİLİMSEL YAYINLAR & EDİTÖR</div>
+      <a href="articles.html" class="sidebar-nav-link">
+        <span class="sidebar-icon">📰</span>
+        <span>Bilimsel Makale Akışı</span>
+      </a>
+      <a href="editor.html" class="sidebar-nav-link">
+        <span class="sidebar-icon">✍️</span>
+        <span>Canlı LaTeX Editörü</span>
+      </a>
+
+      <div class="sidebar-group-title">YÖNETİM & PROFİL</div>
+      <a href="dashboard.html" class="sidebar-nav-link">
+        <span class="sidebar-icon">👤</span>
+        <span>Araştırmacı Portalı</span>
+      </a>
+      <a href="admin.html" class="sidebar-nav-link">
+        <span class="sidebar-icon">⚙️</span>
+        <span>Kurumsal Yönetim Konsolu</span>
+      </a>
+    </div>
+
+    <div class="sidebar-footer">
+      <div><em>"Nature isn't classical, dammit..."</em></div>
+      <div style="font-weight: 700; margin-top: 4px; color: var(--gold-antique); font-size: 0.72rem;">❖ LAQUMO QUANTUM RERUM NATURA ❖</div>
+    </div>
+  </aside>
+
+  <!-- Hero Header Section (QuEra & High-Energy Physics Spec) -->
+  <header class="section" style="padding-top: 60px; padding-bottom: 40px; text-align: center;">
+    <div class="container">
+      <div class="badge" style="margin-bottom: 20px;">
+        <span class="badge-dot"></span>
+        <span data-i18n="hero_badge">NEUTRAL-ATOM QUANTUM COMPUTING &bull; SCIENTIFIC PORTAL</span>
       </div>
 
-      <div style="font-size:0.88rem; color:var(--text-secondary);">
-        Direct Inquiry: <a href="mailto:info@laqumo.com" style="color:var(--accent-white); text-decoration:none; font-weight:600;">info@laqumo.com</a>
+      <h1 style="font-size: clamp(2.3rem, 4.8vw, 3.8rem); max-width: 980px; margin: 0 auto 20px auto; font-weight: 800; line-height: 1.18;">
+        Neutral-Atom Quantum Architecture, <span style="color: var(--crimson-bright);">Physical Simulations</span> & Academic Publishing
+      </h1>
+
+      <p style="font-size: 1.15rem; color: var(--slate-medium); max-width: 800px; margin: 0 auto 32px auto; line-height: 1.75;" data-i18n="hero_desc">
+        A state-of-the-art quantum platform inspired by QuEra Aquila & Harvard-MIT neutral atom arrays. Featuring real-time Rydberg blockade simulators, Bloqade SDK, molecular Hamiltonians, and an Evrim Ağacı-style peer-reviewed research magazine.
+      </p>
+
+      <div class="math-block" style="max-width: 860px; margin: 0 auto 36px auto;">
+        \[ \hat{\mathcal{H}}_{Rydberg} = \sum_{i} \frac{\Omega_i(t)}{2} \hat{\sigma}_i^x - \sum_{i} \Delta_i(t) \hat{n}_i + \sum_{i < j} \frac{C_6}{|\vec{r}_i - \vec{r}_j|^6} \hat{n}_i \hat{n}_j \]
       </div>
 
-      <div class="footer-copy">
-        &copy; 2026 LaQuMo Research Collective. Scientific Virtual Lab &amp; Educational Visualization Dashboard.
+      <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 45px;">
+        <a href="lab.html" class="btn btn-primary" data-i18n="btn_launch_lab">
+          🧪 5'i 1 Arada Sanal Laboratuvar
+        </a>
+        <a href="articles.html" class="btn btn-outline" data-i18n="btn_read_articles">
+          📖 Bilimsel Makaleleri Oku
+        </a>
+        <a href="editor.html" class="btn btn-violet" data-i18n="btn_write_paper">
+          ✍️ Yeni Makale Yaz
+        </a>
+      </div>
+
+      <!-- Live Platform Metrics -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-val">256 Neutral Atoms</div>
+          <div class="stat-lbl">Rubidium-87 Qubit Capacity</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">99.85%</div>
+          <div class="stat-lbl">Rydberg Gate Fidelity</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">5 Simulators</div>
+          <div class="stat-lbl">Interactive Physics Engines</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">Bloqade SDK</div>
+          <div class="stat-lbl">Analog & Digital Neutral Atom QPU</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- QuEra Corporate Institutional Partners Strip -->
+  <div class="container">
+    <div class="partner-logo-strip">
+      <div class="partner-logo-item">🏛️ HARVARD QUANTUM INITIATIVE</div>
+      <div class="partner-logo-item">⚛️ MIT CENTER FOR ULTRACOLD ATOMS</div>
+      <div class="partner-logo-item">☁️ AWS BRAKET QPU CLOUD</div>
+      <div class="partner-logo-item">🔬 DARPA ONISQ PROGRAM</div>
+      <div class="partner-logo-item">🌐 NATIONAL SCIENCE FOUNDATION (NSF)</div>
+    </div>
+  </div>
+
+  <!-- 🌟 NEW: QuEra-Style 2D Neutral-Atom Rydberg Lattice Simulator -->
+  <section class="section" style="background: #ffffff; border-top: 1px solid var(--silver-border); border-bottom: 1px solid var(--silver-border);">
+    <div class="container">
+      <div class="section-header" style="text-align: center; margin-bottom: 36px;">
+        <span class="badge" style="margin-bottom: 8px;">// QUERA AQUILA SPECIFICATION</span>
+        <h2 style="font-size: 2.3rem;">2D Neutral-Atom Laser Tweezer Lattice & Rydberg Blockade</h2>
+        <p style="color: var(--slate-medium); max-width: 760px; margin: 6px auto 0 auto;">
+          Drag optical tweezers with your mouse to rearrange individual Rubidium atoms. Adjust Rabi frequency $\Omega(t)$ and detuning $\Delta(t)$ to observe the Rydberg blockade radius $R_b = (C_6/\Omega)^{1/6}$.
+        </p>
+      </div>
+
+      <div class="sim-grid">
+        <!-- Controls -->
+        <div class="sim-panel">
+          <div class="sim-panel-title">
+            <span>⚡</span> Laser Pulse Controls
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Rabi Frequency \(\Omega(t)\)</span>
+              <span class="control-val-tag" id="val-rabi">2.5 rad/μs</span>
+            </div>
+            <input type="range" id="slider-rabi" class="sim-slider" min="0.5" max="5.0" step="0.1" value="2.5">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Laser Detuning \(\Delta(t)\)</span>
+              <span class="control-val-tag" id="val-delta">1.2 rad/μs</span>
+            </div>
+            <input type="range" id="slider-delta" class="sim-slider" min="-2.0" max="4.0" step="0.1" value="1.2">
+          </div>
+
+          <div style="background: #ffffff; padding: 12px; border-radius: var(--radius-xs); border: 1px solid var(--silver-border); margin-top: 10px;">
+            <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Blockade Radius \(R_b\):</div>
+            <div id="val-rydberg-rb" style="font-family: var(--font-mono); font-size: 1.1rem; color: var(--crimson-bright); font-weight: 800; margin-top: 2px;">
+              7.6 μm
+            </div>
+            <div style="font-size: 0.76rem; color: var(--slate-light); margin-top: 4px;">
+              Atoms within \(R_b\) cannot be simultaneously excited to \(|r\rangle\).
+            </div>
+          </div>
+
+          <div style="margin-top: 14px;">
+            <a href="lab.html" class="btn btn-primary btn-sm" style="width: 100%;">
+              🧪 Open in Full Virtual Lab &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Canvas & HUD -->
+        <div class="sim-viewport">
+          <div class="sim-overlay-hud">
+            <div class="hud-pill">🖱️ Drag atoms with mouse to reposition optical tweezers</div>
+            <div class="hud-pill">Excited: <span id="val-rydberg-excited" style="color: var(--crimson-bright); font-weight: 700;">Calculating...</span></div>
+          </div>
+
+          <canvas id="rydberg-canvas" class="sim-canvas"></canvas>
+
+          <div style="padding: 14px 18px; background: #f8fafc; border-top: 1px solid var(--silver-border); display: flex; justify-content: space-between; align-items: center; font-size: 0.84rem; color: var(--slate-medium);">
+            <div><span style="color: #e11d48; font-weight: 800;">● |r⟩</span> Rydberg Excited State ($n=70$)</div>
+            <div><span style="color: #d97706; font-weight: 800;">● |g⟩</span> Ground State ($5S_{1/2}$)</div>
+            <div><span>---</span> Blockade Sphere ($R_b$)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QuEra Corporate Hardware Roadmap -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" style="text-align: center; margin-bottom: 24px;">
+        <span class="badge" style="margin-bottom: 8px;">// HARDWARE ROADMAP</span>
+        <h2 style="font-size: 2.3rem;">QuEra-Class Neutral Atom QPUs & Roadmap</h2>
+        <p style="color: var(--slate-medium); max-width: 750px; margin: 6px auto 0 auto;">
+          From analog quantum simulation to fault-tolerant universal logical qubits.
+        </p>
+      </div>
+
+      <div class="roadmap-grid">
+        <!-- Gen 1 -->
+        <div class="roadmap-card">
+          <span class="roadmap-gen-tag">GENERATION 1 &bull; ANALOG QPU</span>
+          <h3 class="roadmap-qpu-name">Aquila Processor</h3>
+          <span class="roadmap-status-pill">AVAILABLE ON CLOUD</span>
+          <p style="font-size: 0.9rem; color: var(--slate-medium); line-height: 1.6;">
+            256 neutral Rubidium atoms programmed in flexible 2D geometries. High-fidelity Hamiltonian simulation for materials and optimization.
+          </p>
+          <ul class="roadmap-feature-list">
+            <li>256 physical qubits in optical tweezers</li>
+            <li>Continuous analog pulse shaping ($\Omega, \Delta$)</li>
+            <li>AWS Braket & QuEra Cloud direct execution</li>
+          </ul>
+        </div>
+
+        <!-- Gen 2 -->
+        <div class="roadmap-card featured">
+          <span class="roadmap-gen-tag" style="color: var(--gold-antique);">GENERATION 2 &bull; DIGITAL / LOGICAL</span>
+          <h3 class="roadmap-qpu-name">Gemini Architecture</h3>
+          <span class="roadmap-status-pill" style="background: rgba(217,119,6,0.1); color: var(--gold-antique); border-color: var(--gold-border);">DEPLOYING 2026</span>
+          <p style="font-size: 0.9rem; color: var(--slate-medium); line-height: 1.6;">
+            Reconfigurable neutral atom shuttle movement with transversal gates and logical qubit error detection.
+          </p>
+          <ul class="roadmap-feature-list">
+            <li>Sub-millisecond optical shuttle movement</li>
+            <li>Transversal non-local 2-qubit gates</li>
+            <li>Multi-logical qubit entanglement demonstration</li>
+          </ul>
+        </div>
+
+        <!-- Gen 3 -->
+        <div class="roadmap-card">
+          <span class="roadmap-gen-tag">GENERATION 3 &bull; FAULT-TOLERANT</span>
+          <h3 class="roadmap-qpu-name">Fault-Tolerant QPU</h3>
+          <span class="roadmap-status-pill" style="background: rgba(79, 70, 229, 0.1); color: var(--indigo-accent); border-color: rgba(79, 70, 229, 0.25);">RESEARCH STAGE</span>
+          <p style="font-size: 0.9rem; color: var(--slate-medium); line-height: 1.6;">
+            Over 10,000 physical atoms with 3D color code surface architecture, achieving full universal error-corrected computation.
+          </p>
+          <ul class="roadmap-feature-list">
+            <li>10,000+ neutral atom register</li>
+            <li>Fault-tolerant magic state distillation</li>
+            <li>Quantum supremacy in molecular synthesis</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QuEra Corporate Industry Solutions Matrix -->
+  <section class="section" style="background: rgba(255, 255, 255, 0.6); border-top: 1px solid var(--silver-border); border-bottom: 1px solid var(--silver-border);">
+    <div class="container">
+      <div class="section-header" style="text-align: center; margin-bottom: 24px;">
+        <span class="badge" style="margin-bottom: 8px;">// ENTERPRISE APPLICATIONS</span>
+        <h2 style="font-size: 2.3rem;">Scientific & Industrial Solutions</h2>
+        <p style="color: var(--slate-medium); max-width: 700px; margin: 6px auto 0 auto;">
+          Accelerating discoveries across pharma, high-energy physics, and logistics with neutral atom processors.
+        </p>
+      </div>
+
+      <div class="solutions-grid">
+        <div class="solution-card">
+          <div class="solution-icon-box">💊</div>
+          <h3 class="solution-title">Quantum Chemistry & Pharma</h3>
+          <p class="solution-desc">
+            Simulate strongly correlated molecular orbital configurations, electronic ground states, and catalytic reaction pathways with VQE.
+          </p>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-icon-box" style="background: var(--crimson-subtle); color: var(--crimson-bright); border-color: var(--crimson-border);">📊</div>
+          <h3 class="solution-title">Combinatorial Optimization</h3>
+          <p class="solution-desc">
+            Solve Maximum Independent Set (MIS), portfolio optimization, and Max-Cut problems directly mapped to Rydberg blockade graphs.
+          </p>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-icon-box">🌌</div>
+          <h3 class="solution-title">High-Energy & Lattice Physics</h3>
+          <p class="solution-desc">
+            Simulate $U(1)$ and $\mathbb{Z}_2$ lattice gauge theories, topological string dynamics, and exotic non-equilibrium phase transitions.
+          </p>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-icon-box" style="background: rgba(5, 150, 105, 0.1); color: #059669; border-color: rgba(5, 150, 105, 0.25);">🧠</div>
+          <h3 class="solution-title">Quantum AI & Machine Learning</h3>
+          <p class="solution-desc">
+            Implement hybrid variational quantum circuits and Quantum Kernel Methods for high-dimensional classification tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Evrim Ağacı Style Featured Science News & Articles Section -->
+  <section class="section">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <span class="badge" style="margin-bottom: 8px;">// BİLİMSEL YAYIN AKIŞI</span>
+          <h2 style="font-size: 2.2rem;">Öne Çıkan Kuantum Makaleleri & Notlar</h2>
+          <p style="color: var(--slate-medium); font-size: 0.98rem; margin-top: 4px;">
+            Fizikçiler ve araştırmacılar tarafından hazırlanan güncel makale ve incelemeler.
+          </p>
+        </div>
+
+        <a href="articles.html" class="btn btn-outline btn-sm">
+          Tüm Makaleleri Gör &rarr;
+        </a>
+      </div>
+
+      <!-- Editorial Grid -->
+      <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px;">
+        <!-- Big Lead Article Card -->
+        <div class="article-editorial-card" style="margin-bottom: 0;">
+          <div class="article-header-meta">
+            <span class="badge">Kuantum Kimyası</span>
+            <span style="font-size: 0.82rem; color: var(--slate-light);">⏱️ 12 dk okuma &bull; 📅 18 Ağustos 2026</span>
+          </div>
+
+          <h3 class="article-headline" style="font-size: 1.7rem;">
+            <a href="articles.html">Variational Quantum Eigensolver (VQE) ile Moleküler Taban Durumları</a>
+          </h3>
+
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+            <div class="author-avatar-img" style="width: 36px; height: 36px;">👨‍🔬</div>
+            <div>
+              <div style="font-weight: 700; color: #0f172a; font-size: 0.9rem;">Dr. Richard Feynman</div>
+              <div style="font-size: 0.76rem; color: var(--slate-light);">Kuantum Hesaplama Enstitüsü</div>
+            </div>
+          </div>
+
+          <p class="article-snippet">
+            LiH ve H₂O moleküllerinin potansiyel enerji yüzeylerini VQC devresi ile hesaplayan klasik-kuantum hibrit algoritma yaklaşımı.
+          </p>
+
+          <div class="math-block">
+            \[ \langle \hat{\mathcal{H}} \rangle(\vec{\theta}) \ge E_0 \]
+          </div>
+
+          <div class="article-reactions-bar">
+            <div style="display: flex; gap: 12px;">
+              <button class="reaction-btn" onclick="window.handleClap(this)">
+                👏 <span class="clap-count">48</span>
+              </button>
+              <button class="reaction-btn" onclick="window.handleBookmark(this)">
+                🔖 Kaydet
+              </button>
+              <button class="reaction-btn" onclick="window.handleShare('VQE Makalesi')">
+                📤 Paylaş
+              </button>
+            </div>
+            <a href="articles.html" style="font-weight: 700;">Makaleyi Oku &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Secondary Column -->
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div class="article-editorial-card" style="padding: 20px; margin-bottom: 0;">
+            <div class="article-header-meta">
+              <span class="badge">Nötr Atom Fiziği</span>
+              <span style="font-size: 0.78rem; color: var(--slate-light);">10 dk okuma</span>
+            </div>
+            <h4 style="font-size: 1.15rem; margin-bottom: 6px;">
+              <a href="articles.html">QuEra Bloqade ile Rydberg Blokajı ve MIS Optimizasyonu</a>
+            </h4>
+            <p style="font-size: 0.86rem; color: var(--slate-medium); line-height: 1.5;">
+              Aquila 256 QPU üzerinde Rydberg Hamiltonyeni kontrolü ve graf kombinatoryal algoritmaları.
+            </p>
+            <div style="margin-top: 10px;">
+              <a href="lab.html" class="btn btn-outline btn-sm">🧪 Rydberg Simülasyonu</a>
+            </div>
+          </div>
+
+          <div class="article-editorial-card" style="padding: 20px; margin-bottom: 0;">
+            <div class="article-header-meta">
+              <span class="badge" style="background: var(--gold-subtle); color: var(--gold-antique); border-color: var(--gold-border);">Topolojik Maddeler</span>
+              <span style="font-size: 0.78rem; color: var(--slate-light);">14 dk okuma</span>
+            </div>
+            <h4 style="font-size: 1.15rem; margin-bottom: 6px;">
+              <a href="articles.html">Kitaev Zincirinde Majorana Sıfır Modları ve Hata Toleransı</a>
+            </h4>
+            <p style="font-size: 0.86rem; color: var(--slate-medium); line-height: 1.5;">
+              Topolojik kuantum bilgisayarlar için örgüleme (braiding) operatörleri ve dekoherans koruması.
+            </p>
+            <div style="margin-top: 10px;">
+              <a href="database.html" class="btn btn-outline btn-sm">🔬 Model Veritabanı</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloqade & Developer SDK Snippet -->
+  <section class="section" style="background: #ffffff; border-top: 1px solid var(--silver-border);">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge" style="margin-bottom: 8px;">// DEVELOPER ACCESS</span>
+        <h2 style="font-size: 2.2rem;">QuEra Bloqade & Quantum SDKs</h2>
+        <p style="color: var(--slate-medium);">
+          Python and Julia code snippets ready for local emulation and cloud QPU execution.
+        </p>
+      </div>
+
+      <div class="code-window">
+        <div class="code-header">
+          <div class="code-dots">
+            <div class="code-dot dot-red"></div>
+            <div class="code-dot dot-yellow"></div>
+            <div class="code-dot dot-green"></div>
+          </div>
+          <div class="code-tabs">
+            <button class="code-tab active" data-lang="bloqade">Bloqade (Neutral Atom)</button>
+            <button class="code-tab" data-lang="qiskit">Qiskit (Bell State)</button>
+            <button class="code-tab" data-lang="pennylane">PennyLane (VQE)</button>
+          </div>
+          <button class="btn btn-outline btn-sm" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);" data-copy-code>Copy Code</button>
+        </div>
+        <div class="code-body">
+          <pre><code>from bloqade import var, cast
+from bloqade.atom_arrangement import Square
+
+# 1. Define 2D Neutral Atom Tweezer Geometry (QuEra Aquila Spec)
+lattice = Square(4, 4, lattice_constant=5.0)
+
+# 2. Program Analog Time-Dependent Pulse Driving (Rabi Frequency & Detuning)
+durations = [0.2, 1.6, 0.2]
+rabi_pulse = var("rabi").piecewise_linear(durations, [0.0, 2.5, 2.5, 0.0])
+detuning_pulse = var("delta").piecewise_linear(durations, [-2.0, -2.0, 3.0, 3.0])
+
+# 3. Build & Emulate Rydberg Hamiltonian Program
+program = lattice.rydberg.rabi.amplitude.uniform.piecewise_linear(
+    durations, [0.0, 2.5, 2.5, 0.0]
+).detuning.uniform.piecewise_linear(durations, [-2.0, -2.0, 3.0, 3.0])
+
+# 4. Run Statevector Simulation
+batch = program.bloqade.python().run(1000)
+print("Rydberg Population Results:", batch.report().counts())</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🌟 Daily Quantum Concept & Upcoming Symposia Calendar -->
+  <section class="section" style="background: linear-gradient(135deg, #fcfbfa 0%, #f7f5f0 100%); border-top: 1px solid var(--silver-border);">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px; align-items: start;">
+        
+        <!-- Günün Kuantum Kavramı Card -->
+        <div class="card" style="padding: 28px; background: #ffffff; border-left: 4px solid var(--gold-antique);">
+          <div class="badge" style="background: var(--gold-subtle); color: var(--gold-antique); border-color: var(--gold-border); margin-bottom: 10px;">
+            💡 GÜNÜN KUANTUM KAVRAMI
+          </div>
+          <h3 style="font-size: 1.4rem; color: #0f172a; margin-bottom: 8px;">Kuantum Dolanıklığı & Bell Eşitsizliği İhlali</h3>
+          <p style="color: var(--slate-medium); font-size: 0.92rem; line-height: 1.65; margin-bottom: 14px;">
+            Yerel gizli değişkenler teorisine göre fiziksel korelasyonlar $|S| \le 2$ ile sınırlıdır. Kuantum mekaniğinde ise azami dolanık Bell durumları $(|\Phi^+\rangle)$ Tsirelson sınırına kadar $(2\sqrt{2} \approx 2.828)$ bu sınırı ihlal eder.
+          </p>
+          <div class="math-block" style="margin: 0 0 16px 0; background: #fffcf8;">
+            \[ |S| = |E(a,b) - E(a,b') + E(a',b) + E(a',b')| \le 2\sqrt{2} \]
+          </div>
+          <a href="lab.html" class="btn btn-outline btn-sm">🧪 Bell Durumunu Sanal Lab'da İncele &rarr;</a>
+        </div>
+
+        <!-- Yaklaşan Uluslararası Sempozyumlar & Çağrılar -->
+        <div>
+          <div class="badge" style="margin-bottom: 10px;">
+            <span class="badge-dot"></span>
+            <span>ULUSLARARASI KONFERANSLAR & BİLDİRİ ÇAĞRILARI (2026)</span>
+          </div>
+          <h3 style="font-size: 1.5rem; margin-bottom: 16px;">Kuantum Bilim Takvimi & Akademik Çağrılar</h3>
+
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="card" style="padding: 16px 20px; background: #ffffff; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <div style="font-weight: 700; color: #0f172a; font-size: 0.95rem;">IEEE Quantum Week (QCE26)</div>
+                <div style="font-size: 0.8rem; color: var(--slate-light);">📍 Zürih, İsviçre &bull; 14-19 Eylül 2026</div>
+              </div>
+              <span class="badge" style="background: rgba(5,150,105,0.1); color: #059669;">Bildiri Çağrısı Açık</span>
+            </div>
+
+            <div class="card" style="padding: 16px 20px; background: #ffffff; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <div style="font-weight: 700; color: #0f172a; font-size: 0.95rem;">International Conference on Neutral Atom Computing (ICNAC)</div>
+                <div style="font-size: 0.8rem; color: var(--slate-light);">📍 Boston (Harvard/MIT), ABD &bull; 22-25 Ekim 2026</div>
+              </div>
+              <span class="badge" style="background: rgba(217,119,6,0.1); color: #d97706;">Kayıtlar Başladı</span>
+            </div>
+
+            <div class="card" style="padding: 16px 20px; background: #ffffff; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <div style="font-weight: 700; color: #0f172a; font-size: 0.95rem;">Solvay Centenary Quantum Mechanics Summit</div>
+                <div style="font-size: 0.8rem; color: var(--slate-light);">📍 Brüksel, Belçika &bull; 10-12 Kasım 2026</div>
+              </div>
+              <span class="badge">Davetli Konuşmacılar</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Community & Collaboration Section -->
+  <section class="section" id="community" style="background: rgba(255, 255, 255, 0.5);">
+    <div class="container">
+      <div class="section-header" style="text-align: center; margin-bottom: 30px;">
+        <span class="badge" style="margin-bottom: 8px;">// AKADEMİK İŞBİRLİĞİ & QPU TALEBİ</span>
+        <h2 style="font-size: 2.2rem;">Araştırma Talebi & QPU Erişim Başvurusu</h2>
+        <p style="color: var(--slate-medium); max-width: 650px; margin: 6px auto 0 auto;">
+          Doktora teziniz, yeni nötr atom modelleri veya makale gönderimleriniz için bize ulaşın.
+        </p>
+      </div>
+
+      <div style="max-width: 680px; margin: 0 auto; background: #ffffff; border: 1px solid var(--silver-border); border-radius: var(--radius-xl); padding: 36px; box-shadow: var(--glass-shadow);">
+        <form id="contact-form" style="display: flex; flex-direction: column; gap: 18px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="control-group">
+              <label class="control-label">Adınız Soyadınız *</label>
+              <input type="text" name="name" class="search-input" style="padding-left: 14px;" required placeholder="Dr. John Doe">
+            </div>
+            <div class="control-group">
+              <label class="control-label">E-Posta Adresiniz *</label>
+              <input type="email" name="email" class="search-input" style="padding-left: 14px;" required placeholder="john@universite.edu">
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">Kurum / Üniversite</label>
+            <input type="text" name="institution" class="search-input" style="padding-left: 14px;" placeholder="Harvard Quantum Initiative / MIT">
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">Konu / İlgi Alanı</label>
+            <input type="text" name="subject" class="search-input" style="padding-left: 14px;" placeholder="QuEra Bloqade / VQE Simülasyonu / QPU Süresi">
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">Mesajınız *</label>
+            <textarea name="message" class="search-input" style="padding: 12px 14px; min-height: 120px; resize: vertical;" required placeholder="Simülasyon parametreleri, araştırma fikriniz veya QPU zamanı talebiniz..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="margin-top: 8px;">
+            ✉️ QPU & Araştırma Talebini Gönder
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="mobile-bottom-nav">
+    <div class="mobile-bottom-nav-inner">
+      <a href="index.html" class="mob-nav-item active">
+        <span class="mob-nav-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="lab.html" class="mob-nav-item">
+        <span class="mob-nav-icon">🧪</span>
+        <span>Lab</span>
+      </a>
+      <a href="database.html" class="mob-nav-item">
+        <span class="mob-nav-icon">🔬</span>
+        <span>DB</span>
+      </a>
+      <a href="articles.html" class="mob-nav-item">
+        <span class="mob-nav-icon">📝</span>
+        <span>Articles</span>
+      </a>
+      <a href="editor.html" class="mob-nav-item">
+        <span class="mob-nav-icon">✍️</span>
+        <span>Editor</span>
+      </a>
+      <a href="dashboard.html" class="mob-nav-item">
+        <span class="mob-nav-icon">👤</span>
+        <span>Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-logo" style="margin-bottom: 12px;">
+            <div class="brand-icon-box" style="width: 32px; height: 32px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle></svg>
+            </div>
+            <span class="brand-text" style="font-size: 1.2rem;">LaQuMo</span>
+          </div>
+          <p class="footer-brand-desc">
+            LaQuMo: Large Quantum Model, Neutral-Atom Computing & Physical Simulation Platform.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Laboratuvar</h5>
+          <ul class="footer-links">
+            <li><a href="lab.html">2D Rydberg Blokajı</a></li>
+            <li><a href="lab.html">Bloch Küresi 3D</a></li>
+            <li><a href="lab.html">Schrödinger Tünellemesi</a></li>
+            <li><a href="lab.html">2-Qubit Dolanıklığı</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Yayınlar & SDK</h5>
+          <ul class="footer-links">
+            <li><a href="articles.html">Bilimsel Makale Akışı</a></li>
+            <li><a href="database.html">Materyal Veritabanı</a></li>
+            <li><a href="libraries.html">QuEra Bloqade SDK</a></li>
+            <li><a href="dashboard.html">Yazar & Editör Portalı</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Yönetim & İletişim</h5>
+          <ul class="footer-links">
+            <li><a href="admin.html">Yönetim Konsolu (Admin)</a></li>
+            <li><a href="dashboard.html">Araştırmacı Profili</a></li>
+            <li><a href="#community">QPU Zaman Talebi</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 LaQuMo: Large Quantum Model, Neutral-Atom Computing & Physical Simulation Platform.</div>
+        <div><a href="dashboard.html">Araştırmacı Portalı</a></div>
       </div>
     </div>
   </footer>
 
-  <!-- Modal Backdrop -->
-  <div class="modal-backdrop" id="modal-backdrop">
-    <div class="modal-box">
-      <button class="modal-close" id="modal-close">&times;</button>
-      <h3 class="section-title" id="modal-title" style="font-size:1.4rem; margin-bottom:16px;">Abstract</h3>
-      <div id="modal-body"></div>
-    </div>
-  </div>
-
-  <!-- Main JavaScript App -->
-  <script src="js/app.js"></script>
+  <!-- Scripts -->
+  <script src="js/data-store.js"></script>
+  <script src="js/quantum-bg.js"></script>
+  <script src="js/sim-rydberg.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/schrodinger-bot.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      new RydbergLatticeSimulator('rydberg-canvas');
+
+      window.codeSnippets = {
+        bloqade: `from bloqade import var, cast
+from bloqade.atom_arrangement import Square
+
+# 1. Define 2D Neutral Atom Tweezer Geometry (QuEra Aquila Spec)
+lattice = Square(4, 4, lattice_constant=5.0)
+
+# 2. Program Analog Time-Dependent Pulse Driving (Rabi Frequency & Detuning)
+durations = [0.2, 1.6, 0.2]
+rabi_pulse = var("rabi").piecewise_linear(durations, [0.0, 2.5, 2.5, 0.0])
+detuning_pulse = var("delta").piecewise_linear(durations, [-2.0, -2.0, 3.0, 3.0])
+
+# 3. Build & Emulate Rydberg Hamiltonian Program
+program = lattice.rydberg.rabi.amplitude.uniform.piecewise_linear(
+    durations, [0.0, 2.5, 2.5, 0.0]
+).detuning.uniform.piecewise_linear(durations, [-2.0, -2.0, 3.0, 3.0])
+
+# 4. Run Statevector Simulation
+batch = program.bloqade.python().run(1000)
+print("Rydberg Population Results:", batch.report().counts())`,
+
+        qiskit: `from qiskit import QuantumCircuit, transpile
+from qiskit_aer import AerSimulator
+
+# Prepare 2-Qubit Maximally Entangled Bell State |Phi+>
+qc = QuantumCircuit(2, 2)
+qc.h(0)         # Put qubit 0 into equal superposition
+qc.cx(0, 1)     # CNOT gate entangles qubit 0 and qubit 1
+qc.measure([0, 1], [0, 1])
+
+# Simulate on Aer backend
+simulator = AerSimulator()
+compiled_circuit = transpile(qc, simulator)
+job = simulator.run(compiled_circuit, shots=1000)
+counts = job.result().get_counts()
+
+print("Measurement Counts:", counts)`,
+
+        pennylane: `import pennylane as qml
+
+# Define 2-Qubit Device & Variational Quantum Circuit
+dev = qml.device("default.qubit", wires=2)
+
+@qml.qnode(dev)
+def vqe_circuit(params):
+    qml.RY(params[0], wires=0)
+    qml.RY(params[1], wires=1)
+    qml.CNOT(wires=[0, 1])
+    return qml.expval(qml.PauliZ(0) @ qml.PauliZ(1))
+
+energy = vqe_circuit([0.52, 0.94])
+print("Estimated Expectation <H>:", energy)`
+      };
+    });
+  </script>
 </body>
 </html>

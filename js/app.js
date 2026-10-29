@@ -633,28 +633,68 @@ print(<span class="code-str">"Hybrid Layer Output:"</span>, qlayer(x))`
 /* ==========================================================================
    5. Interactive Contact Form
    ========================================================================== */
+// Messages are delivered by the LaQuMo Cloudflare Worker (see CONTACT_FORM_SETUP.md).
+const CONTACT_API_URL = "https://laqumo-chat.snajib000.workers.dev/contact";
+
 function initContactForm() {
   const form = document.getElementById('contact-form');
   const feedback = document.getElementById('contact-feedback');
-
+  const button = document.getElementById('btn-send-contact');
   if (!form || !feedback) return;
 
-  form.addEventListener('submit', (e) => {
+  const show = (kind, html) => {
+    feedback.className = 'form-feedback-simple ' + kind;
+    feedback.innerHTML = html;
+  };
+  const fallback = 'You can also email us directly at <a href="mailto:info@laqumo.com">info@laqumo.com</a>.';
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const name = document.getElementById('contact-name').value;
+    const val = id => (document.getElementById(id)?.value || '').trim();
+    const data = {
+      name: val('contact-name'),
+      email: val('contact-email'),
+      phone: val('contact-phone'),
+      message: val('contact-message'),
+      website: val('contact-website') // hidden spam trap
+    };
 
-    feedback.className = 'form-feedback-simple success';
-    feedback.innerHTML = `✓ Thank you, ${name}! Your message has been sent to <strong>info@laqumo.com</strong>. We will get back to you shortly.`;
+    if (!data.name || !data.email || !data.message) {
+      show('is-error', 'Please fill in your name, email and message.');
+      return;
+    }
 
-    form.reset();
-    setTimeout(() => {
-      feedback.style.opacity = '0';
-      setTimeout(() => {
-        feedback.className = 'form-feedback-simple';
-        feedback.innerHTML = '';
-        feedback.style.opacity = '1';
-      }, 400);
-    }, 5000);
+    const label = button ? button.textContent : '';
+    if (button) { button.disabled = true; button.textContent = 'SENDING…'; }
+    show('', '');
+
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 20000);
+      const res = await fetch(CONTACT_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        signal: ctrl.signal
+      });
+      clearTimeout(timer);
+      const out = await res.json().catch(() => ({}));
+
+      if (res.ok && out.ok) {
+        show('is-success', `✓ Thank you, ${data.name.replace(/[<>&"]/g, '')}! Your message has been sent. We'll get back to you at the email you gave.`);
+        form.reset();
+      } else if (out.error === 'invalid') {
+        show('is-error', 'Please check your email address and message, then try again.');
+      } else if (out.error === 'rate_limited') {
+        show('is-error', 'You have sent several messages already. Please try again later. ' + fallback);
+      } else {
+        show('is-error', 'Sorry, your message could not be sent right now. ' + fallback);
+      }
+    } catch (err) {
+      show('is-error', 'Sorry, your message could not be sent (connection problem). ' + fallback);
+    } finally {
+      if (button) { button.disabled = false; button.textContent = label; }
+    }
   });
 }
 
