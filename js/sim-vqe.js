@@ -28,7 +28,7 @@ class VQESimulator {
     // Exact ground-state energy from diagonalising this same Hamiltonian
     this.exactFCI = -1.137306;
 
-    this.theta = -1.456; // Default variational angle
+    this.theta = 0; // Start at the Hartree-Fock state |01> (E = -1.116999 Ha)
     this.initControls();
     this.resize();
     this.update();
@@ -156,7 +156,7 @@ class VQESimulator {
     ctx.clearRect(0, 0, w, h);
 
     // Background Grid
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+    ctx.strokeStyle = 'rgba(128, 128, 128, 0.12)';
     ctx.lineWidth = 1;
     for (let x = 0; x < w; x += 40) {
       ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
@@ -166,8 +166,9 @@ class VQESimulator {
     }
 
     // Energy Mapping Bounds
+    // E(theta) spans -1.137 to +0.495 Ha for this Hamiltonian
     const minE = -1.25;
-    const maxE = -0.05;
+    const maxE = 0.6;
 
     const mapY = (e) => h - ((e - minE) / (maxE - minE)) * (h - 40) - 20;
     const mapX = (th) => ((th + Math.PI) / (2 * Math.PI)) * (w - 60) + 30;
@@ -203,20 +204,21 @@ class VQESimulator {
     }
     ctx.stroke();
 
-    // Highlight Current Theta Point
+    // Highlight Current Theta Point (label colour follows the light/dark theme)
+    const ink = (getComputedStyle(document.documentElement).getPropertyValue('--text-primary') || '#ffffff').trim() || '#ffffff';
     const currentRes = this.calculateEnergy(this.theta);
     const cx = mapX(this.theta);
     const cy = mapY(currentRes.energy);
 
     ctx.beginPath();
     ctx.arc(cx, cy, 6, 0, Math.PI * 2);
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = ink;
     ctx.fill();
     ctx.strokeStyle = '#10b981';
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = ink;
     ctx.font = 'bold 11px "IBM Plex Mono", Consolas, monospace';
     ctx.fillText(`E(θ) = ${currentRes.energy.toFixed(4)} Ha`, Math.min(cx + 10, w - 150), Math.max(cy - 10, 20));
   }

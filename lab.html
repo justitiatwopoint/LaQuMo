@@ -352,15 +352,15 @@
             VQE Pauli Expectation &amp; Ansatz
           </div>
           <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
-            Evaluates real Pauli expectation values \(\langle ZI \rangle, \langle IZ \rangle, \langle ZZ \rangle, \langle XX \rangle, \langle YY \rangle\) on a 2-qubit UCC statevector \(|\Psi(\theta)\rangle\) for \(\text{H}_2\) (\(R = 0.75\text{ \AA}\)).
+            Evaluates the Pauli expectation values \(\langle ZI \rangle, \langle IZ \rangle, \langle ZZ \rangle, \langle XX \rangle\) of the one-parameter ansatz \(|\Psi(\theta)\rangle = \cos\theta\,|01\rangle + \sin\theta\,|10\rangle\) for \(\text{H}_2\) in the STO-3G basis at \(R = 0.735\)&nbsp;&Aring;, using the standard parity-mapped two-qubit Hamiltonian. \(\theta = 0\) is the Hartree&ndash;Fock state.
           </p>
 
           <div class="control-group">
             <div class="control-label">
               <span>Variational Parameter \(\theta\)</span>
-              <span class="control-val-tag" id="val-vqe-theta">-1.456 rad (-83.4°)</span>
+              <span class="control-val-tag" id="val-vqe-theta">0.000 rad (0.0°)</span>
             </div>
-            <input type="range" id="vqe-theta" class="sim-slider" min="-3.14159" max="3.14159" step="0.001" value="-1.456">
+            <input type="range" id="vqe-theta" class="sim-slider" min="-3.14159" max="3.14159" step="0.001" value="0">
           </div>
 
           <div style="display: flex; gap: 8px; margin-top: 14px;">
@@ -372,17 +372,17 @@
           </div>
 
           <div style="background: rgba(255, 255, 255, 0.04); padding: 12px; border-radius: var(--radius-xs); border: 1px solid rgba(255, 255, 255, 0.12); margin-top: 10px;">
-            <div style="font-size: 0.82rem; color: var(--text-secondary);">VQE Computed Energy: <strong id="vqe-energy-tag" style="color: #10b981;">-1.145630 Hartree</strong></div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary);">FCI Target Energy \(E_0\): <strong style="color: #ffffff;">-1.137306 Hartree</strong></div>
-            <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;" id="vqe-pauli-tag">⟨ZI⟩= -0.978 | ⟨IZ⟩= 0.978 | ⟨XX⟩= -0.208</div>
-            <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;">Energy Error: <span id="vqe-error-tag" style="color: #f59e0b;">8.3241 mHartree</span></div>
-            <div style="font-size: 0.78rem; font-weight: 700; margin-top: 6px; color: #f59e0b;" id="vqe-status-tag">VARIATIONAL BOUND REACHED (8.32 mHartree)</div>
+            <div style="font-size: 0.82rem; color: var(--text-secondary);">VQE Computed Energy: <strong id="vqe-energy-tag" style="color: #10b981;">-1.116999 Hartree</strong></div>
+            <div style="font-size: 0.82rem; color: var(--text-secondary);">Exact Ground-State Energy \(E_0\) (FCI): <strong style="color: var(--text-primary);">-1.137306 Hartree</strong></div>
+            <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;" id="vqe-pauli-tag">⟨ZI⟩=1.000 | ⟨IZ⟩=-1.000 | ⟨XX⟩=0.000</div>
+            <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;">Energy Error: <span id="vqe-error-tag" style="color: #f59e0b;">0.020307 Hartree (20.3070 mHartree)</span></div>
+            <div style="font-size: 0.78rem; font-weight: 700; margin-top: 6px; color: #f59e0b;" id="vqe-status-tag">ABOVE EXACT BY 20.31 mHartree</div>
           </div>
         </div>
 
         <div class="sim-viewport">
           <div class="sim-overlay-hud">
-            <div class="hud-pill">O'Malley et al. PRX 2016 Hamiltonian</div>
+            <div class="hud-pill">H₂ · STO-3G · R = 0.735 Å · 2 qubits</div>
             <div class="hud-pill">Continuous Energy Landscape \(E(\theta)\)</div>
           </div>
           <div class="sim-canvas-wrap">
