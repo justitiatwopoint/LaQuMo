@@ -1630,3 +1630,67 @@ html:not([data-theme="dark"]) .badge-dot { box-shadow: none; }
 #tab-ghz .sim-panel { min-width: 0; }
 #tab-ghz mjx-container { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
 @media (max-width: 760px) { #ghz-state-latex { font-size: 0.85rem; } }
+
+/* ==========================================================================
+   BRAND: Cormorant Garamond "Q" logo + wordmark, and theme dots
+   ========================================================================== */
+.brand { gap: 10px; }
+.brand-icon {
+  width: auto;
+  height: auto;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--text-primary);
+}
+.brand-icon svg.brand-q {
+  height: 32px;
+  width: auto;
+  stroke: none;
+  display: block;
+  overflow: visible;
+}
+.brand-icon svg.brand-q path { fill: currentColor; }
+
+html .brand-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
+}
+.footer .brand-icon svg.brand-q { height: 28px; }
+.footer .brand-text { font-size: 1.45rem; }
+
+/* Theme switch: a softly blinking dot instead of emoji */
+.theme-toggle-btn { gap: 8px; font-family: var(--font-sans); }
+.theme-icon { display: none !important; }
+.theme-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: none;
+  /* Light mode: button offers "Dark", so the dot is black */
+  background: #000000;
+  box-shadow: 0 0 0 1px rgba(43, 40, 35, 0.25), 0 0 6px rgba(0, 0, 0, 0.35);
+  animation: theme-dot-blink 2.4s ease-in-out infinite;
+}
+[data-theme="dark"] .theme-dot {
+  /* Dark mode: button offers "Light", so the dot is white and glows */
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5), 0 0 8px rgba(255, 255, 255, 0.85);
+}
+@keyframes theme-dot-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-dot { animation: none; }
+}
+@media (max-width: 760px) {
+  .brand-icon svg.brand-q { height: 27px; }
+  html .brand-text { font-size: 1.4rem; }
+  .theme-toggle-btn .theme-text { display: inline; }
+}

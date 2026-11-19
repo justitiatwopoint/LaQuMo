@@ -18,8 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (toggleBtn) {
       const textLabel = toggleBtn.querySelector(".theme-text");
       if (textLabel) {
-        textLabel.textContent = theme === "dark" ? "Dark" : "Light";
+        // Show the mode the button switches TO
+        textLabel.textContent = theme === "dark" ? "Light" : "Dark";
       }
+      const next = theme === "dark" ? "light" : "dark";
+      toggleBtn.setAttribute("aria-label", `Switch to ${next} mode`);
+      toggleBtn.setAttribute("title", `Switch to ${next} mode`);
     }
   }
 

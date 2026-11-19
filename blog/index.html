@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog | LaQuMo</title>
   <meta name="description" content="LaQuMo blog: articles on quantum physics, its history and quantum computing.">
@@ -21,13 +22,7 @@
 
   <nav class="navbar" id="navbar">
     <a href="../index.html" class="brand">
-      <div class="brand-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="9"></circle>
-          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
-          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
-        </svg>
-      </div>
+      <div class="brand-icon"><svg class="brand-q" viewBox="39 -646 721.1428571428571 851" aria-hidden="true" focusable="false"><path transform="scale(1,-1)" d="M481 10Q508 -44 546.5 -86.0Q585 -128 628.0 -151.5Q671 -175 710 -175Q720 -175 729.0 -174.5Q738 -174 745 -173Q748 -171 749.5 -176.5Q751 -182 749 -183Q730 -188 709.5 -191.5Q689 -195 667 -195Q617 -195 562.5 -172.0Q508 -149 457.0 -105.5Q406 -62 365 2ZM366 -12Q294 -12 235.5 13.5Q177 39 135.5 84.0Q94 129 71.5 187.5Q49 246 49 312Q49 393 80.5 454.0Q112 515 164.0 555.5Q216 596 278.0 616.0Q340 636 401 636Q475 636 533.5 609.5Q592 583 633.0 538.0Q674 493 695.5 436.0Q717 379 717 319Q717 249 689.0 189.0Q661 129 612.5 84.0Q564 39 500.5 13.5Q437 -12 366 -12ZM400 12Q460 12 507.5 44.0Q555 76 582.5 138.5Q610 201 610 290Q610 383 580.0 455.0Q550 527 494.0 568.5Q438 610 360 610Q263 610 209.5 540.5Q156 471 156 348Q156 276 174.0 214.5Q192 153 224.5 107.0Q257 61 301.5 36.5Q346 12 400 12Z"/></svg></div>
       <span class="brand-text">LaQuMo</span>
       <span class="brand-tag">BLOG</span>
     </a>
@@ -40,10 +35,9 @@
     </ul>
 
     <div class="nav-actions">
-      <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Light/Dark Theme">
-        <span class="theme-icon sun-icon">☀️</span>
-        <span class="theme-icon moon-icon">🌙</span>
-        <span class="theme-text">Light</span>
+      <button class="theme-toggle-btn" id="theme-toggle" title="Switch to dark mode" aria-label="Switch to dark mode">
+        <span class="theme-dot" aria-hidden="true"></span>
+        <span class="theme-text">Dark</span>
       </button>
     </div>
   </nav>
@@ -92,13 +86,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div class="brand">
-        <div class="brand-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="9"></circle>
-            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
-            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
-          </svg>
-        </div>
+        <div class="brand-icon"><svg class="brand-q" viewBox="39 -646 721.1428571428571 851" aria-hidden="true" focusable="false"><path transform="scale(1,-1)" d="M481 10Q508 -44 546.5 -86.0Q585 -128 628.0 -151.5Q671 -175 710 -175Q720 -175 729.0 -174.5Q738 -174 745 -173Q748 -171 749.5 -176.5Q751 -182 749 -183Q730 -188 709.5 -191.5Q689 -195 667 -195Q617 -195 562.5 -172.0Q508 -149 457.0 -105.5Q406 -62 365 2ZM366 -12Q294 -12 235.5 13.5Q177 39 135.5 84.0Q94 129 71.5 187.5Q49 246 49 312Q49 393 80.5 454.0Q112 515 164.0 555.5Q216 596 278.0 616.0Q340 636 401 636Q475 636 533.5 609.5Q592 583 633.0 538.0Q674 493 695.5 436.0Q717 379 717 319Q717 249 689.0 189.0Q661 129 612.5 84.0Q564 39 500.5 13.5Q437 -12 366 -12ZM400 12Q460 12 507.5 44.0Q555 76 582.5 138.5Q610 201 610 290Q610 383 580.0 455.0Q550 527 494.0 568.5Q438 610 360 610Q263 610 209.5 540.5Q156 471 156 348Q156 276 174.0 214.5Q192 153 224.5 107.0Q257 61 301.5 36.5Q346 12 400 12Z"/></svg></div>
         <span class="brand-text">LaQuMo</span>
       </div>
       <div style="font-size:0.88rem; color:var(--text-secondary);">
