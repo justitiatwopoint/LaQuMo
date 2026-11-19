@@ -72,7 +72,7 @@
       <li><a href="#simulator">3D Bloch Sphere</a></li>
       <li><a href="lab.html" style="color: var(--accent-white); font-weight: 600;">Virtual Lab</a></li>
       <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#benchmarks">Complexity &amp; Bounds</a></li>
+      <li><a href="#benchmarks">Reference Values</a></li>
       <li><a href="blog/index.html">Blog</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -139,82 +139,26 @@
       </div>
     </section>
 
-    <!-- Interactive Quantum Simulator Section -->
+    <!-- Bloch Sphere Display -->
     <section class="section" id="simulator">
       <div class="section-header">
-        <span class="section-tag">// INTERACTIVE EXPERIMENT</span>
-        <h2 class="section-title">Quantum State &amp; 3D Bloch Sphere Visualizer</h2>
+        <span class="section-tag">// THE QUBIT</span>
+        <h2 class="section-title">The Bloch Sphere</h2>
         <p class="section-desc">
-          Adjust state vector parameters below to observe real-time 3D Bloch sphere rotations, state amplitudes, and measurement probability distributions.
+          Every state of a single qubit is a point on a sphere. Here the state precesses about the vertical axis, as a spin does in a magnetic field:
+          its polar angle stays fixed while its phase turns at a steady rate.
         </p>
       </div>
 
-      <div class="simulator-wrapper">
-        <div class="sim-grid">
-          
-          <!-- Controls -->
-          <div class="sim-controls">
-            <div class="control-group">
-              <label>Qubit Register Size <span id="val-qubits">16</span></label>
-              <input type="range" id="slider-qubits" class="slider-input" min="4" max="64" value="16">
-            </div>
-
-            <div class="control-group">
-              <label>Circuit Layer Depth <span id="val-depth">12</span></label>
-              <input type="range" id="slider-depth" class="slider-input" min="2" max="32" value="12">
-            </div>
-
-            <div class="control-group">
-              <label>Entanglement Entropy S(ρ) <span id="val-entropy">0.45</span></label>
-              <input type="range" id="slider-entropy" class="slider-input" min="0" max="1" step="0.05" value="0.45">
-            </div>
-
-            <div class="control-group">
-              <label>Quantum Attention Heads <span id="val-heads">8</span></label>
-              <input type="range" id="slider-heads" class="slider-input" min="1" max="16" value="8">
-            </div>
-
-            <div style="margin-top: 12px; font-size: 0.82rem; color: var(--text-muted);">
-              Current State Vector Equation:
-              <div id="dynamic-state-latex" style="margin-top: 8px; font-family: var(--font-mono); color: var(--text-primary);">
-                \(|\Psi_{LaQuMo}\rangle = 0.71|00\dots 0\rangle + 0.71e^{i\phi}|11\dots 1\rangle\)
-              </div>
-            </div>
-          </div>
-
-          <!-- Canvas & Probabilities -->
-          <div class="sim-view">
-            <div class="sim-canvas-container">
-              <canvas id="bloch-canvas"></canvas>
-            </div>
-
-            <div class="state-amplitudes">
-              <div class="amplitude-box">
-                <div class="amp-state">|0000⟩</div>
-                <div class="amp-val" id="amp-val-0">48.2%</div>
-                <div class="amp-bar-bg"><div class="amp-bar-fill" id="amp-bar-0" style="width: 48.2%;"></div></div>
-              </div>
-              <div class="amplitude-box">
-                <div class="amp-state">|0001⟩</div>
-                <div class="amp-val" id="amp-val-1">32.5%</div>
-                <div class="amp-bar-bg"><div class="amp-bar-fill" id="amp-bar-1" style="width: 32.5%;"></div></div>
-              </div>
-              <div class="amplitude-box">
-                <div class="amp-state">|0110⟩</div>
-                <div class="amp-val" id="amp-val-2">11.8%</div>
-                <div class="amp-bar-bg"><div class="amp-bar-fill" id="amp-bar-2" style="width: 11.8%;"></div></div>
-              </div>
-              <div class="amplitude-box">
-                <div class="amp-state">|1111⟩</div>
-                <div class="amp-val" id="amp-val-3">7.5%</div>
-                <div class="amp-bar-bg"><div class="amp-bar-fill" id="amp-bar-3" style="width: 7.5%;"></div></div>
-              </div>
-            </div>
-          </div>
-
+      <div class="simulator-wrapper bloch-display">
+        <div class="sim-canvas-container bloch-display-canvas">
+          <canvas id="bloch-canvas" aria-label="Animated Bloch sphere: a qubit state precessing about the z-axis" role="img"></canvas>
         </div>
-
-
+        <p class="bloch-caption">
+          \(|\psi(t)\rangle = \cos\tfrac{\theta}{2}\,|0\rangle + e^{i\omega t}\sin\tfrac{\theta}{2}\,|1\rangle\)
+          &nbsp;&middot;&nbsp; precession under \(H = \tfrac{\hbar\omega}{2}\sigma_z\) (global phase omitted)
+        </p>
+        <a class="bloch-lab-link" href="lab.html#tab-ghz">Calculate real multi-qubit states in the Virtual Lab &rarr;</a>
       </div>
     </section>
 
@@ -286,10 +230,10 @@
     <!-- Factually Grounded Complexity & Theoretical Bounds Section -->
     <section class="section" id="benchmarks">
       <div class="section-header">
-        <span class="section-tag">// ALGORITHMIC FOUNDATIONS &amp; LITERATURE BOUNDS</span>
-        <h2 class="section-title">Quantum vs Classical Theoretical Complexity Bounds</h2>
+        <span class="section-tag">// LITERATURE CONTEXT</span>
+        <h2 class="section-title">Reference Values from the Literature</h2>
         <p class="section-desc">
-          Established theoretical complexity limits documented in published quantum computing literature (e.g., Goemans-Williamson 1995, Peruzzo et al. 2014) serving as theoretical context for virtual lab simulations.
+          What classical methods guarantee, what the exact answer is, and what the corresponding quantum approach offers, for three problems related to the simulations in the Virtual Lab.
         </p>
       </div>
 
@@ -297,40 +241,37 @@
         <table class="bench-table">
           <thead>
             <tr>
-              <th>Computational Domain</th>
-              <th>Classical Standard Limit</th>
-              <th>Theoretical Exact Limit</th>
-              <th>Quantum Upper Bound</th>
-              <th>Literature Citation</th>
+              <th>Problem</th>
+              <th>Classical Reference</th>
+              <th>Exact / Optimum</th>
+              <th>What the Quantum Method Offers</th>
+              <th>Sources</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>Molecular VQE Energy ($\text{LiH}$ Ground State)</strong></td>
-              <td>-7.82 Hartree (HF Approx.)</td>
-              <td>-7.8827 Hartree (FCI Exact)</td>
-              <td><span class="tag-highlight">&le; 1.6 mHartree Target</span></td>
+              <td><strong>LiH ground-state energy</strong><br><span style="font-size: 0.85em; color: var(--text-muted);">STO-3G basis, \(R = 1.595\)&nbsp;&Aring;</span></td>
+              <td>Hartree&ndash;Fock: &minus;7.862 Ha</td>
+              <td>Full CI: &minus;7.882 Ha</td>
+              <td><span class="tag-highlight">VQE aims for chemical accuracy</span><br>within 1.6&nbsp;mHa (&asymp;&nbsp;1&nbsp;kcal/mol) of full CI; demonstrated on hardware for small molecules</td>
               <td>Kandala et al. (Nature 2017)</td>
             </tr>
             <tr>
-              <td><strong>MAX-CUT Combinatorial Optimization</strong></td>
-              <td>84.2% (Greedy Heuristic)</td>
-              <td>87.856% (GW SDP Limit)</td>
-              <td><span class="tag-highlight">QAOA $p \ge 5$ Ansätze</span></td>
-              <td>Goemans &amp; Williamson (JACM 1995)</td>
+              <td><strong>Max-Cut</strong></td>
+              <td>Goemans&ndash;Williamson: guaranteed &ge;&nbsp;87.856% of the optimum (the best classical guarantee possible if the Unique Games Conjecture holds)</td>
+              <td>Exact optimum: NP-hard to compute</td>
+              <td><span class="tag-highlight">QAOA, depth 1, 3-regular graphs</span><br>guaranteed &ge;&nbsp;69.24%; higher depths can do better, but no proven advantage over Goemans&ndash;Williamson</td>
+              <td>Goemans &amp; Williamson (J. ACM 1995); Khot et al. (SIAM J. Comput. 2007); Farhi, Goldstone &amp; Gutmann (arXiv:1411.4028)</td>
             </tr>
             <tr>
-              <td><strong>Quantum Density Matrix State Vector Encoding</strong></td>
-              <td>\(\mathcal{O}(d)\) Vector Space</td>
-              <td>\(\mathcal{O}(d)\) State Dimension</td>
-              <td><span class="tag-highlight">\(\mathcal{O}(\log_2 d)\) Subspace Encoding (Quantum PCA)</span></td>
-              <td>Lloyd, Mohseni &amp; Rebentrost (Nat. Phys. 2014)</td>
+              <td><strong>Principal component analysis</strong><br><span style="font-size: 0.85em; color: var(--text-muted);">\(d\)-dimensional data</span></td>
+              <td>Polynomial in \(d\)</td>
+              <td>&mdash;</td>
+              <td><span class="tag-highlight">qPCA: polylog(\(d\))</span><br>only if the data are already available as quantum states; classical &ldquo;dequantised&rdquo; algorithms match this under comparable access</td>
+              <td>Lloyd, Mohseni &amp; Rebentrost (Nat. Phys. 2014); Tang (PRL 2021)</td>
             </tr>
           </tbody>
         </table>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; font-style: italic;">
-          * Note: Theoretical bounds listed above are established mathematical limits from published quantum computing literature and are presented solely for educational reference.
-        </p>
       </div>
     </section>
 
@@ -408,7 +349,7 @@
       </div>
 
       <div class="footer-copy">
-        &copy; 2026 LaQuMo Research Collective. Scientific Virtual Lab &amp; Educational Visualization Dashboard.
+        &copy; 2026 LaQuMo Research. Scientific Virtual Lab &amp; Educational Visualization Dashboard.
       </div>
     </div>
   </footer>

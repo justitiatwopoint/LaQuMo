@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Bloch Sphere: One Picture for Every Qubit | LaQuMo Blog</title>
+  <meta name="description" content="What the Bloch sphere is, why it matters in physics, engineering and materials science, and seven surprising facts about it.">
+  <script>
+    (function() {
+      var t = 'light';
+      try { t = localStorage.getItem('laqumo_theme') || 'light'; } catch (e) {}
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      chtml: { scale: 1.0 }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/blog.css">
+  <link rel="stylesheet" href="../css/schrodinger-bot.css">
+  <script src="../js/theme.js" defer></script>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
+          <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+        </svg>
+      </div>
+      <span class="brand-text">LaQuMo</span>
+      <span class="brand-tag">BLOG</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../lab.html">Virtual Lab</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Light/Dark Theme">
+        <span class="theme-icon sun-icon">☀️</span>
+        <span class="theme-icon moon-icon">🌙</span>
+        <span class="theme-text">Light</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="container blog-main">
+    <article class="article">
+      <a href="index.html" class="article-back">← All posts</a>
+
+      <header class="article-head">
+        <div class="post-meta">
+          <span>Quantum Fundamentals</span>
+          <span>·</span>
+          <time datetime="2026-11-19">19 Nov 2026</time>
+          <span>·</span>
+          <span>10 min read</span>
+        </div>
+        <h1 class="article-title">The Bloch Sphere: One Picture for Every Qubit</h1>
+        <p class="article-lede">
+          A single sphere describes every possible state of a qubit, the spin of a proton in an MRI scanner,
+          the polarisation of light in an optical fibre and the ticking of an atomic clock. Here is how it works,
+          where it is used, and seven facts about it that still surprise physicists.
+        </p>
+      </header>
+
+      <div class="article-body">
+
+        <h2>Where it comes from</h2>
+        <p>
+          In 1946 Felix Bloch published a paper on <em>nuclear induction</em>: atomic nuclei behave like tiny magnets,
+          and in a magnetic field their magnetisation swings around the field direction like a spinning top. Bloch described
+          this motion with a vector in three dimensions, governed by what are now called the <strong>Bloch equations</strong>.
+          Working independently, Edward Purcell's group detected the same nuclear magnetic resonance that year, and the two
+          shared the 1952 Nobel Prize in Physics.
+        </p>
+        <p>
+          The geometry is older than quantum mechanics. In 1892 Henri Poincaré represented every polarisation of light as a
+          point on a sphere, now called the <strong>Poincaré sphere</strong>. In 1957 Feynman, Vernon and Hellwarth showed
+          that <em>any</em> two-level quantum system can be pictured as a spin precessing in an effective magnetic field.
+          Quantum computing inherited this picture, and today the sphere is the first thing most people learn about a qubit.
+        </p>
+
+        <h2>The fundamentals</h2>
+        <p>
+          A qubit has two basis states, \(|0\rangle\) and \(|1\rangle\). Its general state is a superposition, and after
+          removing an overall phase, which has no physical effect, every pure state can be written with just two angles:
+        </p>
+        <div class="post-math">
+          \[ |\psi\rangle = \cos\frac{\theta}{2}\,|0\rangle + e^{i\varphi}\sin\frac{\theta}{2}\,|1\rangle,
+             \qquad 0 \le \theta \le \pi,\quad 0 \le \varphi < 2\pi . \]
+        </div>
+        <p>
+          Read \(\theta\) as latitude, measured down from the north pole, and \(\varphi\) as longitude: each state is a point on
+          the surface of a unit sphere. The north pole is \(|0\rangle\), the south pole is \(|1\rangle\), and the equator holds
+          the equal superpositions, such as \(|+\rangle = (|0\rangle + |1\rangle)/\sqrt{2}\) on the \(x\)-axis and
+          \(|{+i}\rangle = (|0\rangle + i|1\rangle)/\sqrt{2}\) on the \(y\)-axis.
+        </p>
+
+        <figure class="post-figure">
+          <svg viewBox="-20 0 400 330" role="img" aria-labelledby="bloch-fig-title">
+            <title id="bloch-fig-title">The Bloch sphere: |0⟩ at the north pole, |1⟩ at the south pole, a state vector at polar angle θ and azimuth φ</title>
+            <g fill="none" stroke="currentColor">
+              <circle cx="180" cy="165" r="120" stroke-opacity="0.35" stroke-width="1.5"/>
+              <ellipse cx="180" cy="165" rx="120" ry="36" stroke-opacity="0.25" stroke-dasharray="5 5"/>
+              <line x1="180" y1="30" x2="180" y2="300" stroke-opacity="0.35"/>
+              <line x1="180" y1="165" x2="300" y2="165" stroke-opacity="0.35"/>
+              <line x1="180" y1="165" x2="111.2" y2="194.5" stroke-opacity="0.35"/>
+              <!-- projection of the state onto the equatorial plane -->
+              <line x1="180" y1="165" x2="233.2" y2="176.3" stroke-opacity="0.45" stroke-dasharray="3 4"/>
+              <line x1="233.2" y1="176.3" x2="233.2" y2="99.2" stroke-opacity="0.45" stroke-dasharray="3 4"/>
+              <!-- theta and phi arcs -->
+              <path d="M180 125 A40 40 0 0 1 205.2 133.9" stroke-width="1.4"/>
+              <path d="M155.9 175.3 Q180.2 175.1 204.3 170.2" stroke-width="1.4"/>
+              <!-- state vector -->
+              <line x1="180" y1="165" x2="233.2" y2="99.2" stroke-width="2.6"/>
+            </g>
+            <circle cx="233.2" cy="99.2" r="5.5" fill="currentColor"/>
+            <g fill="currentColor" font-family="'IBM Plex Mono', Consolas, monospace" font-size="14">
+              <text x="180" y="22" text-anchor="middle">|0⟩</text>
+              <text x="180" y="320" text-anchor="middle">|1⟩</text>
+              <text x="304" y="170">|+i⟩ (y)</text>
+              <text x="33" y="214">|+⟩ (x)</text>
+              <text x="243" y="91">|ψ⟩</text>
+              <text x="196" y="118">θ</text>
+              <text x="176" y="194">φ</text>
+            </g>
+          </svg>
+          <figcaption>The state \(|\psi\rangle\) sits at polar angle \(\theta\) from \(|0\rangle\) and azimuth \(\varphi\) around the vertical axis.</figcaption>
+        </figure>
+
+        <p>The picture also does real work:</p>
+        <ul>
+          <li><strong>Measurement is a projection.</strong> The probability of measuring \(0\) is \(\cos^2(\theta/2) = (1 + z)/2\), where \(z\) is the height of the point. States near the north pole almost always give \(0\).</li>
+          <li><strong>Gates are rotations.</strong> Every single-qubit gate rotates the sphere. The NOT gate \(X\) is a half-turn about the \(x\)-axis, the Hadamard gate is a half-turn about the axis halfway between \(x\) and \(z\), and the phase gates \(S\) and \(T\) turn the sphere by \(90^\circ\) and \(45^\circ\) about \(z\).</li>
+          <li><strong>The inside matters too.</strong> Noisy, partly-known states, called <em>mixed states</em>, lie inside the sphere, which is then called the Bloch ball. The centre is the state of complete ignorance: a perfect coin toss.</li>
+          <li><strong>Time is motion.</strong> Under a magnetic field along \(z\), a state precesses around the vertical axis at a fixed latitude. This is the motion shown on our <a href="../index.html#simulator">home page</a>.</li>
+        </ul>
+
+        <h2>Why it matters in physics</h2>
+        <p>
+          <strong>Magnetic resonance.</strong> In nuclear magnetic resonance (NMR) and MRI, the Bloch vector is the measured
+          magnetisation of countless nuclear spins. A radio-frequency pulse tips it away from the field, it precesses, and it relaxes
+          back. Two relaxation times describe that return: \(T_1\), as the vector regrows along the field, and \(T_2\), as the spins
+          lose step with one another and the sideways part shrinks. Different tissues have different \(T_1\) and \(T_2\), which is
+          where MRI contrast comes from. The 2003 Nobel Prize in Physiology or Medicine went to Paul Lauterbur and Peter Mansfield
+          for turning this into imaging.
+        </p>
+        <p>
+          <strong>Spin echoes.</strong> In 1950 Erwin Hahn found that dephased spins can be brought back into step: a half-turn pulse flips
+          the fanned-out vectors across the sphere, and they reconverge into an "echo". The same trick, now called dynamical
+          decoupling, protects qubits from noise today.
+        </p>
+        <p>
+          <strong>Rabi oscillations and atomic clocks.</strong> A steady drive rotates the state from pole to pole and back: a
+          <em>Rabi oscillation</em>, named after Isidor Rabi (Nobel Prize 1944). Norman Ramsey's method of two separated pulses
+          (Nobel Prize 1989) measures the precession frequency with extraordinary precision. It underlies caesium atomic clocks,
+          and the SI second is defined as exactly 9,192,631,770 periods of the caesium-133 transition.
+        </p>
+
+        <h2>Why it matters in engineering</h2>
+        <p>
+          <strong>Building quantum computers.</strong> Engineers calibrate qubits by thinking in rotations: a "\(\pi\) pulse" is a
+          half-turn that swaps \(|0\rangle\) and \(|1\rangle\), and a "\(\pi/2\) pulse" moves a pole to the equator. Superconducting
+          circuits, trapped ions and neutral atoms all implement gates as carefully shaped microwave or laser pulses that steer the
+          Bloch vector.
+        </p>
+        <p>
+          <strong>Optical fibres and telecoms.</strong> Polarisation drifts as light travels through a fibre, which is a wandering
+          point on the Poincaré sphere. Polarisation controllers and compensators are designed as sequences of rotations that bring
+          it back to where it is needed.
+        </p>
+        <p>
+          <strong>Quantum cryptography.</strong> The BB84 protocol (Bennett and Brassard, 1984) sends single photons prepared at the
+          poles or on the equator of the sphere. An eavesdropper who measures along the wrong axis unavoidably disturbs the states, and
+          the legitimate users can detect it.
+        </p>
+        <p>
+          <strong>Medical imaging.</strong> Every MRI pulse sequence is, at heart, a choreographed set of rotations and waits for the
+          Bloch vectors in the body, designed to bring out a particular \(T_1\) or \(T_2\) contrast.
+        </p>
+
+        <h2>Why it matters in materials science</h2>
+        <p>
+          <strong>NMR spectroscopy.</strong> The precession frequency of a nucleus shifts slightly with its chemical surroundings.
+          Measuring these shifts, and how fast the Bloch vectors relax, reveals molecular structure and motion in liquids, polymers,
+          batteries and catalysts.
+        </p>
+        <p>
+          <strong>Electron spin resonance.</strong> The same physics with electrons instead of nuclei (ESR, also called EPR)
+          detects unpaired electrons: defects in semiconductors, radicals in chemical reactions, and the active sites of catalysts.
+        </p>
+        <p>
+          <strong>Quantum sensors in diamond.</strong> A nitrogen&ndash;vacancy (NV) centre is a defect in diamond whose electron spin
+          can be prepared, rotated and read out with laser light, even at room temperature. How its Bloch vector precesses reveals tiny
+          magnetic fields, so NV centres are used to map magnetism in thin films and currents in microchips at the nanoscale.
+        </p>
+        <p>
+          <strong>Muon spin rotation.</strong> In &mu;SR, spin-polarised muons are implanted in a material and their spins precess in
+          the local magnetic field. Their decay reveals that precession, giving a probe of magnetism and superconductivity from inside
+          the sample.
+        </p>
+        <p>
+          <strong>Spintronics.</strong> The magnetisation of a nanomagnet in a hard drive or MRAM cell also precesses and relaxes
+          (described by the Landau&ndash;Lifshitz&ndash;Gilbert equation). There the vector is classical rather than a qubit, but engineers
+          use the same picture of a vector moving on a sphere.
+        </p>
+
+        <h2>Seven facts that still surprise physicists</h2>
+        <ol class="fact-list">
+          <li>
+            <h3>Opposite points are "perpendicular" states</h3>
+            <p>
+              \(|0\rangle\) and \(|1\rangle\) are orthogonal, at \(90^\circ\) to each other in the underlying space, yet they sit
+              \(180^\circ\) apart on the sphere. That is why the formula uses \(\theta/2\): the sphere doubles every angle.
+            </p>
+          </li>
+          <li>
+            <h3>A full turn is not enough</h3>
+            <p>
+              Rotating a spin-\(\tfrac12\) particle by \(360^\circ\) returns it to the same point on the sphere, but multiplies its
+              state by \(-1\). Only a \(720^\circ\) turn restores it completely. The sign is invisible on its own, but it shows up when
+              the rotated particle interferes with an unrotated one. Neutron interferometry experiments confirmed it in 1975.
+            </p>
+          </li>
+          <li>
+            <h3>Infinitely many states, but only one bit</h3>
+            <p>
+              A qubit can be in any of a continuum of states, yet a measurement gives a single 0 or 1. Holevo's theorem (1973) proves
+              that one qubit can never carry more than one bit of classical information.
+            </p>
+          </li>
+          <li>
+            <h3>Light was there first</h3>
+            <p>
+              The polarisation of light obeys exactly the same mathematics: horizontal and vertical polarisation at the poles,
+              diagonal and circular polarisation around the equator. Polarising sunglasses are, in effect, a measurement on the
+              Poincaré sphere.
+            </p>
+          </li>
+          <li>
+            <h3>Paths leave a memory</h3>
+            <p>
+              Steer a state around a closed loop on the sphere and it returns with an extra phase equal to half the solid angle the loop
+              encloses (up to sign). This <em>geometric phase</em> depends only on the shape of the path, not on how fast it is travelled.
+              It was found for light by Pancharatnam in 1956 and in general by Berry in 1984.
+            </p>
+          </li>
+          <li>
+            <h3>Entanglement hides in the centre</h3>
+            <p>
+              In an entangled Bell state, each qubit taken alone sits at the very centre of its sphere: individually, each looks like a
+              perfect coin toss. All the information is in the correlations, which no single sphere can show. That is why our
+              <a href="../lab.html#tab-ghz">GHZ simulation</a> draws its sphere for the pair \(|0000\rangle, |1111\rangle\) together.
+            </p>
+          </li>
+          <li>
+            <h3>A four-dimensional sphere is hidden inside</h3>
+            <p>
+              A qubit's normalised state is a point on a sphere in four real dimensions. Dropping the unobservable overall phase
+              squeezes it onto the ordinary sphere. That map is the <em>Hopf fibration</em>, a celebrated object in topology in which
+              every point of the Bloch sphere corresponds to a whole circle of states.
+            </p>
+          </li>
+        </ol>
+
+        <h2>Try it yourself</h2>
+        <ul>
+          <li><a href="../lab.html">3D Bloch Sphere</a>: apply gates and watch the state rotate.</li>
+          <li><a href="../lab.html#tab-ghz">4-Qubit GHZ State &amp; Noise</a>: see what happens beyond one qubit, and how noise washes out correlations.</li>
+          <li><a href="../index.html#simulator">Home page</a>: a qubit precessing about the \(z\)-axis, as a spin does in a magnetic field.</li>
+        </ul>
+      </div>
+
+      <aside class="article-notes">
+        <h3>Sources &amp; further reading</h3>
+        <ul>
+          <li>F. Bloch, "Nuclear induction", <em>Phys. Rev.</em> 70, 460 (1946).</li>
+          <li>E. M. Purcell, H. C. Torrey &amp; R. V. Pound, "Resonance absorption by nuclear magnetic moments in a solid", <em>Phys. Rev.</em> 69, 37 (1946).</li>
+          <li>H. Poincaré, <em>Théorie mathématique de la lumière</em>, vol. 2 (1892).</li>
+          <li>R. P. Feynman, F. L. Vernon &amp; R. W. Hellwarth, "Geometrical representation of the Schrödinger equation for solving maser problems", <em>J. Appl. Phys.</em> 28, 49 (1957).</li>
+          <li>E. L. Hahn, "Spin echoes", <em>Phys. Rev.</em> 80, 580 (1950).</li>
+          <li>H. Rauch et al., "Verification of coherent spinor rotation of fermions", <em>Phys. Lett. A</em> 54, 425 (1975); S. A. Werner et al., <em>Phys. Rev. Lett.</em> 35, 1053 (1975).</li>
+          <li>A. S. Holevo, "Bounds for the quantity of information transmitted by a quantum communication channel", <em>Probl. Inf. Transm.</em> 9, 177 (1973).</li>
+          <li>S. Pancharatnam, <em>Proc. Indian Acad. Sci. A</em> 44, 247 (1956); M. V. Berry, "Quantal phase factors accompanying adiabatic changes", <em>Proc. R. Soc. A</em> 392, 45 (1984).</li>
+          <li>C. H. Bennett &amp; G. Brassard, "Quantum cryptography: public key distribution and coin tossing" (1984).</li>
+          <li>M. A. Nielsen &amp; I. L. Chuang, <em>Quantum Computation and Quantum Information</em>, Cambridge University Press (2000), §1.2 and §4.2.</li>
+        </ul>
+      </aside>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </div>
+        <span class="brand-text">LaQuMo</span>
+      </div>
+      <div style="font-size:0.88rem; color:var(--text-secondary);">
+        Direct Inquiry: <a href="mailto:info@laqumo.com" style="color:var(--accent-white); text-decoration:none; font-weight:600;">info@laqumo.com</a>
+      </div>
+      <div class="footer-copy">
+        &copy; 2026 LaQuMo Research. Scientific Virtual Lab &amp; Educational Visualization Dashboard.
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/schrodinger-bot.js"></script>
+</body>
+</html>

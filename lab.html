@@ -130,7 +130,7 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="lab.html" class="active" style="color: var(--accent-white); font-weight: bold;">Virtual Lab</a></li>
       <li><a href="index.html#architecture">Architecture</a></li>
-      <li><a href="index.html#benchmarks">Complexity &amp; Bounds</a></li>
+      <li><a href="index.html#benchmarks">Reference Values</a></li>
       <li><a href="blog/index.html">Blog</a></li>
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
@@ -156,7 +156,7 @@
         Virtual Quantum Physics Laboratory
       </h1>
       <p class="hero-subtitle" style="text-align: left; max-width: 820px; margin: 0; font-size: 1rem;">
-        Adjust physical parameters, calculate wavefunctions, and observe quantum mechanical phenomena in real time across 4 interactive simulation environments.
+        Adjust physical parameters, calculate wavefunctions, and observe quantum mechanical phenomena in real time across 8 interactive simulations.
       </p>
     </div>
 
@@ -167,6 +167,9 @@
       </button>
       <button class="lab-tab-btn" data-target="tab-circuit">
         2-Qubit Quantum Circuit Grid
+      </button>
+      <button class="lab-tab-btn" data-target="tab-ghz">
+        4-Qubit GHZ State &amp; Noise
       </button>
       <button class="lab-tab-btn" data-target="tab-vqe">
         VQE Energy Estimation
@@ -339,6 +342,76 @@
           <div class="circuit-math-card">
             <span class="math-card-label">State Amplitudes &amp; Entanglement:</span>
             <span id="circuit-math-probs" class="math-card-value">P(00)=100.0% | P(01)=0.0% | P(10)=0.0% | P(11)=0.0%</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: 4-QUBIT GHZ STATE & BIT-FLIP NOISE -->
+    <section id="tab-ghz" class="lab-content-section">
+      <div class="sim-grid">
+        <div class="sim-panel">
+          <div class="sim-panel-title">4-Qubit GHZ State &amp; Bit-Flip Noise</div>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+            Prepare \(|\Psi\rangle = \cos\tfrac{\theta}{2}\,|0000\rangle + e^{i\varphi}\sin\tfrac{\theta}{2}\,|1111\rangle\)
+            (at \(\theta = 90^\circ\) this is the GHZ state), then let each qubit independently flip with probability \(p\) before measurement.
+          </p>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Superposition angle \(\theta\)</span>
+              <span class="control-val-tag" id="val-ghz-theta">90°</span>
+            </div>
+            <input type="range" id="ghz-theta" class="sim-slider" min="0" max="180" step="1" value="90">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Relative phase \(\varphi\)</span>
+              <span class="control-val-tag" id="val-ghz-phi">60°</span>
+            </div>
+            <input type="range" id="ghz-phi" class="sim-slider" min="0" max="360" step="1" value="60">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Bit-flip probability \(p\) (per qubit)</span>
+              <span class="control-val-tag" id="val-ghz-noise">0.00</span>
+            </div>
+            <input type="range" id="ghz-noise" class="sim-slider" min="0" max="0.5" step="0.01" value="0">
+          </div>
+
+          <div class="math-block" style="font-size: 0.82rem; margin-top: 16px;">
+            \[ \begin{aligned} P(x) = {}& \cos^2\tfrac{\theta}{2}\,p^{w}(1-p)^{4-w} \\ &+ \sin^2\tfrac{\theta}{2}\,p^{4-w}(1-p)^{w} \end{aligned} \]
+            <div style="font-size: 0.78rem; color: var(--text-muted); text-align: center;">\(w\) = number of 1s in the outcome \(x\)</div>
+          </div>
+
+          <div style="background: var(--accent-glow); padding: 12px; border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); margin-top: 10px;">
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">Prepared state (before noise):</div>
+            <div id="ghz-state-latex" style="margin: 6px 0 10px; color: var(--text-primary);">\(|\Psi\rangle = 0.707\,|0000\rangle + 0.707\,e^{i\,60^\circ}|1111\rangle\)</div>
+
+            <div class="state-amplitudes" style="grid-template-columns: 1fr 1fr;">
+              <div class="amplitude-box"><div class="amp-state">|0000⟩</div><div class="amp-val" id="ghz-prob-0">50.0%</div><div class="amp-bar-bg"><div class="amp-bar-fill" id="ghz-bar-0" style="width: 50%;"></div></div></div>
+              <div class="amplitude-box"><div class="amp-state">|0001⟩</div><div class="amp-val" id="ghz-prob-1">0.0%</div><div class="amp-bar-bg"><div class="amp-bar-fill" id="ghz-bar-1" style="width: 0%;"></div></div></div>
+              <div class="amplitude-box"><div class="amp-state">|0110⟩</div><div class="amp-val" id="ghz-prob-2">0.0%</div><div class="amp-bar-bg"><div class="amp-bar-fill" id="ghz-bar-2" style="width: 0%;"></div></div></div>
+              <div class="amplitude-box"><div class="amp-state">|1111⟩</div><div class="amp-val" id="ghz-prob-3">50.0%</div><div class="amp-bar-bg"><div class="amp-bar-fill" id="ghz-bar-3" style="width: 50%;"></div></div></div>
+            </div>
+            <div class="amp-rest" id="ghz-rest">Other 12 basis states: 0.0% &middot; Total: 100.0%</div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px;">All four qubits agree (0000 or 1111): <strong id="ghz-agree" style="color: var(--text-primary);">100.0%</strong></div>
+          </div>
+          <p class="ghz-note">
+            Bit flips commute with a measurement in the computational basis, so the phase \(\varphi\) moves the state on the sphere but never changes the probabilities.
+            At \(p = 0.5\) every one of the 16 outcomes has probability \(1/16 = 6.25\%\): the correlations are completely washed out.
+          </p>
+        </div>
+
+        <div class="sim-viewport">
+          <div class="sim-overlay-hud">
+            <div class="hud-pill">Bloch sphere of span{|0000⟩, |1111⟩}</div>
+            <div class="hud-pill">Prepared state, before noise</div>
+          </div>
+          <div class="sim-canvas-wrap">
+            <canvas id="ghz-canvas" class="sim-canvas"></canvas>
           </div>
         </div>
       </div>
@@ -621,23 +694,22 @@
     </section>
 
   <!-- Scripts -->
-  <script src="js/data-store.js"></script>
   <script src="js/quantum-bg.js"></script>
   <script src="js/sim-bloch.js"></script>
+  <script src="js/sim-ghz.js"></script>
   <script src="js/sim-vqe.js"></script>
   <script src="js/sim-maxcut.js"></script>
   <script src="js/sim-rydberg.js"></script>
   <script src="js/sim-schrodinger.js"></script>
   <script src="js/sim-doubleslit.js"></script>
   <script src="js/sim-entanglement.js"></script>
-  <script src="js/auth.js"></script>
   <script src="js/schrodinger-bot.js"></script>
-  <script src="js/main.js"></script>
   <script src="js/app.js"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const bloch = new BlochSphereSimulator('bloch-canvas');
+      let ghz = null;
       let vqe = null;
       let maxcut = null;
       let rydberg = null;
@@ -659,7 +731,10 @@
             targetSection.classList.add('active');
 
             requestAnimationFrame(() => {
-              if (targetId === 'tab-vqe') {
+              if (targetId === 'tab-ghz') {
+                if (!ghz) ghz = new GHZNoiseSimulator('ghz-canvas');
+                else ghz.resize();
+              } else if (targetId === 'tab-vqe') {
                 if (!vqe) vqe = new VQESimulator('vqe-canvas');
                 else vqe.resize();
               } else if (targetId === 'tab-maxcut') {
@@ -681,6 +756,11 @@
           }
         });
       });
+
+      // Open a tab from the address, e.g. lab.html#tab-ghz
+      const hashId = location.hash.slice(1);
+      const fromHash = /^[\w-]+$/.test(hashId) && document.querySelector(`.lab-tab-btn[data-target="${hashId}"]`);
+      if (fromHash) fromHash.click();
     });
   </script>
 </body>

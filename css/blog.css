@@ -379,3 +379,70 @@ mark {
   .nobel-year-num { font-size: 1.25rem; }
   .post-card { padding: 22px 20px; }
 }
+
+/* ---------- Long-form articles ---------- */
+.article-body h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin: 44px 0 14px;
+}
+.article-body h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+}
+.article-body ul,
+.article-body ol { color: var(--text-secondary); max-width: 70ch; padding-left: 22px; margin: 0 0 18px; }
+.article-body li { margin-bottom: 8px; line-height: 1.7; }
+.article-body a { color: var(--accent-white); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.article-body em { color: var(--text-primary); }
+
+.post-math { margin: 6px 0 22px; max-width: 70ch; overflow-x: auto; overflow-y: hidden; }
+.article-body mjx-container { max-width: 100%; }
+
+.post-figure {
+  margin: 10px auto 30px;
+  max-width: 420px;
+  color: var(--text-primary);
+  text-align: center;
+}
+.post-figure svg { width: 100%; height: auto; display: block; }
+.post-figure figcaption { font-size: 0.86rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6; }
+
+.fact-list { list-style: none; padding-left: 0 !important; counter-reset: fact; max-width: 72ch; }
+.fact-list > li {
+  counter-increment: fact;
+  position: relative;
+  padding: 18px 20px 6px 64px;
+  margin-bottom: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+.fact-list > li::before {
+  content: counter(fact);
+  position: absolute;
+  left: 18px;
+  top: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.fact-list > li p { margin-bottom: 12px; }
+
+@media (max-width: 760px) {
+  .fact-list > li { padding: 16px 16px 4px 56px; }
+  .fact-list > li::before { left: 14px; }
+}
