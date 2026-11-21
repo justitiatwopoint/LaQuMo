@@ -446,3 +446,13 @@ mark {
   .fact-list > li { padding: 16px 16px 4px 56px; }
   .fact-list > li::before { left: 14px; }
 }
+
+.post-figure-wide { max-width: 640px; }
+.post-callout {
+  max-width: 70ch;
+  padding: 16px 18px;
+  border-left: 3px solid #d97706;
+  background: var(--accent-glow);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--text-primary) !important;
+}
